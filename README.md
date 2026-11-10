@@ -4,12 +4,10 @@ CEO Dashboard แผนงานปี 2570 (หน้าเดียวกั�
 
 - `public/index.html` คือหน้า dashboard เดิม เปลี่ยนแค่การเก็บข้อมูลร่วมกับทีม (สถานะงาน เช็กลิสต์ Go/No-go KPI) จาก claude.ai มาเป็น Supabase ผ่าน `public/supabase-bridge.js` (ตาราง `shared_state`)
 - ค่าที่ปรับในแท็บการเงินยังเก็บในเครื่องของแต่ละคนเหมือนเดิม
-- ตาราง `tasks`, `projects`, `kpis`, `kpi_actuals`, `decisions`, `metrics` มาจาก dashboard รุ่นแรก ยังเก็บไว้แต่หน้าเว็บไม่ได้ใช้
 
 - **หน้าเว็บ**: GitHub Pages (static) — `public/`
 - **ข้อมูล**: Supabase (Postgres + Auth) — `supabase/`
 - **เข้าสู่ระบบ**: กรอกรหัสอย่างเดียว ใช้บัญชีกลาง `team@years-plan.local` (ตั้งใน `public/config.js` → `loginEmail`) เปลี่ยนรหัสได้ที่ Supabase → Authentication → Users
-- ข้อมูลตั้งต้นมาจากเอกสาร "แผนงานปี 2570 (2027) — CMNH" (`supabase/seed.sql`)
 
 ## สิทธิ์การเข้าถึง
 
@@ -21,7 +19,7 @@ CEO Dashboard แผนงานปี 2570 (หน้าเดียวกั�
 
 ## ตั้งค่าครั้งแรก
 
-โปรเจกต์ Supabase ที่ใช้งาน: `years-plan` (ref `yfswjxzsrgngxbuajnov`, org MD-CMNH, region ap-southeast-1) — สร้างตารางและใส่ข้อมูลตั้งต้นแล้ว
+โปรเจกต์ Supabase ที่ใช้งาน: `years-plan` (ref `yfswjxzsrgngxbuajnov`, org MD-CMNH, region ap-southeast-1) — สร้างตารางแล้ว
 
 ### 1. Supabase
 
@@ -29,7 +27,6 @@ CEO Dashboard แผนงานปี 2570 (หน้าเดียวกั�
 npx supabase login
 npx supabase link --project-ref <PROJECT_REF>
 npx supabase db push            # สร้างตาราง + RLS
-npx supabase db execute -f supabase/seed.sql   # หรือวาง seed.sql ใน SQL Editor
 ```
 
 เพิ่มผู้มีสิทธิ์ (SQL Editor):
