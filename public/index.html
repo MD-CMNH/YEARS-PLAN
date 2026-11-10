@@ -6,9 +6,9 @@
   <title>แผนงานปี 2570 — CMNH Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
-  <script src="/config.js"></script>
-  <script type="module" src="/app.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./config.js"></script>
+  <script type="module" src="./app.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -35,7 +35,7 @@
 
     <section id="config-error" class="card narrow" hidden>
       <h2>ยังไม่ได้ตั้งค่า Supabase</h2>
-      <p>ตั้งค่า <code>SUPABASE_URL</code> และ <code>SUPABASE_ANON_KEY</code> ใน Worker vars แล้ว deploy ใหม่ (ดู README)</p>
+      <p>ตั้งค่า Repository variables <code>SUPABASE_URL</code> และ <code>SUPABASE_ANON_KEY</code> ใน GitHub แล้วรัน workflow ใหม่ (ดู README)</p>
     </section>
 
     <section id="app-view" hidden>

@@ -23,7 +23,7 @@ const state = { tasks: [], projects: [], kpis: [], actuals: [], decisions: [], m
 $("#login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = $("#login-email").value.trim();
-  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin, shouldCreateUser: true } });
+  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname, shouldCreateUser: true } });
   $("#login-msg").textContent = error ? `ผิดพลาด: ${error.message}` : "ส่งลิงก์แล้ว กรุณาเปิดอีเมล";
 });
 $("#logout").addEventListener("click", () => sb.auth.signOut());
