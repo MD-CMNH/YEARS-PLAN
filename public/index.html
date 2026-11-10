@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>แผนงานปี 2570 — CMNH Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/config.js"></script>
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>แผนงานปี 2570 — CMNH</h1>
+      <p class="sub">Dashboard ติดตามงาน · โปรเจ็ค · KPI · เรื่องที่ต้องตัดสินใจ</p>
+    </div>
+    <div id="user-box" class="user-box" hidden>
+      <span id="user-email"></span>
+      <button id="logout" class="btn ghost">ออกจากระบบ</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="login-view" class="card narrow" hidden>
+      <h2>เข้าสู่ระบบ</h2>
+      <p>กรอกอีเมลที่ได้รับสิทธิ์ ระบบจะส่งลิงก์เข้าสู่ระบบไปที่อีเมล</p>
+      <form id="login-form">
+        <input type="email" id="login-email" placeholder="you@example.com" required>
+        <button class="btn" type="submit">ส่งลิงก์เข้าสู่ระบบ</button>
+      </form>
+      <p id="login-msg" class="msg"></p>
+    </section>
+
+    <section id="config-error" class="card narrow" hidden>
+      <h2>ยังไม่ได้ตั้งค่า Supabase</h2>
+      <p>ตั้งค่า <code>SUPABASE_URL</code> และ <code>SUPABASE_ANON_KEY</code> ใน Worker vars แล้ว deploy ใหม่ (ดู README)</p>
+    </section>
+
+    <section id="app-view" hidden>
+      <nav class="tabs" role="tablist">
+        <button data-tab="overview" class="active">ภาพรวม</button>
+        <button data-tab="tasks">ตารางงาน</button>
+        <button data-tab="projects">โปรเจ็ค</button>
+        <button data-tab="kpis">KPI</button>
+        <button data-tab="decisions">เรื่องที่ต้องตัดสินใจ</button>
+      </nav>
+      <p id="app-msg" class="msg"></p>
+
+      <div id="tab-overview" class="tab">
+        <div id="progress" class="card"></div>
+        <div id="metrics" class="grid"></div>
+      </div>
+
+      <div id="tab-tasks" class="tab" hidden>
+        <div class="toolbar">
+          <label>ไตรมาส <select id="filter-quarter"><option value="">ทั้งหมด</option></select></label>
+          <label>สถานะ <select id="filter-status"><option value="">ทั้งหมด</option></select></label>
+        </div>
+        <div class="card table-wrap"><table id="tasks-table"></table></div>
+      </div>
+
+      <div id="tab-projects" class="tab" hidden>
+        <div class="card table-wrap"><table id="projects-table"></table></div>
+      </div>
+
+      <div id="tab-kpis" class="tab" hidden>
+        <p class="hint">กรอกผลจริงทุกวันที่ 5 ของเดือน · คลิกช่องเดือนเพื่อแก้ไข (บันทึกอัตโนมัติ)</p>
+        <div class="card table-wrap"><table id="kpis-table"></table></div>
+      </div>
+
+      <div id="tab-decisions" class="tab" hidden>
+        <div class="card table-wrap"><table id="decisions-table"></table></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
