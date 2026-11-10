@@ -6,7 +6,7 @@
 <title>CMNH แผนงานปี 2570 — CEO Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&family=Trirong:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--brand:#1F4D3E;--brand2:#2F6B57;--tint:#EFE6D2;--ink:#2B2416;--mute:#6E6350;--line:#DDD0B4;--bg:#E6DDC9;--warn:#9A5B0B;--bad:#A4161A;--good:#1E6B3A;--card:#FFFDF7;--paper:#FBF8F0;--brass1:#E9CF8E;--brass2:#B8893B;--hh:110px;
+:root{--brand:#1F4D3E;--brand2:#2F6B57;--tint:#EFE6D2;--ink:#2B2416;--mute:#55493A;--line:#DDD0B4;--bg:#E6DDC9;--warn:#9A5B0B;--bad:#A4161A;--good:#1E6B3A;--card:#FFFDF7;--paper:#FBF8F0;--brass1:#E9CF8E;--brass2:#B8893B;--hh:110px;
 --noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 --check:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%23F6EBCB' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/></svg>");
 --arrow:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%235A4A2A' stroke-width='1.8' stroke-linecap='round'/></svg>");
@@ -241,6 +241,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
 <script src="./config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./supabase-bridge.js"></script>
+<script src="./ux.js" defer></script>
 </head>
 <body>
 <header>
@@ -842,7 +843,9 @@ const kfmt=v=>v==null||v===''?'':(Math.abs(v)>=1000?fmt(v):String(v));
 const knum=v=>{if(v==null||v==='')return null;const n=parseFloat(String(v).replace(/,/g,''));return isNaN(n)?null:n};
 let kv=store.get('kpi3',{});
 const KLINES=['ทั้งหมด','CEO','MD','Group Finance','Group Marketing','HR'];
-let kline='ทั้งหมด',kmon=matchMedia('(max-width:640px)').matches?(new Date().getFullYear()===2027?new Date().getMonth():0):-1;
+// default to the month being reported: results are entered on the 5th for the previous month
+const kmonDefault=(()=>{const d=new Date(),y=d.getFullYear();if(y<2027)return 0;if(y>2027)return 11;return Math.max(0,d.getMonth()-(d.getDate()<=10?1:0))})();
+let kline='ทั้งหมด',kmon=kmonDefault;
 function kpiFilters(){
   $('#kf').innerHTML=KLINES.map(l=>'<button class="'+(l===kline?'on':'')+'" data-l="'+l+'">'+(l==='ทั้งหมด'?'ทุกสาย':l)+'</button>').join('')
    +'<select id="kmon" aria-label="เลือกเดือน"><option value="-1">ทุกเดือน</option>'+MON.map((m,j)=>'<option value="'+j+'"'+(j===kmon?' selected':'')+'>'+m+' 70</option>').join('')+'</select>';

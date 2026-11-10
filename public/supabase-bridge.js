@@ -17,7 +17,7 @@
     #gate form { width: 100%; max-width: 380px; background: linear-gradient(#FFFDF7, #F7F1E3); border: 1px solid #D8CBAE;
       border-radius: 10px; padding: 26px 24px; box-shadow: 0 20px 50px rgba(0,0,0,.45); font-family: "IBM Plex Sans Thai Looped", "Sarabun", sans-serif; color: #2B2416; }
     #gate h1 { margin: 0 0 4px; font-family: "Trirong", Georgia, serif; font-size: 20px; color: #20392F; }
-    #gate p { margin: 0 0 16px; color: #6E6350; font-size: 14px; }
+    #gate p { margin: 0 0 16px; color: #55493A; font-size: 14px; }
     #gate input { width: 100%; font: inherit; padding: 10px 12px; border: 1px solid #C9BA97; border-radius: 7px; margin-bottom: 12px; box-sizing: border-box; }
     #gate button { width: 100%; font: inherit; font-weight: 700; padding: 10px; border-radius: 7px; cursor: pointer; color: #F6EBCB;
       border: 1px solid #163A2F; background: linear-gradient(#2F6B57, #1F4D3E); }
