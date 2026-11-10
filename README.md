@@ -16,6 +16,8 @@ Dashboard ติดตามแผนงานปี 2570: ภาพรวมต
 
 ## ตั้งค่าครั้งแรก
 
+โปรเจกต์ Supabase ที่ใช้งาน: `years-plan` (ref `yfswjxzsrgngxbuajnov`, org MD-CMNH, region ap-southeast-1) — สร้างตารางและใส่ข้อมูลตั้งต้นแล้ว
+
 ### 1. Supabase
 
 ```bash
@@ -36,16 +38,14 @@ insert into public.allowed_users (email, role) values ('someone@example.com', 'e
 ### 2. GitHub Pages
 
 1. Settings → Pages → Source เลือก **GitHub Actions**
-2. Settings → Secrets and variables → Actions → แท็บ **Variables** เพิ่ม
-   - `SUPABASE_URL` เช่น `https://<ref>.supabase.co`
-   - `SUPABASE_ANON_KEY` (Project Settings → API → anon / publishable key, เปิดเผยได้เพราะทุกตารางมี RLS)
+2. (ไม่บังคับ) ค่า Supabase ของโปรเจกต์ `years-plan` ใส่ไว้แล้วใน `public/config.js` ถ้าต้องการเปลี่ยนโปรเจกต์ ให้ตั้ง Repository variables `SUPABASE_URL` และ `SUPABASE_ANON_KEY`
 3. Merge เข้า `main` (หรือกด Run workflow ที่ Actions → "Deploy dashboard to GitHub Pages")
 
 หมายเหตุ: หน้าเว็บบน GitHub Pages เปิดให้ทุกคนเข้าถึงได้ แต่ข้อมูลอ่านได้เฉพาะคนที่ล็อกอินและอยู่ใน `allowed_users` เท่านั้น ถ้า repo เป็น private ต้องใช้ GitHub แพ็กเกจที่รองรับ Pages สำหรับ private repo
 
 ## พัฒนาบนเครื่อง
 
-ใส่ค่าใน `public/config.js` (อย่า commit) แล้วเปิด
+เปิดด้วย static server ใดก็ได้
 
 ```bash
 npx serve public

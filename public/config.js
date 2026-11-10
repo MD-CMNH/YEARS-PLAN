@@ -1,2 +1,6 @@
-// Local development only. On GitHub Pages this file is regenerated from repository variables.
-window.APP_CONFIG = { supabaseUrl: "", supabaseAnonKey: "" };
+// Public Supabase settings (safe to expose: every table is protected by Row Level Security).
+// The GitHub Pages workflow overwrites this file if SUPABASE_URL / SUPABASE_ANON_KEY repo variables are set.
+window.APP_CONFIG = {
+  supabaseUrl: "https://yfswjxzsrgngxbuajnov.supabase.co",
+  supabaseAnonKey: "sb_publishable_6Qz3wewB80JK22KeC40Z_w_3SSoUk2p",
+};
