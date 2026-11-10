@@ -12,6 +12,9 @@
     nav.more-r { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
     nav.more-l { -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%); mask-image: linear-gradient(90deg, transparent, #000 15%); }
     nav.more-l.more-r { -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
+    /* blanks inside document tables shrink to the cell so wide forms fit the popup */
+    #mbody .doc td .blank { min-width: 0; width: 100%; }
+    #mbody .doc { overflow-x: auto; }
     /* show password */
     #gate .pwrow { position: relative; }
     #gate .pwrow input { padding-right: 64px; }
