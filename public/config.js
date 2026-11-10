@@ -3,4 +3,6 @@
 window.APP_CONFIG = {
   supabaseUrl: "https://yfswjxzsrgngxbuajnov.supabase.co",
   supabaseAnonKey: "sb_publishable_6Qz3wewB80JK22KeC40Z_w_3SSoUk2p",
+  // Shared dashboard account; people sign in with its password only.
+  loginEmail: "team@years-plan.local",
 };

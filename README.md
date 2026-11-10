@@ -3,7 +3,8 @@
 Dashboard ติดตามแผนงานปี 2570: ภาพรวมตัวเลขหลัก · ตารางงานรายไตรมาส (20 งาน) · 6 โปรเจ็คต่อเนื่อง · KPI 17 ตัว พร้อมช่องกรอกผลจริงรายเดือน · เรื่องที่ต้องให้ CEO ตัดสินใจ
 
 - **หน้าเว็บ**: GitHub Pages (static) — `public/`
-- **ข้อมูล**: Supabase (Postgres + Auth แบบ magic link) — `supabase/`
+- **ข้อมูล**: Supabase (Postgres + Auth) — `supabase/`
+- **เข้าสู่ระบบ**: กรอกรหัสอย่างเดียว ใช้บัญชีกลาง `team@years-plan.local` (ตั้งใน `public/config.js` → `loginEmail`) เปลี่ยนรหัสได้ที่ Supabase → Authentication → Users
 - ข้อมูลตั้งต้นมาจากเอกสาร "แผนงานปี 2570 (2027) — CMNH" (`supabase/seed.sql`)
 
 ## สิทธิ์การเข้าถึง

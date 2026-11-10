@@ -11,7 +11,7 @@ const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 const show = (el, on) => { el.hidden = !on; };
 const msg = (text, error = false) => { const m = $("#app-msg"); m.textContent = text; m.classList.toggle("error", error); };
 
-if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) {
+if (!cfg.supabaseUrl || !cfg.supabaseAnonKey || !cfg.loginEmail) {
   show($("#config-error"), true);
   throw new Error("Supabase config missing");
 }
@@ -22,9 +22,11 @@ const state = { tasks: [], projects: [], kpis: [], actuals: [], decisions: [], m
 // ---------- auth ----------
 $("#login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const email = $("#login-email").value.trim();
-  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname, shouldCreateUser: true } });
-  $("#login-msg").textContent = error ? `ผิดพลาด: ${error.message}` : "ส่งลิงก์แล้ว กรุณาเปิดอีเมล";
+  const m = $("#login-msg");
+  m.textContent = "กำลังเข้าสู่ระบบ…"; m.classList.remove("error");
+  const { error } = await sb.auth.signInWithPassword({ email: cfg.loginEmail, password: $("#login-password").value });
+  if (error) { m.textContent = "รหัสไม่ถูกต้อง"; m.classList.add("error"); }
+  else { m.textContent = ""; $("#login-password").value = ""; }
 });
 $("#logout").addEventListener("click", () => sb.auth.signOut());
 
@@ -36,7 +38,7 @@ async function render(session) {
   show($("#app-view"), signedIn);
   show($("#user-box"), signedIn);
   if (!signedIn) return;
-  $("#user-email").textContent = session.user.email;
+  $("#user-email").textContent = "ทีม CMNH";
   await loadAll();
 }
 
