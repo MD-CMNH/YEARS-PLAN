@@ -22,7 +22,8 @@
     #gate button { width: 100%; font: inherit; font-weight: 700; padding: 10px; border-radius: 7px; cursor: pointer; color: #F6EBCB;
       border: 1px solid #163A2F; background: linear-gradient(#2F6B57, #1F4D3E); }
     #gate .err { color: #A4161A; min-height: 1.3em; margin: 10px 0 0; font-size: 14px; }
-    #logout { font: inherit; font-size: 12px; cursor: pointer; color: #F3EBD6; background: none; border: 1px solid rgba(243,235,214,.5); border-radius: 99px; padding: 3px 10px; }`;
+    #logout { font: inherit; font-size: 12px; cursor: pointer; color: #F3EBD6; background: none; border: 1px solid rgba(243,235,214,.5); border-radius: 99px; padding: 3px 10px; white-space: nowrap; flex: 0 0 auto; }
+    @media (max-width: 640px) { #logout { font-size: 11px; padding: 2px 8px; } #logout .lg-long { display: none; } }`;
   document.head.appendChild(css);
 
   function buildGate() {
@@ -43,7 +44,7 @@
     const hr = document.querySelector(".hright");
     if (hr) {
       const b = document.createElement("button");
-      b.id = "logout"; b.textContent = "ออกจากระบบ";
+      b.id = "logout"; b.title = "ออกจากระบบ"; b.innerHTML = 'ออก<span class="lg-long">จากระบบ</span>';
       b.onclick = async () => { await sb.auth.signOut(); location.reload(); };
       hr.appendChild(b);
     }
