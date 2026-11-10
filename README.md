@@ -1,6 +1,10 @@
 # YEARS-PLAN — Dashboard แผนงานปี 2570 (CMNH)
 
-Dashboard ติดตามแผนงานปี 2570: ภาพรวมตัวเลขหลัก · ตารางงานรายไตรมาส (20 งาน) · 6 โปรเจ็คต่อเนื่อง · KPI 17 ตัว พร้อมช่องกรอกผลจริงรายเดือน · เรื่องที่ต้องให้ CEO ตัดสินใจ
+CEO Dashboard แผนงานปี 2570 (หน้าเดียวกับ artifact "CMNH แผนงานปี 2570 — CEO Dashboard"): สรุป CEO · แผนไตรมาส · งาน · โปรเจ็ค · โครงสร้าง · ธรรมาภิบาล · การเงิน · การขาย · KPI · เอกสาร
+
+- `public/index.html` คือหน้า dashboard เดิม เปลี่ยนแค่การเก็บข้อมูลร่วมกับทีม (สถานะงาน เช็กลิสต์ Go/No-go KPI) จาก claude.ai มาเป็น Supabase ผ่าน `public/supabase-bridge.js` (ตาราง `shared_state`)
+- ค่าที่ปรับในแท็บการเงินยังเก็บในเครื่องของแต่ละคนเหมือนเดิม
+- ตาราง `tasks`, `projects`, `kpis`, `kpi_actuals`, `decisions`, `metrics` มาจาก dashboard รุ่นแรก ยังเก็บไว้แต่หน้าเว็บไม่ได้ใช้
 
 - **หน้าเว็บ**: GitHub Pages (static) — `public/`
 - **ข้อมูล**: Supabase (Postgres + Auth) — `supabase/`

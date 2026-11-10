@@ -1,79 +1,1124 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>แผนงานปี 2570 — CMNH Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css">
-  <script src="./config.js"></script>
-  <script type="module" src="./app.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CMNH แผนงานปี 2570 — CEO Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&family=Trirong:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#1F4D3E;--brand2:#2F6B57;--tint:#EFE6D2;--ink:#2B2416;--mute:#6E6350;--line:#DDD0B4;--bg:#E6DDC9;--warn:#9A5B0B;--bad:#A4161A;--good:#1E6B3A;--card:#FFFDF7;--paper:#FBF8F0;--brass1:#E9CF8E;--brass2:#B8893B;--hh:110px;
+--noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+--check:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%23F6EBCB' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+--arrow:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%235A4A2A' stroke-width='1.8' stroke-linecap='round'/></svg>");
+--ok:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%231E6B3A' stroke-width='2.4' stroke-linecap='round'/></svg>");
+--no:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 4l8 8M12 4l-8 8' fill='none' stroke='%23A4161A' stroke-width='2.4' stroke-linecap='round'/></svg>")}
+*{box-sizing:border-box}
+h1,h2,h3,h4,.stat .v,.plaque b,.qcol h4,#mbox h2,.doc h3{font-family:"Trirong","Taviraj","Leelawadee UI",Georgia,serif;letter-spacing:.1px}
+h1,h2{font-weight:700}h3,h4,.stat .v{font-weight:600}
+body{margin:0;font-family:"IBM Plex Sans Thai Looped","Sarabun","Leelawadee UI","Tahoma",system-ui,sans-serif;color:var(--ink);font-size:15px;line-height:1.6;font-variant-numeric:tabular-nums;
+ background:var(--noise),repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(90,70,30,.035) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 50% 0,#EFE8D8,#DCD0B6 70%) fixed;background-color:var(--bg)}
+/* ---- leather cover ---- */
+header{position:sticky;top:0;z-index:6;color:#F3EBD6;padding:14px 24px 0;
+ background:var(--noise),radial-gradient(ellipse at 25% -20%,#3A7A63 0%,#24584A 45%,#173D31 100%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(0,0,0,.35),0 4px 10px rgba(30,20,5,.35)}
+header>*{max-width:1180px;margin-left:auto;margin-right:auto}
+.hrow{display:flex;align-items:center;gap:12px;justify-content:space-between}
+header h1{margin:0;font-size:20px;font-weight:700;letter-spacing:.2px;color:#F3EBD6;text-shadow:0 -1px 0 rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.12)}
+header p{margin:2px auto 10px;opacity:.85;font-size:13px;text-shadow:0 -1px 0 rgba(0,0,0,.4)}
+.sync{flex:0 0 auto;font-size:12px;font-weight:600;color:#3B2A08;padding:3px 10px;border-radius:99px;white-space:nowrap;
+ background:linear-gradient(#F4E2AE,#C99A47);border:1px solid #8A6526;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 2px rgba(0,0,0,.4);text-shadow:0 1px 0 rgba(255,255,255,.45)}
+.sync.warn{background:linear-gradient(#F3D3C4,#C98466);border-color:#7C3A1E}
+.sync.ok::before{content:"● ";color:#1E6B3A}
+/* folder tabs */
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:2px}nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;font:inherit;font-size:14px;cursor:pointer;white-space:nowrap;padding:9px 15px 8px;border-radius:9px 9px 0 0;color:#E9DFC6;
+ background:linear-gradient(#2D6453,#204E40);border:1px solid #12342A;border-bottom:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.16);text-shadow:0 -1px 0 rgba(0,0,0,.5)}
+nav button:hover{background:linear-gradient(#357260,#245647)}
+nav button.on{color:var(--ink);font-weight:700;background:linear-gradient(#FFFDF7,var(--paper));border-color:#CDBE9C;text-shadow:0 1px 0 #fff;box-shadow:0 -2px 4px rgba(0,0,0,.18);position:relative;top:1px}
+/* ---- paper page ---- */
+main{max-width:1180px;margin:0 auto 40px;padding:26px 28px 60px;background:var(--noise),linear-gradient(var(--paper),#F7F1E3);border:1px solid #D8CBAE;border-top:0;border-radius:0 0 8px 8px;
+ box-shadow:0 1px 1px rgba(0,0,0,.06),0 10px 30px rgba(70,50,15,.22),0 3px 0 -1px #F3EDDF,0 3px 1px -1px #CDBF9F,0 6px 0 -2px #F0E9D9,0 6px 1px -2px #C8B996}
+section{display:none}section.on{display:block}
+h2{font-size:21px;margin:0 0 4px;color:#20392F;text-shadow:0 1px 0 #fff}
+h3{font-size:16px;margin:24px 0 10px;color:#3A3222;text-shadow:0 1px 0 #fff;display:flex;align-items:center;gap:10px}
+h3::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,#D3C4A0,transparent);box-shadow:0 1px 0 #fff}
+.lead{color:var(--mute);margin:0 0 18px}
+.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+#sumStats{grid-template-columns:repeat(4,1fr)}
+.card{background:linear-gradient(#FFFEFA,#F8F2E4);border:1px solid #DCCFB2;border-radius:7px;padding:16px;
+ box-shadow:inset 0 1px 0 #fff,0 1px 1px rgba(80,60,20,.12),0 4px 10px -4px rgba(80,60,20,.3)}
+.stat .l{font-size:13px;color:var(--mute)}
+.stat .v{font-size:23px;font-weight:700;color:#21483B;text-shadow:0 1px 0 #fff;line-height:1.3}
+.stat .v.bad{color:var(--bad)}
+.stat.hero{background:linear-gradient(#FFF6EC,#F6E6D2);border-color:#D9B79A}
+.stat.hero .v{font-size:28px}
+table{border-collapse:separate;border-spacing:0;width:100%;background:#FFFDF8;font-size:14px;border:1px solid #DCCFB2;border-radius:6px;overflow:hidden;box-shadow:0 2px 6px -3px rgba(80,60,20,.3)}
+th,td{border-bottom:1px solid #EAE0CA;padding:8px 10px;text-align:left;vertical-align:top}
+tr:nth-child(even) td{background:rgba(120,95,40,.025)}
+th{background:linear-gradient(#F3EAD6,#E5D8BB);font-weight:700;font-size:13px;color:#3A3020;text-shadow:0 1px 0 rgba(255,255,255,.8);border-bottom:2px solid #C9B88E}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.neg{color:var(--bad)}.pos{color:var(--good)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:0 8px;border-radius:4px;color:#22513F;border:1.5px solid #3C7A63;background:rgba(60,122,99,.06);letter-spacing:.2px}
+.tag.warn{color:#9A4A0B;border-color:#B8742F;background:rgba(184,116,47,.07)}
+ol.dec li{margin:6px 0}
+/* cork board */
+.q{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:16px;border-radius:8px;
+ background:var(--noise),radial-gradient(circle at 20% 30%,rgba(255,255,255,.12) 0 2px,transparent 3px) 0 0/14px 14px,radial-gradient(circle at 70% 60%,rgba(90,50,10,.18) 0 1.5px,transparent 2.5px) 0 0/11px 11px,linear-gradient(#C9A06A,#B88B54);
+ border:10px solid #7A5230;border-image:linear-gradient(#9A6B3E,#6B4424) 1;box-shadow:inset 0 2px 8px rgba(0,0,0,.35)}
+.qcol{background:linear-gradient(#FFFEF9,#F6F0E1);border:1px solid #D6C8A8;border-radius:4px;padding:12px;box-shadow:0 3px 6px rgba(40,25,5,.35);position:relative}
+.qcol::before{content:"";position:absolute;top:-6px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#F28B82,#B3261E 60%,#7A1510);box-shadow:0 2px 3px rgba(0,0,0,.45)}
+.qcol h4{margin:4px 0 0;font-size:15px}.qcol small{color:var(--mute)}
+.item{border:1px solid #E1D5BA;border-radius:4px;padding:7px 10px;margin-top:8px;font-size:14px;background:#FFFEFA;box-shadow:0 1px 2px rgba(80,60,20,.18);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.item:hover{transform:translateY(-1px);box-shadow:0 4px 8px rgba(80,60,20,.25)}
+.item.key{background:linear-gradient(#FFF6B8,#FBE98A);border-color:#D9C25A;font-weight:700;box-shadow:0 2px 4px rgba(80,60,20,.3)}
+.item.span{background:linear-gradient(#EEF3EF,#E2EAE4);border-color:#C5D3C9}
+.item .dc{display:block;font-size:11px;color:#3A6B58;font-weight:400;margin-top:2px}
+/* controls */
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px 18px}
+.ctrl label{font-size:13px;color:var(--mute);display:block;margin-bottom:3px}
+input,select{font:inherit;color:var(--ink)}
+.ctrl input,.ctrl select,select.st,.jdbar input,input.kp{border:1px solid #C9BA97;border-radius:6px;background:linear-gradient(#F3EDDF,#FFFDF8 40%);box-shadow:inset 0 2px 3px rgba(80,60,20,.2),0 1px 0 #fff}
+.ctrl input,.ctrl select{width:100%;padding:8px 10px}
+select{appearance:none;-webkit-appearance:none;background:var(--arrow) no-repeat right 10px center/12px 8px,linear-gradient(#FFFEFA,#EDE3CD)!important;box-shadow:inset 0 1px 0 #fff,0 1px 2px rgba(60,40,10,.25)!important;padding-right:30px!important;cursor:pointer}
+input:focus,select:focus,button:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(201,154,71,.55),inset 0 2px 3px rgba(80,60,20,.15)!important}
+input[type=range]{-webkit-appearance:none;appearance:none;height:28px;background:none!important;box-shadow:none!important;border:0!important;padding:0!important}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:8px;background:linear-gradient(#CDBF9F,#E8DDC6);box-shadow:inset 0 2px 3px rgba(0,0,0,.35),0 1px 0 #fff}
+input[type=range]::-moz-range-track{height:8px;border-radius:8px;background:linear-gradient(#CDBF9F,#E8DDC6);box-shadow:inset 0 2px 3px rgba(0,0,0,.35),0 1px 0 #fff}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF1C4,#D2A453 55%,#8A6526);border:1px solid #6E4F1A;box-shadow:0 2px 4px rgba(0,0,0,.45)}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF1C4,#D2A453 55%,#8A6526);border:1px solid #6E4F1A;box-shadow:0 2px 4px rgba(0,0,0,.45)}
+.rv{font-weight:700;color:var(--ink)}
+/* raised buttons */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.filters button,.chip,.btn,.mtools button{font:inherit;font-size:13px;cursor:pointer;color:#3A3020;padding:5px 13px;border-radius:99px;border:1px solid #B9A77E;
+ background:linear-gradient(#FFFEFA,#E9DFC8);box-shadow:inset 0 1px 0 #fff,0 2px 0 #B5A276,0 3px 4px rgba(60,40,10,.2);text-shadow:0 1px 0 #fff;transition:transform .08s}
+.filters button:active,.chip:active,.btn:active,.mtools button:active{transform:translateY(2px);box-shadow:inset 0 1px 3px rgba(0,0,0,.25)}
+.filters button.on,.chip.on{color:#F6EBCB;border-color:#163A2F;text-shadow:0 -1px 0 rgba(0,0,0,.5);background:linear-gradient(#24584A,#2F6B57);box-shadow:inset 0 2px 4px rgba(0,0,0,.45),0 1px 0 rgba(255,255,255,.7);transform:translateY(2px)}
+.btn{border-radius:7px}
+.mixw{grid-column:1/-1}.mixg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.mixi{display:flex!important;flex-direction:column;gap:2px}.mixi input{width:100%}@media(max-width:640px){.mixg{grid-template-columns:repeat(3,1fr)}}
+.scn{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}.scn .filters{margin:0}.cgh{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:6px 0 -2px;font-weight:700;color:#20392F}.cgh::after{content:"";flex:1;height:1px;background:#D8CBAE}.cgh:first-child{margin-top:0}.ttag{display:inline-block;font-size:11px;font-weight:600;padding:0 6px;border-radius:4px;margin-left:6px;vertical-align:1px}.ttag.real{color:#1E6B3A;border:1px solid #3A7D58}.ttag.asm{color:#9A4A0B;border:1px solid #B8742F}.ttag.plan{color:#36506B;border:1px solid #6B86A3}.stat .sub{font-size:12px;color:var(--mute);margin-top:2px;line-height:1.4}#scnTable td:first-child{cursor:pointer;color:#20392F;text-decoration:underline dotted}
+.pbtn{flex:0 0 auto;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:#3B2A08;padding:4px 12px;border-radius:7px;border:1px solid #8A6526;background:linear-gradient(#F7E7B8,#CFA24F);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 2px 0 #7A5A20,0 3px 5px rgba(0,0,0,.35);text-shadow:0 1px 0 rgba(255,255,255,.5)}
+.pbtn:active{transform:translateY(2px);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+.pbtn[disabled]{opacity:.6;cursor:wait}
+.hright{display:flex;gap:8px;align-items:center}
+#pmenu{position:fixed;z-index:15;display:none;flex-direction:column;min-width:210px;padding:6px;border-radius:9px;background:linear-gradient(#FFFEFA,#F3EBD8);border:1px solid #BFAE87;box-shadow:0 10px 24px rgba(40,25,5,.35)}#pmenu.on{display:flex}#pmenu button{font:inherit;font-size:14px;text-align:left;padding:9px 12px;border:0;border-radius:6px;background:none;cursor:pointer;color:var(--ink)}#pmenu button:hover{background:#EAE0C8}#pmenu small{display:block;color:var(--mute);font-size:12px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:20;background:#2B2416;color:#F6EBCB;padding:9px 16px;border-radius:8px;font-size:14px;box-shadow:0 6px 16px rgba(0,0,0,.35);display:none}
+.pdf{background:#fff;color:#222;padding:0}
+.pdf,.pdf *{box-shadow:none!important;text-shadow:none!important;background-image:none!important}
+.pdf section{display:block!important}
+.pdf .card,.pdf table,.pdf th,.pdf td,.pdf .qcol,.pdf .item,.pdf details,.pdf .doc,.pdf #chart,.pdf #leadChart{background:#fff!important}
+.pdf th{background:#EEE7D6!important}.pdf .item.key{background:#FFF3B0!important}
+.pdf .q{border:0!important;padding:0;background:#fff!important}.pdf .qcol::before{display:none}
+.pdf .filters,.pdf #kf,.pdf .mtools,.pdf #reset{display:none!important}
+.pdf .val{display:inline-block;min-width:56px;min-height:1.4em;border:1px solid #BBB;border-radius:3px;padding:0 5px;margin:1px 0;font-size:12px;background:#fff}
+.pdf .val.vt{background:#FFF7CC}.pdf .val.good{background:#DDF0E1}.pdf .val.bad{background:#F8DCDC}.pdf .val.cb{border:0;min-width:0;font-size:15px;padding:0}
+.pdf .scroll{overflow:visible}.pdf #kt{font-size:10.5px}.pdf #kt td,.pdf #kt th{padding:3px 4px}.pdf #kt td:first-child{min-width:150px}.pdf #kt .val{display:block;min-width:0;width:100%;font-size:10px;padding:0 3px}.pdf #kt .note{font-size:9.5px}
+@media print{#kt{font-size:10.5px}#kt td,#kt th{padding:3px 4px}#kt td:first-child{min-width:150px}#kt input.kp{width:100%!important;font-size:10px;padding:1px 3px}.scroll{overflow:visible}}
+.pdf .doc{overflow:hidden}.pdf .doc table{table-layout:fixed;width:100%}.pdf td .blank{min-width:0;width:100%}.pdf .doc td,.pdf .doc th{word-break:break-word}
+.pdfhead{display:flex;justify-content:space-between;border-bottom:2px solid #1F4D3E;padding:0 0 6px;margin:0 0 12px;font-size:12px;color:#444}
+.filters select{font:inherit;font-size:13px;padding:5px 30px 5px 12px;border:1px solid #B9A77E;border-radius:99px;min-height:0}
+.org{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kl{list-style:none;margin:0;padding:0}.kl li{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px dashed #E2D6BB;font-size:14px}.kl li b{text-align:right;font-weight:600;color:#21483B}.kgrid .card h4{margin:0 0 6px;color:var(--brand)}#gov .card h4{margin:0 0 8px;color:var(--brand)}#gov .card ul{margin:0;padding-left:18px}
+.chain{display:flex;flex-direction:column;align-items:center;gap:2px;margin:6px 0 16px}.chain i{font-style:normal;color:#8A6526;font-weight:700}.plaque{min-width:min(460px,100%);text-align:center;padding:10px 18px;border-radius:8px;border:1px solid #8A6526;background:linear-gradient(#F7E7B8,#D6AE60);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 3px 6px rgba(60,40,10,.3);color:#3B2A08;text-shadow:0 1px 0 rgba(255,255,255,.5)}.plaque b{display:block;font-size:16px}.plaque span{font-size:13px}
+.org{grid-template-columns:repeat(3,1fr)!important}.org .card h4{margin:0 0 6px;font-size:15px;color:var(--brand)}
+.org ul{margin:0;padding-left:18px;font-size:14px}.org li b{font-weight:700}
+details{background:linear-gradient(#FFFEFA,#F8F2E4);border:1px solid #DCCFB2;border-radius:7px;padding:8px 12px;margin:8px 0;box-shadow:0 1px 2px rgba(80,60,20,.15)}
+summary{cursor:pointer;font-weight:700}
+/* checkboxes */
+input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:20px;height:20px;margin:2px 0 0;border-radius:5px;cursor:pointer;border:1px solid #B5A276;background:linear-gradient(#EFE7D4,#FFFDF8);box-shadow:inset 0 2px 3px rgba(80,60,20,.3),0 1px 0 #fff}
+input[type=checkbox]:checked{border-color:#163A2F;background:var(--check) center/14px no-repeat,linear-gradient(#2F6B57,#1F4D3E);box-shadow:inset 0 1px 2px rgba(0,0,0,.4),0 1px 0 #fff}
+.chk label{display:flex;gap:9px;align-items:flex-start;padding:5px 0;font-size:14px;cursor:pointer}
+.note{font-size:13px;color:var(--mute)}
+svg text{font-family:inherit}
+#chart,#leadChart{background:var(--noise),linear-gradient(rgba(47,107,87,.07) 1px,transparent 1px) 0 0/20px 20px,linear-gradient(90deg,rgba(47,107,87,.07) 1px,transparent 1px) 0 0/20px 20px,#FFFEF9}
+select.st{font-size:13px;padding:4px 30px 4px 8px;border-radius:6px}
+/* KPI */
+input.kp{width:72px;padding:4px 6px;font-size:13px}
+input.kp.kt{display:block;width:112px;margin-bottom:4px;background:linear-gradient(#FFF6B8,#FDEFA0);border-color:#D9C25A;box-shadow:0 1px 2px rgba(80,60,20,.25)}
+input.kp.ka{display:block;width:112px;padding-right:22px}
+input.kp.good{background:var(--ok) right 5px center/12px no-repeat,linear-gradient(#DDF0E1,#F2FAF3);border-color:#3A7D58}
+input.kp.bad{background:var(--no) right 5px center/12px no-repeat,linear-gradient(#F8DCDC,#FDF1F1);border-color:#B23A3A}
+.kpass{font-weight:700;white-space:nowrap}
+#kt td:first-child{min-width:210px}
+.scroll{overflow-x:auto}
+/* modal = document on desk */
+#modal{position:fixed;inset:0;background:rgba(30,22,8,.55);display:none;align-items:flex-start;justify-content:center;padding:30px 12px;overflow-y:auto;z-index:10}
+#modal.on{display:flex}
+#mbox{background:var(--noise),linear-gradient(#FFFEFA,#F8F3E6);border-radius:4px;max-width:860px;width:100%;padding:24px 28px 30px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+#mbox h2{margin-right:110px}
+.mtools{position:absolute;top:16px;right:16px;display:flex;gap:8px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+.doc{border:1px solid #DCCFB2;border-radius:4px;padding:16px 18px;margin-top:16px;background:#FFFEFA;box-shadow:inset 0 1px 0 #fff}
+.doc h3{margin-top:0;color:var(--brand)}
+.doc h4{margin:14px 0 6px;font-size:14px}
+.doc table{font-size:13px}.doc td,.doc th{padding:6px 8px}
+.blank{display:inline-block;min-width:120px;border-bottom:1px dotted #999}
+.box{display:inline-block;width:12px;height:12px;border:1px solid #777;margin-right:6px;vertical-align:-1px}
+.doclist{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.doclist .card{cursor:pointer;transition:transform .12s}.doclist .card:hover{transform:translateY(-2px);border-color:#B9A77E}
+.jdbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0}.jdbar input{padding:7px 10px;border-radius:8px;min-width:220px}
+details.jd{padding:10px 14px;margin:6px 0}details.jd ul{margin:4px 0 10px}
+h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:none}table.jdh td:nth-child(odd){color:var(--mute);width:150px}
+@media(max-width:800px){.q,.org{grid-template-columns:1fr 1fr}}
+@media print{
+ @page{margin:12mm}
+ body,main,.card,table,th,td,details,.qcol,.q,.item,.doc,#chart,#leadChart{background:#fff!important;box-shadow:none!important;text-shadow:none!important}
+ header,#totop,.mtools,.filters,#kf,#tf,#reset,#toast{display:none!important}
+ main{border:0!important;max-width:none;padding:0;margin:0}
+ #modal{display:none!important}
+ body.pdoc main{display:none!important}
+ body.pdoc #modal{position:static;display:block!important;background:none;padding:0}
+ body.pdoc #mbox{max-width:none;padding:0;box-shadow:none;background:#fff}
+ .doc{break-inside:auto;border:0;padding:0}
+ tr,.card,.item,h3{break-inside:avoid}
+ .q{border:0!important;padding:0;background:#fff!important}.qcol::before{display:none}
+ input,select{box-shadow:none!important;background:#fff!important}
+}
+
+/* ---------- mobile ---------- */
+@media(max-width:640px){
+ body{font-size:15px}
+ header{padding:8px 0 0}
+ header>*{padding-left:12px;padding-right:12px}
+ header h1{font-size:16px}header p{display:none}
+ .hrow{margin-bottom:6px}.sync{font-size:11px;padding:2px 8px}.pbtn{font-size:14px;padding:2px 9px}.pbtn .pl{display:none}header h1{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ nav{gap:3px;padding-right:12px}
+ nav button{padding:8px 12px 7px;font-size:13px}
+ main{padding:16px 12px 70px;border-radius:0;border-left:0;border-right:0;margin-bottom:0}
+ h2{font-size:19px}h3{font-size:16px;margin-top:22px}
+ .lead{font-size:14px}
+ .q,.org{grid-template-columns:1fr!important}
+ .q{padding:10px;border-width:7px}
+ .g2{grid-template-columns:1fr}
+ #sumStats,#finStats,.grid.g4{grid-template-columns:1fr 1fr!important;gap:8px}
+ .stat{padding:10px 12px}.stat .v{font-size:17px}.stat .l{font-size:12px}.stat.hero .v{font-size:20px}
+ #finStats{position:sticky;top:var(--hh);z-index:4;margin:0 -12px 14px;padding:8px 12px;background:var(--noise),linear-gradient(#F7F1E3,#EFE6D2);border-bottom:1px solid #D3C4A0;box-shadow:0 4px 8px -4px rgba(60,40,10,.35)}
+ #finStats .stat{padding:6px 10px}#finStats .stat .v{font-size:15px}#finStats .stat .l{font-size:11px}
+ .card{padding:12px}
+ table.mc,table.mc tbody,table.mc tr,table.mc td{display:block;width:100%;box-sizing:border-box}
+ table.mc{background:none;border:0;box-shadow:none}
+ table.mc tr:first-child{display:none}
+ table.mc tr{background:linear-gradient(#FFFEFA,#F8F2E4);border:1px solid #DCCFB2;border-radius:7px;margin:0 0 10px;padding:8px 12px;box-shadow:0 2px 5px -2px rgba(80,60,20,.3)}
+ table.mc td{border:0!important;padding:3px 0!important;display:flex;gap:10px;font-size:14px;background:none!important;text-align:left!important}
+ table.mc td::before{text-align:left;content:attr(data-label);flex:0 0 38%;color:var(--mute);font-size:12px;padding-top:2px}
+ table.mc td:first-child{font-weight:700;font-size:15px}
+ table.mc td:first-child::before{display:none}
+ table.mc td:empty{display:none}
+ #kt tr{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 6px;background:linear-gradient(#FFFEFA,#F8F2E4);border:1px solid #DCCFB2;border-radius:7px;margin:0 0 10px;padding:10px;box-shadow:0 2px 5px -2px rgba(80,60,20,.3)}
+ #kt tr:first-child{display:none}
+ #kt,#kt tbody{display:block;background:none;border:0;box-shadow:none}
+ #kt td{display:block;border:0!important;padding:0!important;min-width:0!important;font-size:12px;background:none!important}
+ #kt td:nth-child(1){grid-column:1/-1;font-weight:700;font-size:15px}
+ #kt td:nth-child(2),#kt td:nth-child(3){grid-column:span 2;color:var(--mute)}
+ #kt td:nth-child(4){grid-column:span 4}
+ #kt.one td.m{grid-column:span 4}
+ #kt.one td.m input{display:inline-block;width:calc(50% - 4px)!important;margin:0 4px 0 0}
+ #kt td::before{content:attr(data-label);display:block;color:var(--mute);font-size:11px}
+ #kt td:nth-child(1)::before,#kt td:nth-child(2)::before,#kt td:nth-child(3)::before{display:none}
+ #kt td.kpass:empty{display:none}
+ #kt td input{width:100%!important;font-size:14px;padding:6px}
+ #kt td input.ka{padding-right:22px}
+ #modal{padding:0}
+ #mbox{border-radius:0;min-height:100vh;padding:58px 14px 40px}
+ .mtools{position:fixed;top:0;left:0;right:0;justify-content:flex-end;background:linear-gradient(#FFFEFA,#EFE6D2);padding:8px 12px;border-bottom:1px solid #D3C4A0;z-index:12}
+ .mtools button{padding:7px 14px;font-size:14px}
+ .doc{padding:12px!important}
+ .doc table{font-size:12px}
+ .scroll{-webkit-overflow-scrolling:touch}
+ .jdbar input{min-width:0;flex:1}
+ table.jdh td{display:block;width:auto!important;padding:2px 0!important;border:0!important}
+ table.jdh tr{display:grid;grid-template-columns:auto 1fr;column-gap:10px;border-bottom:1px solid var(--line);padding:4px 0}
+ .filters button,.chip{padding:6px 12px}
+ button,select,input{min-height:36px}
+ input[type=checkbox]{min-height:0;width:22px;height:22px}
+ input[type=range]{min-height:28px}
+ #totop{display:flex}
+ #chart,#leadChart{overflow-x:auto}
+ #chart svg,#leadChart svg{min-width:620px}
+}
+#totop{display:none;position:fixed;right:14px;bottom:16px;width:46px;height:46px;border-radius:50%;color:#3B2A08;font-size:20px;font-weight:700;align-items:center;justify-content:center;z-index:4;cursor:pointer;
+ background:radial-gradient(circle at 35% 30%,#FFF1C4,#D2A453 60%,#8A6526);border:1px solid #6E4F1A;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 3px 6px rgba(0,0,0,.4);text-shadow:0 1px 0 rgba(255,255,255,.5)}
+</style>
+<script src="./config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-bridge.js"></script>
 </head>
 <body>
-  <header class="topbar">
-    <div>
-      <h1>แผนงานปี 2570 — CMNH</h1>
-      <p class="sub">Dashboard ติดตามงาน · โปรเจ็ค · KPI · เรื่องที่ต้องตัดสินใจ</p>
-    </div>
-    <div id="user-box" class="user-box" hidden>
-      <span id="user-email"></span>
-      <button id="logout" class="btn ghost">ออกจากระบบ</button>
-    </div>
-  </header>
+<header>
+  <div class="hrow"><h1>CMNH แผนงานปี 2570 (2027)</h1><span class="hright"><button class="pbtn" id="pbtn" title="พิมพ์แท็บที่เปิดอยู่" aria-label="พิมพ์หน้านี้">🖨<span class="pl"> พิมพ์หน้านี้</span></button><span class="sync" id="sync" title="สถานะการบันทึกข้อมูล">เก็บในเครื่องนี้</span></span></div>
+  <p>บจก. ซีเอ็มเอ็นเอช 2012 · ข้อมูล ณ 9 พ.ย. 2569 · ตัวเลขจาก CMNH_แผนการเงิน_2570-71.xlsx</p>
+  <nav id="nav"></nav>
+</header>
+<main>
 
-  <main>
-    <section id="login-view" class="card narrow" hidden>
-      <h2>เข้าสู่ระบบ</h2>
-      <p>กรอกรหัสเข้าใช้งาน</p>
-      <form id="login-form">
-        <input type="password" id="login-password" placeholder="รหัสเข้าใช้งาน" autocomplete="current-password" required>
-        <button class="btn" type="submit">เข้าสู่ระบบ</button>
-      </form>
-      <p id="login-msg" class="msg"></p>
-    </section>
+<section id="sum">
+  <h2>สรุปสำหรับ CEO <span class="tag warn">ร่างเพื่อตัดสินใจ</span></h2>
+  <p class="lead">ครึ่งปีแรกจัดระบบภายใน (คลินิกหน้า รพ. โครงสร้าง CEO–MD KPI) ครึ่งปีหลังเปิด รพ. Villa และตลาดต่างประเทศ</p>
+  <div class="grid g4" id="sumStats"></div>
+  <h3>ทางเลือกให้ CEO ตัดสินใจ</h3>
+  <p class="note">เทียบแผนเดิมกับแผนใหม่ (คลินิกอาคารหน้า รพ.) คำนวณสดจากสมมติฐานในแท็บการเงิน</p>
+  <div class="scroll"><table id="opt"></table></div>
+  <h3>เรื่องที่ต้องให้ CEO ตัดสินใจ</h3>
+  <ol class="dec">
+    <li>เสนอ Board อนุมัติโครงสร้าง CEO → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ และตารางอำนาจอนุมัติ (ร่างคู่มือ docs/08) แล้วประกาศใช้ภายใน 4 สัปดาห์</li>
+    <li>แต่งตั้ง MD และกำหนดว่าปี 2570 ใครควบตำแหน่ง Group Manager และ Unit Director (ตำแหน่งเหล่านี้ยังไม่มีงบในโมเดลการเงิน)</li>
+    <li>อนุมัติคลินิกแพทย์ + กายภาพที่อาคารหน้า รพ.: ยื่นคำขอภายใน 30 พ.ย. 2569 เปิด ม.ค. 2570 (ตัดสินใจ 26 ธ.ค.)</li>
+    <li>ให้ตัวเลขเงินลงทุน เงินกู้ ประมาณการรายได้ OPD และตัวเลขธุรกิจเดิมปี 2569</li>
+    <li>ยืนยันเดือนเปิด IPD (แผนสมมติ ต.ค. 70) ราคา Villa T.Tube และประเภทใบอนุญาต Villa</li>
+    <li>ให้แต่ละสายตั้งค่าเป้า KPI ให้เสร็จใน ม.ค. 2570</li>
+    <li>เลือกเวลาเริ่มขายตลาดต่างประเทศ A (ก.ค. 70) หรือ B (ทดลอง Q4)</li>
+  </ol>
+  <h3>ตัวเลขจริงที่ต้องเก็บภายใน 2 สัปดาห์ (ภายใน 23 พ.ย. 69)</h3>
+  <div class="card chk" id="datareq"></div>
+  <h3>ข้อสังเกตและข้อเสนอแนะ</h3>
+  <ol class="dec">
+    <li><b>โครงการใหญ่เยอะในปีเดียว</b> โครงสร้างใหม่ให้ CEO ดูกลยุทธ์ และ MD บริหารทุกหน่วยโดยตรง ต้องแต่งตั้ง MD ให้ทันก่อนเปิดคลินิก ม.ค. 70</li>
+    <li><b>รายได้ค่าเตียงอย่างเดียวไม่พอ</b> เมื่อรวมบุคลากรตามใบอนุญาต (118 คน) และค่าผ่อนธนาคารราว 0.9 ล้าน/เดือนแล้ว ไม่คุ้มทุนแม้เข้าพักเต็ม ต้องมีรายได้ OPD และแพ็กเกจเสริมราว 1.04 ล้าน/เดือน</li>
+    <li><b>คำขอใบอนุญาต รพ. ต้องแก้ก่อนยื่น</b> ผู้ดำเนินการต้องอยู่เต็มเวลา ต้องมีแพทย์เวรกลางคืน และเอกสารบุคลากรยังไม่ครบตามจำนวนที่แจ้ง</li>
+    <li><b>ตัวเลขหลายตัวเป็นสมมติฐาน</b> ยังไม่ใช่ประมาณการสุดท้ายจนกว่าจะใส่ตัวเลขจริง</li>
+    <li><b>การรับคน 118 คนเสี่ยงสูง</b> โดยเฉพาะ RN จึงเริ่มสรรหาตั้งแต่ Q2</li>
+    <li><b>ใบอนุญาตเป็นตัวกำหนดเวลา</b> ยืนยันประเภทใบอนุญาตคลินิกและ Villa ใน Q1</li>
+    <li><b>ไฟล์หลัก</b> คือเอกสารแผนและไฟล์ Excel แอปนี้ใช้นำเสนอและทดลองตัวเลข</li>
+  </ol>
+  <h3>4 เรื่องหลักของปี</h3>
+  <div class="grid g4">
+    <div class="card"><b>คลินิกหน้า รพ.</b><div class="note">เปิด ม.ค. 70 ย้ายเข้า OPD รพ. ต.ค. 70</div></div>
+    <div class="card"><b>โครงสร้างใหม่ + KPI</b><div class="note">ปรับใน Q1 ประเมินรอบแรก Q2</div></div>
+    <div class="card"><b>โรงพยาบาลและ Villa</b><div class="note">ก่อสร้าง ธ.ค. 69 · เปิด OPD + IPD ต.ค. 70 · Villa พ.ย. 70</div></div>
+    <div class="card"><b>ตลาดต่างประเทศ</b><div class="note">วางรากฐาน Q1–Q2 · ขายในสวิส ก.ค. (A) หรือทดลอง Q4 (B)</div></div>
+  </div>
+</section>
 
-    <section id="config-error" class="card narrow" hidden>
-      <h2>ยังไม่ได้ตั้งค่า Supabase</h2>
-      <p>ตั้งค่า Repository variables <code>SUPABASE_URL</code> และ <code>SUPABASE_ANON_KEY</code> ใน GitHub แล้วรัน workflow ใหม่ (ดู README)</p>
-    </section>
+<section id="plan">
+  <h2>แผนรายไตรมาส</h2>
+  <p class="lead">ครึ่งปีแรกจัดระบบภายใน ครึ่งปีหลังขยายธุรกิจ กรอบเข้มคืองานหลัก</p>
+  <p class="note">คลิกที่งานเพื่อดูขั้นตอนย่อย ผู้รับผิดชอบ และเอกสารประกอบ</p>
+  <div class="q" id="qboard"></div>
+  <h3>เกณฑ์ก่อนเปิด (Go / No-go)</h3>
+  <p class="note">ติ๊กได้ ทุกคนในทีมเห็นผลเดียวกัน (ดูป้ายสถานะมุมขวาบน)</p>
+  <div class="grid g2" id="gonogo"></div>
+</section>
 
-    <section id="app-view" hidden>
-      <nav class="tabs" role="tablist">
-        <button data-tab="overview" class="active">ภาพรวม</button>
-        <button data-tab="tasks">ตารางงาน</button>
-        <button data-tab="projects">โปรเจ็ค</button>
-        <button data-tab="kpis">KPI</button>
-        <button data-tab="decisions">เรื่องที่ต้องตัดสินใจ</button>
-      </nav>
-      <p id="app-msg" class="msg"></p>
+<section id="tasks">
+  <h2>งานและผู้รับผิดชอบ</h2>
+  <p class="lead">สายรับผิดชอบเป็นข้อเสนอ สถานะที่เลือกแชร์กับทีมเมื่อเข้าสู่ระบบ</p>
+  <div class="filters" id="tf"></div>
+  <div class="scroll"><table id="tt"></table></div>
+</section>
 
-      <div id="tab-overview" class="tab">
-        <div id="progress" class="card"></div>
-        <div id="metrics" class="grid"></div>
-      </div>
+<section id="proj">
+  <h2>โปรเจ็คที่ดำเนินอยู่ (ต่อเนื่องปี 2570)</h2>
+  <p class="lead">6 โปรเจ็คนอกเหนือจาก Chiang Mai Nursing Home Care (4 อาคาร 80 เตียง) และ Tranquila (40 เตียง รวม Villa และเตียงรวม) · ผู้รับผิดชอบกรอกเป้าปี 2570 ให้เสร็จก่อน 31 ม.ค. 70</p>
+  <div class="scroll"><table>
+  <tr><th>#</th><th>โปรเจ็ค</th><th>ทำอะไร</th><th>เริ่ม</th><th>ผู้รับผิดชอบ</th><th>KPI ปี 2570 (เป้ารอกรอก)</th><th>เรื่องที่ต้องตัดสิน</th></tr>
+  <tr><td>1</td><td><b>CMCC Home Care</b></td><td>ส่งผู้ดูแลผู้สูงอายุตามบ้าน บันทึกผ่านแอปเยี่ยมบ้าน ส่งรายงานเข้า LINE ครอบครัว</td><td>ส.ค. 69</td><td>พี่แหม่ม</td><td>ปัจจุบันไม่ถึง 10 ราย · <b>ร่างเป้า</b> 15 ราย (มิ.ย. 70) → 25 ราย (ธ.ค. 70) · รายได้/เดือน · % ต่อสัญญา</td><td>เป้าเคสและจำนวนผู้ดูแลที่ต้องมี</td></tr>
+  <tr><td>2</td><td><b>CMNH Home Rehab</b></td><td>PT · PTA · OT ตามบ้าน แพ็กเกจ + ค่าเดินทางโซน A/B/C (TMS/PMS ทำที่ศูนย์)</td><td>ม.ค. 69</td><td>มิน</td><td>session/เดือน · รายได้/เดือน · % ซื้อแพ็กเกจต่อ</td><td>เชื่อมกับคลินิกหน้า รพ. (ใช้นักกายภาพและเครื่องมือร่วมกัน)</td></tr>
+  <tr><td>3</td><td><b>Single Procedure by Neuro</b></td><td>หัตถการตามบ้านโดยคลินิกหมอต้น (ใส่ NG เปลี่ยน Foley ฯลฯ) เฉพาะผู้ป่วยที่เคยตรวจที่คลินิก</td><td>ส.ค. 69</td><td>จุ้บแจง</td><td>หัตถการ/เดือน · รายได้/เดือน · เวลาตอบรับเคส</td><td>ทำภายใต้ใบอนุญาตคลินิกหมอต้น รับเงินในนาม CMNH · ต้องมีสัญญาคลินิก–บริษัทและใบเสร็จที่สอดคล้องกัน ให้ทนายตรวจ · เมื่อคลินิกบริษัทเปิด พิจารณาย้ายมาใช้ใบอนุญาตบริษัท</td></tr>
+  <tr><td>4</td><td><b>CM Derma Plus</b></td><td>สกินแคร์ผู้สูงอายุ: Shower Gel, Body Lotion, Coconut Soft Balm</td><td>ต้นปี 69</td><td>โมบาย</td><td>ยอดขาย/เดือน · หน่วยที่ขาย · สต็อก</td><td>ช่องทางขายหลัก (สาขา · ออนไลน์ · ตัวแทน)</td></tr>
+  <tr><td>5</td><td><b>แพลตฟอร์มระบบหลังบ้าน</b></td><td>ADMIN ขายแพ็กเกจ/ใบเสนอราคา · Session Tracker · แอปเยี่ยมบ้าน · ผังเตียงว่าง · ADL · หลังบ้านเช่าออกซิเจน</td><td>ก.ย. 69</td><td>มิน</td><td>% งานที่บันทึกผ่านระบบ · ปิดบัญชีรายเดือนภายในกี่วัน</td><td>ขายแบบ white-label หรือไม่ · เพิ่มระบบคลินิก/OPD</td></tr>
+  <tr><td>6</td><td><b>CMCC Health Product</b></td><td>ให้เช่า-ขายอุปกรณ์มือสอง เน้นเครื่องผลิตออกซิเจน มัดจำ 3,000–5,000 บาท</td><td>ก.ย. 69</td><td>พี่แหม่ม</td><td>ปัจจุบันให้เช่ารวมไม่ถึง 10 รายตั้งแต่เริ่ม · <b>ร่างเป้า</b> เช่าอยู่พร้อมกัน 10 เครื่อง (มิ.ย. 70) → 20 เครื่อง (ธ.ค. 70) · รายได้/เดือน</td><td>มัดจำต่อรุ่นหรือต่อเคส · ซื้อเครื่องเพิ่มกี่เครื่อง</td></tr>
+  </table></div>
+  <p class="note">พี่แหม่มและมินดูแลคนละ 2 โปรเจ็ค ปี 2570 มินยังมีงานคลินิกหน้า รพ. และระบบของ รพ. ด้วย ควรกำหนดผู้ช่วยหรือลำดับความสำคัญใน Q1</p>
+</section>
 
-      <div id="tab-tasks" class="tab" hidden>
-        <div class="toolbar">
-          <label>ไตรมาส <select id="filter-quarter"><option value="">ทั้งหมด</option></select></label>
-          <label>สถานะ <select id="filter-status"><option value="">ทั้งหมด</option></select></label>
-        </div>
-        <div class="card table-wrap"><table id="tasks-table"></table></div>
-      </div>
+<section id="org">
+  <h2>โครงสร้างองค์กร</h2>
+  <p class="lead">ตามร่างคู่มือโครงสร้างองค์กร (docs/08): Board → CEO (C-level เดียว) → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ · JD 30 ตำแหน่ง · รอ Board อนุมัติ</p>
+  <div class="chain"><div class="plaque"><b>Board of Directors</b><span>นโยบาย · อนุมัติแผนและงบลงทุน · แต่งตั้ง CEO</span></div><i>↓</i><div class="plaque"><b>CEO</b><span>กลยุทธ์ · การลงทุน · กำกับ MD · อนุมัติ ≤ 2 ล้าน</span></div><i>↓</i><div class="plaque"><b>Managing Director (MD)</b><span>บริหารทุกหน่วยโดยตรง · งบ คน KPI · อนุมัติ ≤ 5 แสน</span></div></div>
+  <div class="org" id="orgg"></div>
+  <p class="note">ตำแหน่งในแต่ละหน่วยเป็นกรอบสำหรับจัดสรรคน ช่วงแรกควบบทบาทได้ แต่ต้องแยกความรับผิดชอบให้ชัด · ตำแหน่งระดับ MD, Group Manager และ Unit Director ยังไม่อยู่ในโมเดลการเงิน</p>
+  <h3>งานที่ยังไม่มีที่ลงในร่าง (ข้อเสนอการจัดวาง)</h3>
+  <div class="scroll"><table><tr><th>งาน</th><th>เสนอให้อยู่ที่</th><th>เหตุผล</th></tr>
+  <tr><td>คลินิกหน้า รพ. (ม.ค.–ก.ย. 70)</td><td>Unit 1 Hospital</td><td>ทีมเดียวกันย้ายเข้า OPD ต.ค. 70</td></tr>
+  <tr><td>CMCC Home Care · CMNH Home Rehab · CMCC Health Product</td><td>Unit 2 Chiangmai Nursing Homecare</td><td>ลูกค้ากลุ่มเดียวกัน ใช้ทีมพยาบาล/กายภาพร่วมกัน</td></tr>
+  <tr><td>Single Procedure by Neuro</td><td>Unit 1 Hospital</td><td>ย้ายมาอยู่ใต้ใบอนุญาตบริษัทเมื่อคลินิกหน้า รพ. ได้ใบอนุญาต (รอทนาย docs/05)</td></tr>
+  <tr><td>CM Derma Plus</td><td>Group Business Development</td><td>เป็นสินค้า ไม่ใช่บริการดูแล</td></tr>
+  <tr><td>แพลตฟอร์มระบบหลังบ้าน</td><td>Group Operations</td><td>ระบบกลางที่ทุกหน่วยใช้</td></tr>
+  <tr><td>คลินิกหมอต้น</td><td>นอกโครงสร้างบริษัท</td><td>ใบอนุญาตบุคคลของ นพ.ณัฐวรรธ</td></tr></table></div>
+  <h3>ตำแหน่งที่ควบรวมระดับเจ้าหน้าที่</h3>
+  <p class="note">ควบ JD ไม่ได้แปลว่าลดคน จำนวนคนยังคิดตามงานและเวร · ต้องให้ CEO อนุมัติก่อนใช้</p>
+  <div class="scroll"><table id="merge"></table></div>
+  <details class="card" style="margin-top:10px"><summary><b>ตำแหน่งที่ไม่ควบ และเหตุผล</b></summary><ul id="nomerge"></ul></details>
+  <h3>สายบังคับบัญชาทุกตำแหน่ง</h3>
+  <div class="scroll"><table id="rep"></table></div>
+  <h3>JD ทุกตำแหน่ง</h3>
+  <p class="note">ที่มา: JD เดิม 20 ฉบับ (จัดพิมพ์ใหม่จากไฟล์สแกน) + JD ใหม่ RN PN NA PTA · ร่าง ให้หัวหน้าแต่ละสายตรวจก่อนประกาศใช้</p>
+  <div class="jdbar"><div id="jdfil"></div><input id="jdq" placeholder="ค้นหาตำแหน่งหรืองาน"><button class="chip" id="jdopen">เปิด/ปิดทั้งหมด</button><span class="note" id="jdcount"></span></div>
+  <div id="jdall"></div>
+  <details class="card" style="margin-top:12px"><summary><b>งานด้านพัฒนาองค์กร (ใช้ร่วมทุกตำแหน่ง)</b></summary><ul id="jdcommon"></ul></details>
+</section>
 
-      <div id="tab-projects" class="tab" hidden>
-        <div class="card table-wrap"><table id="projects-table"></table></div>
-      </div>
+<section id="gov">
+  <h2>ธรรมาภิบาลและอำนาจอนุมัติ <span class="tag warn">ร่างเสนอ Board</span></h2>
+  <p class="lead">ONE GROUP – ONE STRATEGY – ONE MANAGEMENT STANDARD · Board กำหนดทิศทาง · CEO กำหนดกลยุทธ์และกำกับ MD · MD บริหารทุกหน่วยโดยตรง · Unit Directors รับผิดชอบผลการดำเนินงาน · Department Heads รับผิดชอบการปฏิบัติงาน</p>
+  <h3>ตารางอำนาจอนุมัติ (DOA)</h3>
+  <div class="scroll"><table><tr><th>ระดับ</th><th>ตำแหน่ง</th><th>วงเงินอนุมัติต่อรายการ</th></tr><tr><td>L1</td><td>Department Head / Supervisor</td><td>ไม่เกิน 30,000 บาท</td></tr><tr><td>L2</td><td>Unit Director / Group Manager</td><td>ไม่เกิน 100,000 บาท</td></tr><tr><td>L3</td><td>MD</td><td>ไม่เกิน 500,000 บาท</td></tr><tr><td>L4</td><td>CEO</td><td>ไม่เกิน 2,000,000 บาท</td></tr><tr><td>L5</td><td>Board of Directors</td><td>มากกว่า 2,000,000 บาท</td></tr></table></div>
+  <p class="note">เป็นข้อเสนอเริ่มต้น ยังไม่มีผลจนกว่า Board อนุมัติ · DOA เป็นอำนาจอนุมัติภายใน การลงนามผูกพันบริษัทยังเป็นของกรรมการผู้มีอำนาจตามหนังสือรับรอง</p>
+  <div class="grid g2">
+   <div class="card"><h4>หลักเกณฑ์การใช้อำนาจ</h4><ol class="dec"><li>อยู่ในงบประมาณที่อนุมัติแล้ว</li><li>ผู้อนุมัติไม่มีผลประโยชน์ทับซ้อน</li><li>ห้ามแบ่งรายการเพื่อหลบวงเงิน</li><li>นอกงบประมาณ เสนอระดับสูงขึ้น</li><li>ลงทุน กู้ยืม ค้ำประกัน จำหน่ายทรัพย์สินสำคัญ และรายการกับบุคคลเกี่ยวโยง เสนอ Board เสมอ แม้วงเงินต่ำกว่าตาราง</li><li>แยกผู้ขอซื้อ ผู้อนุมัติ ผู้รับของ และผู้จ่ายเงิน</li><li>ห้ามอนุมัติรายการให้ตนเองโดยไม่มีการตรวจสอบอิสระ</li></ol></div>
+   <div class="card"><h4>ข้อกำหนดพิเศษ โรงพยาบาลและสถานดูแลผู้สูงอายุ</h4><ul><li>การรักษาและการตัดสินใจทางการแพทย์เป็นไปตามอำนาจวิชาชีพ</li><li>มีช่องทางจัดซื้ออุปกรณ์ฉุกเฉินเพื่อความปลอดภัยผู้ป่วย <span class="tag warn">ควรกำหนดวงเงินและการอนุมัติย้อนหลัง</span></li><li>หยุดบริการที่เสี่ยงต่อชีวิตได้ทันทีตามระบบความปลอดภัย</li><li>เหตุการณ์ร้ายแรงแจ้งผู้บริหารที่เกี่ยวข้องทันที ไม่รอรอบประชุม</li></ul></div>
+  </div>
+  <h3>อำนาจตามประเภทงาน</h3>
+  <div class="scroll"><table><tr><th>ประเภทงาน</th><th>ผู้เสนอ</th><th>ผู้อนุมัติ</th></tr><tr><td>จัดซื้อวัสดุทั่วไป</td><td>หัวหน้าฝ่าย</td><td>ตามวงเงิน</td></tr><tr><td>จัดซื้อเครื่องมือแพทย์</td><td>Hospital Director</td><td>MD / CEO / Board ตามวงเงินและแผนลงทุน <span class="note">(เสนอ: อนุมัติแผนจัดซื้อรวม 14–20 ล้านครั้งเดียว)</span></td></tr><tr><td>จัดซื้อครุภัณฑ์ Nursing Home</td><td>Unit Director</td><td>ตามวงเงิน</td></tr><tr><td>จ้างพนักงานตามกรอบอัตรากำลัง</td><td>Unit Director + HR</td><td>MD</td></tr><tr><td>เพิ่มอัตรากำลังนอกแผน</td><td>MD + HR</td><td>CEO</td></tr><tr><td>แต่งตั้ง Unit Director</td><td>MD</td><td>CEO</td></tr><tr><td>แต่งตั้ง MD</td><td>CEO / Board</td><td>Board</td></tr><tr><td>ปรับเงินเดือนประจำปี</td><td>HR</td><td>MD ภายในงบที่อนุมัติ</td></tr><tr><td>ลงทุนโครงการใหม่</td><td>MD / CEO</td><td>Board</td></tr><tr><td>ทำสัญญาระยะยาว</td><td>Unit Director / MD</td><td>ตามวงเงินและเงื่อนไขสัญญา</td></tr><tr><td>กู้ยืมเงิน / ค้ำประกัน</td><td>CEO</td><td>Board</td></tr><tr><td>จำหน่ายทรัพย์สินสำคัญ</td><td>MD</td><td>Board ตามข้อบังคับ</td></tr></table></div>
+  <h3>ระบบรายงานและการประชุม</h3>
+  <div class="scroll"><table><tr><th>การประชุม</th><th>ผู้เข้าร่วม</th><th>ความถี่</th></tr><tr><td>Department Meeting</td><td>หัวหน้าฝ่ายและทีม</td><td>รายสัปดาห์</td></tr><tr><td>Business Unit Meeting</td><td>MD + Unit Directors</td><td>รายสัปดาห์</td></tr><tr><td>Group Executive Meeting</td><td>CEO + MD + Group Managers</td><td>รายสัปดาห์</td></tr><tr><td>Financial Performance Review</td><td>CEO + MD + Finance</td><td>รายเดือน</td></tr><tr><td>Quality & Risk Review</td><td>MD + Quality + Unit Directors</td><td>รายเดือน</td></tr><tr><td>Board Meeting</td><td>Board + CEO + MD ตามวาระ</td><td>รายไตรมาส</td></tr></table></div>
+  <div class="card chk" style="margin-top:12px"><h4>รายงานที่ MD เสนอ CEO ทุกเดือน</h4><ol class="dec"><li>Group Revenue &amp; Expense</li><li>Profit &amp; Loss แยกทุกหน่วยธุรกิจ</li><li>Occupancy &amp; Bed Utilization</li><li>HR &amp; Manpower</li><li>Quality &amp; Risk</li><li>Customer Satisfaction</li><li>Project Progress</li><li>Cash Flow &amp; Financial Position</li><li>KPI Dashboard (แท็บ KPI)</li><li>Action Plan เดือนถัดไป</li></ol></div>
+  <h3>KPI ผู้บริหารและหน่วยธุรกิจ (เป้าเริ่มต้น)</h3>
+  <p class="note">ต้องปรับตามกำลังรองรับจริง งบประมาณ และข้อมูลย้อนหลัง · KPI ความปลอดภัยไม่ใช้จำนวนเหตุการณ์เป็นแรงจูงใจให้ปกปิดการรายงาน</p>
+  <div class="grid g2 kgrid"><div class="card"><h4>CEO</h4><ul class="kl"><li><span>Group Revenue Growth</span><b>≥ 10% ต่อปี</b></li><li><span>Group Net Profit Margin</span><b>ตามแผนธุรกิจ</b></li><li><span>Strategic Project Achievement</span><b>≥ 90%</b></li><li><span>Business Expansion Milestones</span><b>≥ 90%</b></li><li><span>Corporate Governance Compliance</span><b>100%</b></li></ul></div><div class="card"><h4>MD</h4><ul class="kl"><li><span>Group Revenue Achievement</span><b>≥ 95% ของงบประมาณ</b></li><li><span>Operating Budget Control</span><b>คลาดเคลื่อนไม่เกิน ±5%</b></li><li><span>Business Unit KPI Achievement</span><b>≥ 90%</b></li><li><span>HR Turnover</span><b>ตามเป้าที่กำหนด (แท็บ KPI: ≤ 2%/เดือน)</b></li><li><span>Monthly Management Report</span><b>100% ตรงเวลา</b></li><li><span>Quality & Compliance Action Closure</span><b>≥ 95% ตามกำหนด</b></li></ul></div><div class="card"><h4>Unit 1 Hospital</h4><ul class="kl"><li><span>Occupancy Rate</span><b>≥ 75% <span class="tag warn">ปีแรกใช้ Ramp-up: ต.ค. 15% · พ.ย. 25% · ธ.ค. 35%</span></b></li><li><span>Revenue Achievement</span><b>≥ 95% ของแผน</b></li><li><span>Patient Satisfaction</span><b>≥ 90%</b></li><li><span>Patient Safety</span><b>ติดตามเหตุการณ์และความเสี่ยงทุกเดือน</b></li><li><span>Clinical Quality</span><b>ตามเกณฑ์มาตรฐาน</b></li><li><span>Staff Turnover</span><b>ตามเป้า HR</b></li></ul></div><div class="card"><h4>Unit 2 Chiangmai Nursing Homecare</h4><ul class="kl"><li><span>Occupancy Rate</span><b>≥ 85%</b></li><li><span>Revenue Achievement</span><b>≥ 95%</b></li><li><span>Family Satisfaction</span><b>≥ 90%</b></li><li><span>Care Plan Compliance</span><b>≥ 95%</b></li><li><span>Incident Reporting</span><b>100% ของเหตุการณ์ที่เข้าเกณฑ์</b></li><li><span>Staffing Coverage</span><b>≥ 95% ของอัตรากำลังตามแผน</b></li></ul></div><div class="card"><h4>Unit 3 Tranquila</h4><ul class="kl"><li><span>Villa Occupancy Rate</span><b>≥ 90% <span class="tag warn">แท็บ KPI ปัจจุบันใช้ ≥ 80%</span></b></li><li><span>Daycare Utilization</span><b>≥ 85% ของกำลังรองรับ</b></li><li><span>Revenue Achievement</span><b>≥ 95%</b></li><li><span>Customer Satisfaction</span><b>≥ 90%</b></li><li><span>Care Plan Compliance</span><b>≥ 95%</b></li><li><span>Cost Control</span><b>ตามงบประมาณ</b></li></ul></div><div class="card"><h4>Unit 4 CMCC Training Center</h4><ul class="kl"><li><span>Student Enrollment</span><b>≥ 95% ของเป้า</b></li><li><span>Course Completion Rate</span><b>≥ 90%</b></li><li><span>Student Satisfaction</span><b>≥ 90%</b></li><li><span>Revenue Achievement</span><b>≥ 95%</b></li><li><span>Training Quality</span><b>ผ่านเกณฑ์ประเมินหลักสูตร</b></li><li><span>Training Partner Development</span><b>ตามแผนประจำปี</b></li></ul></div><div class="card"><h4>Unit 5 Villa Project</h4><ul class="kl"><li><span>Construction Milestone Achievement</span><b>≥ 95%</b></li><li><span>Project Budget Control</span><b>คลาดเคลื่อนไม่เกิน ±5%</b></li><li><span>Construction Quality</span><b>ผ่านการตรวจรับ</b></li><li><span>License & Regulatory Readiness</span><b>100% ก่อนเปิด</b></li><li><span>Recruitment Readiness</span><b>≥ 95% ก่อนเปิด</b></li><li><span>Pre-opening Milestones</span><b>≥ 95%</b></li><li><span>Initial Occupancy</span><b>ตาม Ramp-up (พ.ย. 15% · ธ.ค. 25%)</b></li></ul></div></div>
+  <h3>การประเมินผลผู้บริหาร (100 คะแนน)</h3>
+  <div class="grid g2">
+   <div><div class="scroll"><table><tr><th>หมวด</th><th>น้ำหนัก</th></tr><tr><td>Financial Performance</td><td>30%</td></tr><tr><td>Operational Performance</td><td>25%</td></tr><tr><td>Quality &amp; Customer Satisfaction</td><td>20%</td></tr><tr><td>Human Resources &amp; Leadership</td><td>15%</td></tr><tr><td>Compliance &amp; Risk Management</td><td>10%</td></tr><tr><td><b>รวม</b></td><td><b>100%</b></td></tr></table></div></div>
+   <div><div class="scroll"><table><tr><th>คะแนน</th><th>ระดับ</th></tr><tr><td>90–100</td><td>Excellent</td></tr><tr><td>80–89</td><td>Very Good</td></tr><tr><td>70–79</td><td>Good</td></tr><tr><td>60–69</td><td>Improvement Required</td></tr><tr><td>ต่ำกว่า 60</td><td>Unsatisfactory</td></tr></table></div><p class="note">ต่ำกว่าเกณฑ์ทำ Performance Improvement Plan · ฝ่าฝืนจริยธรรม ความปลอดภัย หรือกฎหมาย ตัดสิทธิ์/ลดคะแนน ผลการเงินหักล้างไม่ได้</p></div>
+  </div>
+  <h3>แผนนำไปใช้ (หลัง Board อนุมัติ)</h3>
+  <div class="scroll"><table><tr><th>ช่วง</th><th>กิจกรรม</th></tr><tr><td>สัปดาห์ที่ 1</td><td>ประกาศโครงสร้างองค์กรและสายบังคับบัญชา</td></tr><tr><td>สัปดาห์ที่ 2</td><td>แต่งตั้งผู้รับผิดชอบและกำหนด JD</td></tr><tr><td>สัปดาห์ที่ 3</td><td>ประกาศ DOA และวงเงินอนุมัติ</td></tr><tr><td>สัปดาห์ที่ 4</td><td>เริ่มใช้ KPI และระบบรายงาน</td></tr><tr><td>เดือนที่ 2</td><td>ประเมินผลการทำงานและปรับ SOP</td></tr><tr><td>เดือนที่ 3</td><td>Management Review และรายงาน Board</td></tr></table></div>
+  <p class="note">เอกสารที่ต้องทำเพิ่ม: Organization Chart ฉบับประกาศใช้ · JD รายบุคคล · DOA ฉบับลงนาม · Procurement &amp; Payment Policy · HR &amp; Recruitment Policy · KPI Evaluation Form · Monthly Management Report Template · Risk Management &amp; Internal Audit Policy</p>
+  <h3>ข้อสังเกตก่อนเสนอ Board</h3>
+  <ol class="dec">
+   <li><b>ใครเป็น MD</b> และปี 2570 ใครควบตำแหน่ง Group Manager / Unit Director · ตำแหน่งเหล่านี้ยังไม่มีงบในโมเดลการเงิน (เงินสดติดลบสูงสุด −29.79 ล้านยังไม่รวม)</li>
+   <li><b>ผู้ดำเนินการสถานพยาบาล</b> ตาม พ.ร.บ.สถานพยาบาล (รพ. นพ.ณัฐวรรธ · คลินิกหน้า รพ. นพ.รังสรรค์) มีหน้าที่ตามกฎหมายแยกจาก Hospital Director ควรเขียนในคู่มือ</li>
+   <li><b>CMCC Training Center</b> ยังไม่มีในแผนและโมเดลการเงินปี 2570</li>
+   <li><b>"เครือธุรกิจ / แต่ละนิติบุคคล"</b> ตอนนี้มีข้อมูลแค่ บจก. ซีเอ็มเอ็นเอช 2012 ถ้ามีบริษัทอื่นต้องระบุ</li>
+   <li>รายละเอียดเต็มอยู่ใน <code>docs/08a_ข้อสังเกต_คู่มือโครงสร้างองค์กร.md</code></li>
+  </ol>
+</section>
 
-      <div id="tab-kpis" class="tab" hidden>
-        <p class="hint">กรอกผลจริงทุกวันที่ 5 ของเดือน · คลิกช่องเดือนเพื่อแก้ไข (บันทึกอัตโนมัติ)</p>
-        <div class="card table-wrap"><table id="kpis-table"></table></div>
-      </div>
+<section id="fin">
+  <h2>การเงิน: ทดลองปรับสมมติฐาน</h2>
+  <p class="lead">ตัวเลขชุดนี้คือ <b>โครงการคลินิก + รพ. + Villa</b> (ยังไม่รวมธุรกิจเดิม) ใช้สูตรเดียวกับไฟล์ Excel · ค่าที่ปรับเห็นแค่เครื่องนี้ ไม่กระทบคนอื่น</p>
+  <div class="scn"><span class="note">เลือกสถานการณ์:</span><div class="filters" id="scn"></div></div>
+  <p class="note" id="scnNote" style="margin:8px 0 12px"></p>
+  <div class="grid g4" id="finStats" style="margin-bottom:14px"></div>
+  <div class="card"><div class="ctrl" id="ctrl"></div>
+    <p class="note" style="margin:10px 0 0"><button id="reset" class="btn">คืนค่าเริ่มต้น</button></p></div>
+  <h3>เงินสดสะสม 24 เดือน</h3>
+  <p class="note" style="margin-top:-4px">เส้นต่ำลง = ใช้เงินมากขึ้น · จุดต่ำสุดของเส้นคือ "เงินที่ต้องเตรียมสูงสุด"</p>
+  <div class="card" id="chart"></div>
+  <h3>เทียบสถานการณ์ (คำนวณจากค่าเริ่มต้น)</h3>
+  <p class="note" style="margin-top:-4px">ใช้ตอบคำถาม "ถ้า…จะเป็นอย่างไร" ในห้องประชุม · กดชื่อสถานการณ์เพื่อโหลดค่าขึ้นด้านบน</p>
+  <div class="scroll"><table id="scnTable"></table></div>
+  <h3>ที่มาของรายได้ (ตามค่าที่เลือกด้านบน)</h3>
+  <p class="note" style="margin-top:-4px">ค่าเริ่มต้นมีรายได้จากค่าเตียงทางเดียว แถวที่เป็น 0 คือรายได้ที่ยังไม่มีประมาณการ</p>
+  <div class="scroll"><table id="revTable"></table></div>
+  <details class="card" style="margin-top:10px"><summary>ราคาค่าห้องและการคิดจำนวนผู้พัก</summary><div id="revHow"></div></details>
+  <h3>สรุปรายไตรมาส (บาท)</h3>
+  <div class="scroll"><table id="qt"></table></div>
+  <h3>ค่าใช้จ่ายตอนเปิดเต็ม (ต่อเดือน)</h3>
+  <table>
+    <tr><th>โซน</th><th class="n">เตียง</th><th class="n">พนักงาน</th><th class="n">บาท/เดือน</th></tr>
+    <tr><td>OPD คลินิกเวชกรรม 08.00–20.00</td><td class="n">–</td><td class="n">31</td><td class="n">822,000</td></tr>
+    <tr><td>IPD (โซนรวม 38 · ห้องคู่ 10 · เดี่ยว 2)</td><td class="n">50</td><td class="n">68</td><td class="n">1,442,000</td></tr>
+    <tr><td>Villa 5 หลัง</td><td class="n">20</td><td class="n">19</td><td class="n">285,000</td></tr>
+    <tr><td>เช่า น้ำ ไฟ อาหาร ซักล้าง อื่นๆ</td><td class="n">–</td><td class="n">–</td><td class="n">1,080,000</td></tr>
+    <tr><th>รวมค่าใช้จ่ายดำเนินงาน</th><th class="n">70</th><th class="n">118</th><th class="n">3,629,000</th></tr>
+    <tr><td>ค่าผ่อนธนาคาร (กู้ 106.8 ล้าน · 6% · 15 ปี สมมติ)</td><td class="n">–</td><td class="n">–</td><td class="n">901,000</td></tr>
+    <tr><th>รวมทั้งหมด</th><th></th><th></th><th class="n">4,530,000</th></tr>
+  </table>
+</section>
 
-      <div id="tab-decisions" class="tab" hidden>
-        <div class="card table-wrap"><table id="decisions-table"></table></div>
-      </div>
-    </section>
-  </main>
+<section id="sales">
+  <h2>แผนการขายเพื่อเติมเตียง</h2>
+  <p class="lead" id="salesLead"></p>
+  <div class="scroll"><table id="st"></table></div>
+  <h3>ผู้สนใจที่ต้องได้รายเดือน</h3>
+  <div class="card" id="leadChart"></div>
+</section>
+
+<section id="kpi">
+  <h2>KPI ปี 2570</h2>
+  <p class="lead">ช่องบน (พื้นเหลือง) คือเป้ารายเดือนที่กรอกไว้ให้ตามชีต "ติดตาม KPI 2570" ช่องล่างคือผลจริง กรอกทุกวันที่ 5 ของเดือนถัดไป ผลจะเป็นสีเขียวเมื่อถึงเป้า สีแดงเมื่อไม่ถึง ประชุมผู้บริหารเดือนละครั้ง</p>
+  <p class="note">เป้าที่ผูกกับแผนการเงิน (อัตราเข้าพัก ค่าใช้จ่าย เงินสด lead รายได้คลินิก) เปลี่ยนตามสมมติฐานในแท็บการเงิน · ช่องว่างคือยังไม่วัดเดือนนั้นหรือรอค่าฐาน 2569 · ผลที่กรอกแชร์กับทีมเมื่อเข้าสู่ระบบ ไฟล์หลักยังเป็น Excel</p>
+  <div class="filters" id="kf"></div>
+  <div class="scroll"><table id="kt"></table></div>
+</section>
+
+<section id="docs">
+  <h2>เอกสารประกอบแผน</h2>
+  <p class="lead">21 เอกสาร (ร่าง/แม่แบบ) ตามงานในแต่ละไตรมาส คลิกเพื่อเปิด พิมพ์ หรือบันทึกเป็น PDF ตรวจสอบรายละเอียดก่อนใช้จริง</p>
+  <div id="docgrid"></div>
+</section>
+</main>
+<div id="modal"><div id="mbox"><div class="mtools"><button id="mprint">พิมพ์ / PDF ▾</button><button id="mclose">ปิด</button></div><div id="mbody"></div></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const fm=n=>(n<0?'−':'')+(Math.abs(n)/1e6).toFixed(2)+' ล้าน';
+const MON=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const store={get(k,d){try{const v=localStorage.getItem('cmnh2570:'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('cmnh2570:'+k,JSON.stringify(v))}catch(e){}}};
+
+// ---------- nav
+const tabs=[['sum','สรุป CEO'],['plan','แผนไตรมาส'],['tasks','งาน'],['proj','โปรเจ็ค'],['org','โครงสร้าง'],['gov','ธรรมาภิบาล'],['fin','การเงิน'],['sales','การขาย'],['kpi','KPI'],['docs','เอกสาร']];
+tabs.forEach(([id,t],i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>show(id);b.dataset.id=id;$('#nav').appendChild(b)});
+function show(id){document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.id===id));if(id==='fin'||id==='sales')run()}
+
+// ---------- model (same as Excel sheet แผนรายเดือน 2570-71)
+const C={ipdPrice:[47200,49400,51600],villaPrice:[75000,79000,82000],opdWage:822000,ipdFixed:887000,villaFixed:105000,naWage:15000,ipdFull:37,villaFull:12,facility:180000,util:200000,varPer:10000};
+const DEF={phase:0,opdSmall:386000,clinicOpen:1,clinicCost:302000,clinicReno:200000,clinicRev:0,opdOpen:10,ipdOpen:10,villaOpen:11,pre:1,tier:1,opdRev:0,addon:0,minI:21,minV:3,utilShare:.5,loan:901174,loanStart:10,churn:.04,conv:.25,ramp:[.15,.25,.35,.45,.55,.62,.68,.73,.77,.80,.82,.85]};
+// ราคาค่าห้อง/เดือน จากชีต "ราคาแพ็กเกจ" [กลุ่มอาการ][ระดับราคา 1-3]
+const MIXG=['ผู้สูงอายุ','Alzheimer','Rehabilitation','Feeding','T.Tube'];
+const PR={common:[[45000,47000,49000],[45000,47000,49000],[49000,52000,54000],[58000,59000,62000],[62500,65000,68000]],
+ double:[[52000,55000,58000],[52000,55000,58000],[59000,65000,67000],[68000,70000,75000],[72000,78000,82000]],
+ single:[[65000,67000,69000],[65000,67000,69000],[72000,75000,78000],[78000,80000,82000],[82500,85000,87000]],
+ villa:[[75000,79000,82000],[75000,79000,82000],[85000,89000,92000],[92500,95000,97000],[97000,99000,101000]]};
+DEF.mix=[100,0,0,0,0];
+function mixW(p){const m=(p.mix||DEF.mix).map(x=>Math.max(0,+x||0)),t=m.reduce((a,b)=>a+b,0);return t>0?m.map(x=>x/t):[1,0,0,0,0]}
+function ipdP(p){const w=mixW(p),t=p.tier-1;return w.reduce((a,x,g)=>a+x*(38*PR.common[g][t]+10*PR.double[g][t]+2*PR.single[g][t])/50,0)}
+function villaP(p){const w=mixW(p),t=p.tier-1;return w.reduce((a,x,g)=>a+x*PR.villa[g][t],0)}
+let P=Object.assign({},DEF,store.get('P2',{}));
+function model(p){
+  const out=[];let cum=0,prevRes=0;
+  for(let i=1;i<=24;i++){
+    const mi=Math.max(0,i-p.ipdOpen+1),mv=Math.max(0,i-p.villaOpen+1);
+    const oi=mi?p.ramp[Math.min(12,mi)-1]:0,ov=mv?p.ramp[Math.min(12,mv)-1]:0;
+    const ri=Math.round(50*oi),rv=Math.round(20*ov),rt=ri+rv;
+    const ipdR=ri*ipdP(p),vilR=rv*villaP(p),addR=rt*p.addon,opdR=i>=p.opdOpen?p.opdRev:0;
+    const rev=ipdR+vilR+addR+opdR;
+    const clin=i>=p.clinicOpen&&i<p.opdOpen;
+    const actI=i>=p.ipdOpen-p.pre,actV=i>=p.villaOpen-p.pre,actO=i>=p.opdOpen-p.pre;
+    const hi=actI?Math.max(p.minI,Math.ceil(C.ipdFull*oi-1e-9)):0,hv=actV?Math.max(p.minV,Math.ceil(C.villaFull*ov-1e-9)):0;
+    const cost=(actO?((p.phase&&i<p.ipdOpen-p.pre)?p.opdSmall:C.opdWage):0)+(actI?C.ipdFixed:0)+hi*C.naWage+(actV?C.villaFixed:0)+hv*C.naWage
+      +(i>=p.opdOpen?C.facility+C.util*p.utilShare:0)+(mi>0?C.util*(1-p.utilShare):0)+rt*C.varPer+(i>=p.loanStart?p.loan:0)+(clin?p.clinicCost:0)+(i===Math.max(1,p.clinicOpen)?p.clinicReno:0);
+    const rv2=rev+(clin?p.clinicRev:0);const net=rv2-cost;cum+=net;
+    const adm=i===1?rt:Math.max(0,rt-prevRes)+Math.round(prevRes*p.churn);
+    const lead=Math.ceil(adm/p.conv-1e-9);
+    out.push({i,oi,ov,ri,rv,rt,rev:rv2,cost,net,cum,hi,hv,adm,lead,ipdR,vilR,addR,opdR,clinR:clin?p.clinicRev:0});prevRes=rt;
+  }
+  return out;
+}
+function summary(m,pp){pp=pp||P;
+  const peak=-Math.min(0,...m.map(x=>x.cum));
+  const be=m.find(x=>x.i>=pp.ipdOpen&&x.net>0);
+  const y1=m.slice(0,12).reduce((a,x)=>a+x.net,0),y2=m.slice(12).reduce((a,x)=>a+x.net,0);
+  const l1=m.slice(0,12).reduce((a,x)=>a+x.lead,0),l2=m.slice(12).reduce((a,x)=>a+x.lead,0);
+  return {peak,be,y1,y2,l1,l2};
+}
+const mlabel=i=>MON[(i-1)%12]+' '+(70+Math.floor((i-1)/12));
+
+// ---------- controls
+const CTRL=[
+ ['clinicOpen','เดือนเปิดคลินิกอาคารหน้า รพ.','month'],['clinicRev','รายได้คลินิกหน้า รพ./เดือน (เท่าทุน 302,000)','num'],['opdOpen','เดือนย้ายคลินิกเข้า รพ. (OPD)','month'],['ipdOpen','เดือนเปิด IPD','month'],['villaOpen','เดือนเปิด Villa','month'],
+ ['tier','ระดับราคา','tier'],['opdRev','รายได้ OPD รพ./เดือน (คุ้มตัวเอง 1,100,000)','num'],
+ ['addon','รายได้แพ็กเกจเสริม ต่อผู้พัก/เดือน (บาท)','num'],['loan','ค่าผ่อนธนาคาร ต่อเดือน (บาท)','num'],
+ ['mix','สัดส่วนกลุ่มอาการผู้พัก (%) · ใช้ทั้ง IPD และ Villa','mix'],['rampEnd','อัตราเข้าพักเป้าหมาย (หลัง 12 เดือน)','range'],['conv','อัตราปิดการขาย','pct'],['churn','ผู้พักออก ต่อเดือน','pct']];
+const CGRP=[['เวลา',['clinicOpen','opdOpen','ipdOpen','villaOpen']],['รายได้ (ยังไม่มีประมาณการ ค่าเริ่มต้น = 0)',['clinicRev','opdRev','addon','tier','mix']],['ต้นทุน',['loan']],['การขายและการเข้าพัก',['rampEnd','conv','churn']]];
+const CTAG={clinicOpen:['plan','แผน'],opdOpen:['plan','แผน'],ipdOpen:['asm','รอวันส่งมอบ DG'],villaOpen:['plan','แผน'],clinicRev:['asm','สมมติ'],opdRev:['asm','สมมติ'],addon:['asm','สมมติ'],tier:['real','ราคาจากไฟล์'],mix:['asm','สมมติ · ค่าเริ่มต้นตรงกับ Excel'],loan:['asm','สมมติ 6% 15 ปี'],rampEnd:['asm','สมมติ'],conv:['asm','สมมติ'],churn:['asm','สมมติ']};
+const SCN=[['แย่สุด: รายได้ใหม่ = 0',{},'ค่าเริ่มต้น คลินิก OPD และแพ็กเกจไม่มีรายได้เลย มีแค่ค่าเตียง'],
+ ['คลินิกเท่าทุน',{clinicRev:302000},'คลินิกหน้า รพ. มีรายได้เท่าค่าใช้จ่าย 302,000/เดือน'],
+ ['คลินิก + OPD เท่าทุน',{clinicRev:302000,opdRev:1100000},'คลินิกเท่าทุน และ OPD รพ. มีรายได้คุ้มค่าจ้างและค่าสถานที่ 1,100,000/เดือน'],
+ ['คลินิก + OPD + แพ็กเกจ',{clinicRev:302000,opdRev:1100000,addon:17300},'เพิ่มแพ็กเกจเฉลี่ย 17,300 บาท/ผู้พัก (ราว 1 ใน 5 ซื้อ Post Stroke)'],
+ ['ราคาขายระดับ 3',{tier:3},'รายได้ใหม่ = 0 แต่ใช้ราคาเตียงระดับ 3'],
+ ['ผู้พักเป็นเคส Rehab ทั้งหมด',{mix:[0,0,100,0,0]},'รายได้ใหม่ = 0 แต่ทุกเตียงคิดราคากลุ่ม Rehabilitation (รวมกายภาพ PTA 6 ครั้ง/สัปดาห์)'],
+ ['รพ. เลื่อนเปิด ธ.ค. 70',{ipdOpen:12,opdOpen:12,villaOpen:13},'IPD และ OPD เปิด ธ.ค. 70 · Villa ม.ค. 71 · รายได้ใหม่ = 0']];
+const SKEYS=['clinicRev','opdRev','addon','tier','ipdOpen','opdOpen','villaOpen'];
+function scnP(o){return Object.assign(JSON.parse(JSON.stringify(DEF)),o)}
+function scnMatch(){return SCN.findIndex(([,o])=>{const q=scnP(o);return SKEYS.every(k=>P[k]===q[k])&&P.loan===DEF.loan&&P.conv===DEF.conv&&P.churn===DEF.churn&&P.ramp[11]===DEF.ramp[11]&&P.clinicOpen===DEF.clinicOpen&&JSON.stringify(mixW(P))===JSON.stringify(mixW(q))})}
+function applyScn(i){P=scnP(SCN[i][1]);store.set('P2',P);buildCtrl();run()}
+function drawScn(){const m=scnMatch();
+  $('#scn').innerHTML=SCN.slice(0,4).map(([n],i)=>'<button class="'+(i===m?'on':'')+'" data-i="'+i+'">'+n+'</button>').join('')+(m<0?'<button class="on" disabled>ปรับเอง</button>':m>=4?'<button class="on" disabled>'+SCN[m][0]+'</button>':'');
+  $('#scn').querySelectorAll('button[data-i]').forEach(b=>b.onclick=()=>applyScn(+b.dataset.i));
+  $('#scnNote').textContent=m>=0?SCN[m][2]:'ค่าที่ปรับเองไม่ตรงกับสถานการณ์สำเร็จรูป · กดสถานการณ์ด้านบนเพื่อกลับ';
+}
+function drawRev(m){
+  const y1=m.slice(0,12),y2=m.slice(12),last=m[23],S=(a,k)=>a.reduce((t,x)=>t+x[k],0);
+  const rows=[['ค่าเตียง IPD 50 เตียง','ipdR','จำนวนผู้พัก × '+fmt(ipdP(P))+' บาท'],['ค่าห้อง Villa 20 ห้อง','vilR','จำนวนผู้พัก × '+fmt(villaP(P))+' บาท'],['คลินิกหน้า รพ. (ก่อนย้ายเข้า)','clinR',P.clinicRev?fmt(P.clinicRev)+'/เดือน':'ยังไม่มีประมาณการ (คุ้มทุน 302,000)'],['OPD รพ.','opdR',P.opdRev?fmt(P.opdRev)+'/เดือน':'ยังไม่มีประมาณการ (คุ้มตัวเอง 1,100,000)'],['แพ็กเกจเสริม','addR',P.addon?fmt(P.addon)+'/ผู้พัก/เดือน':'ยังไม่มีประมาณการ (ราคา Post Stroke 69,000–125,000)']];
+  const c=v=>'<td class="n">'+(v?fmt(v):'<span class="note">0</span>')+'</td>';
+  let h='<tr><th>แหล่งรายได้</th><th class="n">ปี 2570</th><th class="n">ปี 2571</th><th class="n">ต่อเดือนตอนเต็ม ('+mlabel(24)+')</th><th>คิดอย่างไร</th></tr>';
+  rows.forEach(([n,k,how])=>{h+='<tr><td>'+n+'</td>'+c(S(y1,k))+c(S(y2,k))+c(last[k])+'<td class="note">'+how+'</td></tr>'});
+  h+='<tr><th>รายได้รวม</th><th class="n">'+fmt(S(y1,'rev'))+'</th><th class="n">'+fmt(S(y2,'rev'))+'</th><th class="n">'+fmt(last.rev)+'</th><th></th></tr>';
+  h+='<tr><td>ค่าใช้จ่ายรวม</td><td class="n">'+fmt(S(y1,'cost'))+'</td><td class="n">'+fmt(S(y2,'cost'))+'</td><td class="n">'+fmt(last.cost)+'</td><td class="note">ค่าจ้างตามใบอนุญาต ค่าสถานที่ ค่าผ่อน</td></tr>';
+  const nt=[S(y1,'net'),S(y2,'net'),last.net];
+  h+='<tr><th>กำไร/ขาดทุน</th>'+nt.map(v=>'<th class="n '+(v<0?'neg':'pos')+'">'+fmt(v)+'</th>').join('')+'<th class="note">'+(last.net<0?'ตอนเต็มยังขาด '+fmt(-last.net)+'/เดือน ≈ '+fmt(-last.net/Math.max(1,last.rt))+' บาท/ผู้พัก':'ตอนเต็มมีกำไร')+'</th></tr>';
+  $('#revTable').innerHTML=h;
+  const t=P.tier-1;
+  $('#revHow').innerHTML='<p class="note">ราคาจากชีต "ราคาแพ็กเกจ" ระดับราคา '+P.tier+' · ค่าเตียงเฉลี่ยถ่วงตามสัดส่วนกลุ่มอาการที่เลือก</p>'
+   +'<div class="scroll"><table><tr><th>กลุ่มอาการ</th><th class="n">สัดส่วน</th><th class="n">โซนรวม (38)</th><th class="n">ห้องคู่ (10)</th><th class="n">ห้องเดี่ยว (2)</th><th class="n">เฉลี่ย IPD</th><th class="n">Villa (20)</th></tr>'
+   +MIXG.map((g,j)=>'<tr><td>'+g+'</td><td class="n">'+Math.round(mixW(P)[j]*100)+'%</td><td class="n">'+fmt(PR.common[j][t])+'</td><td class="n">'+fmt(PR.double[j][t])+'</td><td class="n">'+fmt(PR.single[j][t])+'</td><td class="n">'+fmt((38*PR.common[j][t]+10*PR.double[j][t]+2*PR.single[j][t])/50)+'</td><td class="n">'+fmt(PR.villa[j][t])+'</td></tr>').join('')
+   +'<tr><th>ที่ใช้ในโมเดล</th><th></th><th></th><th></th><th></th><th class="n">'+fmt(ipdP(P))+'</th><th class="n">'+fmt(villaP(P))+'</th></tr></table></div>'
+   +'<p class="note">จำนวนผู้พัก = เตียง × อัตราเข้าพัก · อัตราเข้าพักไต่ขึ้นทุกเดือนหลังเปิด: '+P.ramp.map(x=>Math.round(x*100)+'%').join(' → ')+' · IPD เปิด '+mlabel(P.ipdOpen)+' · Villa เปิด '+mlabel(P.villaOpen)+' · โมเดลถือว่าเก็บเงินได้ในเดือนที่ให้บริการ</p>';
+  const mi=$('#mixInfo');if(mi){const tot=(P.mix||DEF.mix).reduce((a,b)=>a+(+b||0),0);mi.innerHTML='รวม '+tot+'%'+(tot!==100?' <span class="tag warn">ไม่ครบ 100 ระบบปรับสัดส่วนให้อัตโนมัติ</span>':'')+' · ค่าเตียงเฉลี่ย IPD '+fmt(ipdP(P))+' · Villa '+fmt(villaP(P))}
+}
+function drawScnTable(){
+  $('#scnTable').innerHTML='<tr><th>สถานการณ์</th><th class="n">เงินที่ต้องเตรียมสูงสุด</th><th class="n">ผลปี 2570</th><th class="n">ผลปี 2571</th><th>เดือนแรกที่มีกำไร</th></tr>'+SCN.map(([n,o],i)=>{const q=scnP(o),r=summary(model(q),q);
+    return '<tr><td data-i="'+i+'">'+n+'</td><td class="n neg">'+fm(-r.peak)+'</td><td class="n '+(r.y1<0?'neg':'pos')+'">'+fm(r.y1)+'</td><td class="n '+(r.y2<0?'neg':'pos')+'">'+fm(r.y2)+'</td><td>'+(r.be?mlabel(r.be.i):'เกิน 24 เดือน')+'</td></tr>'}).join('');
+  $('#scnTable').querySelectorAll('td[data-i]').forEach(td=>td.onclick=()=>{applyScn(+td.dataset.i);window.scrollTo({top:$('#fin').offsetTop-20,behavior:'smooth'})});
+}
+function buildCtrl(){
+  const box=$('#ctrl');box.innerHTML='';
+  const ORDER=CGRP.flatMap(g=>g[1]);
+  CGRP.forEach(([g,ks])=>{const h=document.createElement('div');h.className='cgh';h.textContent=g;box.appendChild(h);
+  CTRL.filter(c=>ks.includes(c[0])).sort((a,b)=>ORDER.indexOf(a[0])-ORDER.indexOf(b[0])).forEach(([k,l,t])=>{
+    const w=document.createElement('div');let h='<label>'+l+'</label>';
+    if(t==='month'){h+='<select data-k="'+k+'">'+Array.from({length:24},(_,i)=>'<option value="'+(i+1)+'"'+(P[k]==i+1?' selected':'')+'>'+mlabel(i+1)+'</option>').join('')+'</select>'}
+    else if(t==='phase'){h+='<select data-k="phase"><option value="0"'+(P.phase==0?' selected':'')+'>A: เปิดเต็ม 2 ห้องตรวจ</option><option value="1"'+(P.phase==1?' selected':'')+'>B: เปิดเล็ก 1 ห้องตรวจก่อน</option></select>'}
+    else if(t==='tier'){h+='<select data-k="tier">'+[1,2,3].map(v=>'<option value="'+v+'"'+(P.tier==v?' selected':'')+'>ราคาขาย '+v+'</option>').join('')+'</select>'}
+    else if(t==='num'){h+='<input type="text" inputmode="numeric" data-num="1" data-k="'+k+'" value="'+fmt(P[k])+'">'}
+    else if(t==='pct'){h+='<input type="number" step="1" min="1" max="100" data-k="'+k+'" data-pct="1" value="'+Math.round(P[k]*100)+'">'}
+    else if(t==='mix'){w.className='mixw';h+='<div class="mixg">'+MIXG.map((g,j)=>'<label class="mixi"><span>'+g+'</span><input type="number" min="0" max="100" step="5" data-mix="'+j+'" value="'+((P.mix||DEF.mix)[j]||0)+'"></label>').join('')+'</div><div class="note" id="mixInfo"></div>'}
+    else if(t==='range'){h+='<input type="range" min="50" max="100" step="1" data-k="rampEnd" value="'+Math.round(P.ramp[11]*100)+'"><span class="rv" id="rampv">'+Math.round(P.ramp[11]*100)+'%</span>'}
+    const tg=CTAG[k];if(tg)h=h.replace('</label>','<span class="ttag '+tg[0]+'">'+tg[1]+'</span></label>');
+    w.innerHTML=h;box.appendChild(w)})});
+  box.querySelectorAll('[data-k]').forEach(el=>el.oninput=()=>{
+    const k=el.dataset.k;let v=el.dataset.num?(+el.value.replace(/[^\d.]/g,'')||0):+el.value;
+    if(k==='rampEnd'){const s=v/100/DEF.ramp[11];P.ramp=DEF.ramp.map(x=>Math.min(1,x*s));$('#rampv').textContent=v+'%'}
+    else P[k]=el.dataset.pct?v/100:v;
+    store.set('P2',P);run()});
+  box.querySelectorAll('[data-mix]').forEach(el=>el.oninput=()=>{P.mix=[...box.querySelectorAll('[data-mix]')].map(x=>Math.max(0,+x.value||0));store.set('P2',P);run()});
+  box.querySelectorAll('[data-num]').forEach(el=>el.onblur=()=>{el.value=fmt(+el.value.replace(/[^\d.]/g,'')||0)});
+}
+$('#reset').onclick=()=>applyScn(0);
+
+function stat(l,v,cls,box){return '<div class="card stat '+(box||'')+'"><div class="l">'+l+'</div><div class="v '+(cls||'')+'">'+v+'</div></div>'}
+function lineChart(el,vals,labels,opt){
+  const W=1000,H=opt.h||260,pl=70,pr=16,pt=16,pb=34;
+  const mn=Math.min(0,...vals),mx=Math.max(0,...vals),rng=(mx-mn)||1;
+  const X=i=>pl+i*(W-pl-pr)/(vals.length-1),Y=v=>pt+(mx-v)*(H-pt-pb)/rng;
+  let s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="'+opt.title+'">';
+  const step=opt.step;for(let t=Math.ceil(mn/step)*step;t<=mx+1;t+=step){s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(t)+'" y2="'+Y(t)+'" stroke="'+(t===0?'#9AA5A1':'#E6EAE9')+'"/><text x="'+(pl-8)+'" y="'+(Y(t)+4)+'" font-size="12" text-anchor="end" fill="#5F6B67">'+opt.tick(t)+'</text>'}
+  labels.forEach((l,i)=>{if(i%3===0)s+='<text x="'+X(i)+'" y="'+(H-10)+'" font-size="12" text-anchor="middle" fill="#5F6B67">'+l+'</text>'});
+  if(opt.bars){vals.forEach((v,i)=>{const bw=(W-pl-pr)/vals.length*.6;s+='<rect x="'+(X(i)-bw/2)+'" y="'+Math.min(Y(v),Y(0))+'" width="'+bw+'" height="'+Math.abs(Y(v)-Y(0))+'" fill="#3A7D68"><title>'+labels[i]+': '+v+'</title></rect>'})}
+  else{s+='<polyline fill="none" stroke="#245B4A" stroke-width="2.5" points="'+vals.map((v,i)=>X(i)+','+Y(v)).join(' ')+'"/>';
+    vals.forEach((v,i)=>s+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3.5" fill="'+(v<0?'#B91C1C':'#15803D')+'"><title>'+labels[i]+': '+fmt(v)+' บาท</title></circle>');
+    const k=vals.indexOf(Math.min(...vals));if(vals[k]<0){const an=k>vals.length*.75?'end':k<vals.length*.25?'start':'middle';s+='<text x="'+X(k)+'" y="'+(Y(vals[k])+20)+'" font-size="13" text-anchor="'+an+'" fill="#B91C1C" font-weight="600">ต่ำสุด '+fm(vals[k])+'</text>';}}
+  el.innerHTML=s+'</svg>';
+}
+function run(){
+  const m=model(P),s=summary(m);
+  const ss=(l,v,cls,sub)=>'<div class="card stat"><div class="l">'+l+'</div><div class="v '+(cls||'')+'">'+v+'</div><div class="sub">'+sub+'</div></div>';
+  $('#finStats').innerHTML=ss('เงินที่ต้องเตรียมสูงสุด',fm(-s.peak),'bad','จุดต่ำสุดของเงินสดสะสม = เงินสำรองที่ต้องมี')+ss('เดือนแรกที่มีกำไร',s.be?mlabel(s.be.i):'เกิน 24 เดือน','','เดือนแรกหลังเปิด IPD ที่รายรับ > รายจ่าย')+ss('ผลปี 2570',fm(s.y1),s.y1<0?'bad':'','กำไร/ขาดทุนโครงการทั้งปี')+ss('ผลปี 2571',fm(s.y2),s.y2<0?'bad':'','ปีแรกที่ รพ. และ Villa เปิดเต็มปี');
+  drawScn();drawScnTable();drawRev(m);
+  lineChart($('#chart'),m.map(x=>x.cum),m.map(x=>mlabel(x.i)),{title:'เงินสดสะสม',step:2e6,tick:t=>(t/1e6)+' ล.'});
+  let q='<tr><th>ไตรมาส</th><th class="n">ผู้พักปลายไตรมาส</th><th class="n">รายได้</th><th class="n">ค่าใช้จ่าย</th><th class="n">กำไร/ขาดทุน</th><th class="n">เงินสดสะสม</th></tr>';
+  for(let k=0;k<8;k++){const g=m.slice(k*3,k*3+3),r=g.reduce((a,x)=>a+x.rev,0),c=g.reduce((a,x)=>a+x.cost,0);
+    q+='<tr><td>Q'+(k%4+1)+'/'+(70+Math.floor(k/4))+'</td><td class="n">'+g[2].rt+'</td><td class="n">'+fmt(r)+'</td><td class="n">'+fmt(c)+'</td><td class="n '+(r-c<0?'neg':'pos')+'">'+fmt(r-c)+'</td><td class="n '+(g[2].cum<0?'neg':'pos')+'">'+fmt(g[2].cum)+'</td></tr>'}
+  $('#qt').innerHTML=q;
+  // sales
+  $('#salesLead').textContent='ต้องได้ผู้สนใจ '+s.l1+' รายในปี 2570 และ '+s.l2+' รายในปี 2571 (ปิดการขาย '+Math.round(P.conv*100)+'% ผู้พักออก '+Math.round(P.churn*100)+'%/เดือน) เริ่มหาผู้สนใจก่อนเปิดอย่างน้อย 2 เดือน';
+  const src=[['ส่งต่อจากโรงพยาบาลพันธมิตร',.35,'Group Marketing'],['คลินิกหมอต้น / OPD คลินิกเวชกรรม',.20,'MD'],['ออนไลน์และการตลาด',.20,'Group Marketing'],['ย้ายจากสาขา 1–4 และ TQL (ขึ้นห้องพิเศษ/Villa)',.15,'MD'],['ตลาดต่างประเทศ (เริ่ม Q4)',.10,'Group Marketing']];
+  $('#st').innerHTML='<tr><th>แหล่งผู้พัก (ข้อเสนอ)</th><th class="n">สัดส่วน</th><th class="n">lead 2570</th><th class="n">lead 2571</th><th>สายที่ดูแล</th></tr>'+src.map(x=>'<tr><td>'+x[0]+'</td><td class="n">'+x[1]*100+'%</td><td class="n">'+Math.round(x[1]*s.l1)+'</td><td class="n">'+Math.round(x[1]*s.l2)+'</td><td>'+x[2]+'</td></tr>').join('');
+  lineChart($('#leadChart'),m.map(x=>x.lead),m.map(x=>mlabel(x.i)),{title:'ผู้สนใจรายเดือน',step:10,tick:t=>t,bars:1,h:220});
+  // options A/B
+  const PO=Object.assign({},P,{clinicOpen:99,opdOpen:3,phase:0}),ro=summary(model(PO),PO),rn=summary(model(P),P),PB=Object.assign({},P,{clinicRev:P.clinicCost}),rbk=summary(model(PB),PB);
+  $('#opt').innerHTML='<tr><th>เรื่อง</th><th>แผนเดิม: OPD รพ. มี.ค. 70</th><th>แผนใหม่: คลินิกหน้า รพ. '+mlabel(P.clinicOpen)+'</th></tr>'
+   +'<tr><td>OPD ก่อนเปิด IPD</td><td>OPD เต็มที่ รพ. 822,000 บาท/เดือน + ค่าสถานที่ รพ. ตั้งแต่ มี.ค.</td><td>คลินิกแพทย์ + กายภาพที่อาคารหน้า รพ. 8 คน '+fmt(P.clinicCost)+' บาท/เดือน แล้วย้ายเข้า รพ. '+mlabel(P.opdOpen)+'</td></tr>'
+   +'<tr><td>ใบอนุญาตคลินิก</td><td>คลินิกแยกที่อาคาร รพ. ต้องรออาคาร OPD เสร็จ</td><td>ยื่นที่อาคารสำนักงานหน้า รพ. ภายใน 30 พ.ย. 69 (ต้องให้อาคารเสร็จก่อน)</td></tr>'
+   +'<tr><td>เงินที่ต้องเตรียมสูงสุด</td><td class="neg">'+fm(-ro.peak)+'</td><td class="neg">'+fm(-rn.peak)+'</td></tr>'
+   +'<tr><td>ผลปี 2570</td><td>'+fm(ro.y1)+'</td><td>'+fm(rn.y1)+'</td></tr>'
+   +'<tr><td>ถ้าคลินิกหน้า รพ. มีรายได้เท่าทุน</td><td>–</td><td>'+fm(-rbk.peak)+'</td></tr>'
+   +'<tr><td>ตลาดต่างประเทศ (ยังต้องเลือก)</td><td colspan="2">ใช้ได้กับทั้งสองแผน: A เริ่มขายในสวิส ก.ค. 70 หรือ B ทดลองขาย Q4 แล้วขายเต็มปี 2571 (เสนอ B)</td></tr>';
+  kpiRender();
+  // summary page
+  $('#sumStats').innerHTML=stat('เงินที่ต้องเตรียมสูงสุด (24 เดือน)',fm(-s.peak),'bad','hero')+stat('ผลปี 2570',fm(s.y1))+stat('เดือนแรกที่มีกำไร',s.be?mlabel(s.be.i):'เกิน 24 เดือน')+stat('คลินิกหน้า รพ. ต้องมีรายได้','≥ '+fmt(P.clinicCost)+'/เดือน')+stat('รายได้ OPD + แพ็กเกจ รพ. ที่ต้องมี','≈ 1.04 ล้าน/เดือน')+stat('ค่าใช้จ่าย รพ. + Villa ตอนเต็ม (รวมค่าผ่อน)','4.53 ล้าน/เดือน')+stat('พนักงาน รพ. + Villa','118 คน')+stat('ผู้สนใจที่ต้องหาปี 2570',s.l1+' ราย');
+}
+
+// ---------- tasks
+const ST=['ยังไม่เริ่ม','กำลังทำ','เสร็จ'];
+const TASKS=[['ก่อนเริ่มปี','เก็บตัวเลขจริง 6 รายการ','Group Finance','ใส่ในไฟล์แผนการเงิน ตัวเลขเงินที่ต้องเตรียมเป็นตัวจริง','23 พ.ย. 69'],['Q1','ติดตามคำขอ ส.พ. ที่ยื่นแล้ว (แก้ 11 จุด) + ถาม สสจ. เรื่อง Villa','MD','ไม่ถูกตีกลับ และรู้ใบอนุญาต Villa','31 ม.ค. 70'],['Q2','เริ่มสรรหาบุคลากร รพ.','HR','มีรายชื่อผู้สมัครสำรองก่อนเปิด IPD','30 มิ.ย. 70'],['Q1','ยุทธศาสตร์ปี 2570 + สื่อสารให้พนักงานรับทราบ','CEO + MD','กรรมการอนุมัติ และพนักงานทุกแผนกรับทราบ','31 ม.ค. 70'],['ก่อนเริ่มปี','ยื่นใบอนุญาตคลินิกแพทย์ + กายภาพที่อาคารสำนักงานหน้า รพ.','MD','ได้ใบรับคำขอ ปรับปรุงเสร็จ พร้อมรับตรวจ','30 พ.ย. 69'],['Q1','เปิดคลินิกแพทย์ + กายภาพที่อาคารสำนักงานหน้า รพ.','MD','เปิดให้บริการ ม.ค. 70 (ตัดสินใจ 26 ธ.ค. · สำรอง 1 ก.พ.) รายได้ ≥302,000/เดือน','31 ม.ค. 70'],['Q1','วางรูปแบบการจัดการใหม่','MD','รูปแบบการจัดการใหม่ประกาศใช้ทุกสาขา','31 มี.ค. 70'],['Q1','ประกาศโครงสร้าง CEO–MD + แต่งตั้งผู้บริหารและหัวหน้าแผนก','CEO + HR','ผังองค์กรและ JD ประกาศใช้','31 มี.ค. 70'],['Q1','กำหนด KPI รายแผนก','ทุกหน่วย (HR ประสาน)','KPI และค่าเป้าครบทุกแผนก','31 มี.ค. 70'],['Q2','ประเมิน KPI รอบแรก','HR','รายงานผล KPI ครึ่งปีแรก','30 มิ.ย. 70'],['Q2','ประเมิน Performance รายบุคคล','HR + หัวหน้าแผนก','ผลประเมินรายคน + แผนพัฒนา','30 มิ.ย. 70'],['Q2','ทบทวนแผนกลางปี','CEO','ปรับแผนครึ่งปีหลังจากผล KPI','30 มิ.ย. 70'],['Q3','วางโครงสร้าง รพ.','MD + Group Finance','ผังองค์กร อัตรากำลัง งบดำเนินงาน รพ.','30 ก.ย. 70'],['Q1–Q2','วางรากฐาน Tranquila International (ทำทั้งสองทางเลือก)','CEO + Group Marketing','ตอบ 8 คำถาม แพ็กเกจ A ข้อตกลง SHP เว็บไซต์ EN/DE','30 มิ.ย. 70'],['Q3–Q4','ยื่นขออนุญาต Villa','MD','ได้ใบอนุญาตก่อนเริ่ม operate','30 พ.ย. 70'],['Q3–Q4','เปิดตัว Tranquila International ในสวิส (B: ทดลองขาย Q4)','Group Marketing','lead ต่างชาติ 25 ราย ผู้พักทดลอง 1–3 คน (ทาง A)','31 ธ.ค. 70'],['Q4','ย้ายคลินิกเข้าเป็น OPD รพ. แล้วคืนอาคารหน้าเป็นออฟฟิศ (พร้อมเปิด IPD)','MD','ทีม 8 คนเป็นแกน OPD 31 คน ย้ายเวชระเบียนครบ','31 ต.ค. 70'],['Q4','เปิดให้บริการ Villa ใหม่','MD','เปิดรับผู้พัก','31 ธ.ค. 70'],['Q4','สรุปผลทั้งปี + แผนปี 2571','CEO','รายงานผลปีและแผนปีถัดไป','31 ธ.ค. 70'],['Q1','ตั้งเป้าปี 2570 ทั้ง 6 โปรเจ็คต่อเนื่อง (Home Care · Home Rehab · Single Procedure · CM Derma Plus · แพลตฟอร์ม · Health Product)','เจ้าของโปรเจ็คแต่ละคน','เป้าและ KPI ครบทุกโปรเจ็ค CEO อนุมัติ','31 ม.ค. 70'],['ทั้งปี','ระบบแฟรนไชส์กับ Franbiz','MD','คู่มือและระบบแฟรนไชส์พร้อมขาย','ตามสัญญา'],['ทั้งปี','ติดตามก่อสร้าง รพ. กับ DG และธนาคาร','Group Finance','รายงานความคืบหน้ารายเดือน','ทุกเดือน']];
+let tstat=store.get('tstat4',TASKS.map((_,i)=>i>=19?1:0)),tfil=matchMedia('(max-width:640px)').matches?'ก่อนเริ่มปี':'ทั้งหมด';
+function drawTasks(){
+  const qs=['ทั้งหมด','ก่อนเริ่มปี','Q1','Q2','Q3','Q4','ทั้งปี'];
+  $('#tf').innerHTML=qs.map(q=>'<button class="'+(q===tfil?'on':'')+'" data-q="'+q+'">'+q+'</button>').join('');
+  $('#tf').querySelectorAll('button').forEach(b=>b.onclick=()=>{tfil=b.dataset.q;drawTasks()});
+  $('#tt').innerHTML='<tr><th>ไตรมาส</th><th>งาน</th><th>สายรับผิดชอบ</th><th>ผลลัพธ์ที่ต้องได้</th><th>ส่งภายใน</th><th>สถานะ</th></tr>'+TASKS.map((t,i)=>(tfil==='ทั้งหมด'||t[0].startsWith(tfil))?'<tr><td>'+t[0]+'</td><td>'+t[1]+'</td><td>'+t[2]+'</td><td>'+t[3]+'</td><td>'+t[4]+'</td><td><select class="st" data-i="'+i+'">'+ST.map((s,j)=>'<option value="'+j+'"'+(tstat[i]==j?' selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>':'').join('');
+  $('#tt').querySelectorAll('select').forEach(el=>el.onchange=()=>{tstat[+el.dataset.i]=+el.value;store.set('tstat4',tstat)});
+}
+
+// ---------- data request
+const DATA=['รายได้ ค่าใช้จ่าย อัตราเข้าพักปี 2569 ทุกหน่วยธุรกิจ (Group Finance)','เงินลงทุนรวม: ค่าก่อสร้าง DG อุปกรณ์ ตกแต่ง (Group Finance)','วงเงินกู้ ดอกเบี้ย ระยะเวลา เดือนเริ่มผ่อน (Group Finance)','ประมาณการผู้ป่วย OPD ต่อวัน และรายได้ต่อครั้ง (MD + Group Marketing)','วันส่งมอบอาคาร รพ. และ Villa จาก DG (MD)','ราคาแพ็กเกจ Villa ที่ยืนยันแล้ว (Group Marketing)'];
+let dchk=store.get('data',{});
+function drawData(){
+$('#datareq').innerHTML=DATA.map((x,i)=>'<label><input type="checkbox" data-i="'+i+'"'+(dchk[i]?' checked':'')+'> '+x+'</label>').join('');
+$('#datareq').querySelectorAll('input').forEach(el=>el.onchange=()=>{dchk[el.dataset.i]=el.checked;store.set('data',dchk)});
+}
+drawData();
+
+// ---------- go/no-go
+const GO={'คลินิกอาคารหน้า รพ. (เป้า ม.ค. 70) → OPD รพ. (ต.ค. 70)':['อาคารสำนักงานหน้า รพ. เสร็จ มีเลขที่บ้านและ อ.6','ได้ใบอนุญาตคลินิกจาก สสจ.เชียงใหม่ (ไม่ให้บริการก่อนได้)','แพทย์และนักกายภาพเซ็นสัญญา ใบอนุญาตวิชาชีพไม่หมดอายุ','เครื่องมือกายภาพผ่านการตรวจสภาพ และที่เดิมยังให้บริการได้','ชุดกู้ชีพ ยาฉุกเฉิน แผนส่งต่อ ระบบเวชระเบียนและการเงินพร้อม','อัตราค่าบริการและเป้ารายได้ ≥302,000 บาท/เดือน ที่ Group Finance รับรอง'],
+'IPD 50 เตียง (สมมติ ต.ค. 70)':['ใบอนุญาตสถานพยาบาลประเภทรับผู้ป่วยไว้ค้างคืน','อาคารและอุปกรณ์ผ่านการตรวจรับจาก DG','แพทย์ 1 RN 4 และผู้ช่วยพยาบาลอย่างน้อย 6 คน เริ่มงานก่อนเปิด 1 เดือน','มีผู้จองเตียงล่วงหน้าอย่างน้อย 8 คน','เงินทุนสำรองครบตามตัวเลขเงินที่ต้องเตรียม'],
+'Villa 20 ห้อง (เป้า พ.ย. 70)':['ก่อสร้างเสร็จและได้ใบอนุญาตตามประเภทที่ยืนยันแล้ว','Care manager และผู้ช่วยพยาบาลอย่างน้อย 3 คนพร้อม','มีผู้จองอย่างน้อย 3 ห้อง','ยืนยันราคาแพ็กเกจ Villa ทุกกลุ่มอาการ']};
+let gchk=store.get('go2',{});
+function drawGo(){
+$('#gonogo').innerHTML=Object.entries(GO).map(([h,a],g)=>'<div class="card chk"><b>'+h+'</b><div class="note" id="gs'+g+'"></div>'+a.map((x,i)=>'<label><input type="checkbox" data-k="'+g+'-'+i+'"'+(gchk[g+'-'+i]?' checked':'')+'> '+x+'</label>').join('')+'</div>').join('');
+function goStat(){Object.entries(GO).forEach(([h,a],g)=>{const n=a.filter((_,i)=>gchk[g+'-'+i]).length;$('#gs'+g).innerHTML=n===a.length?'<span class="tag">GO พร้อมเปิด</span>':'<span class="tag warn">ผ่าน '+n+'/'+a.length+'</span>'})}
+$('#gonogo').querySelectorAll('input').forEach(el=>el.onchange=()=>{gchk[el.dataset.k]=el.checked;store.set('go2',gchk);goStat()});goStat();
+}
+drawGo();
+
+// ---------- org
+const JDS=[
+{g:"ผู้บริหารเครือ",n:"คณะกรรมการบริษัท",e:"Board of Directors",lv:"กรรมการ",d:"–",s:"บริหาร",r:"ผู้ถือหุ้น",src:"คู่มือ",
+ p:"กำกับดูแลธรรมาภิบาลและทิศทางเชิงกลยุทธ์ของเครือ",
+ k:["กำหนดวิสัยทัศน์และนโยบายองค์กร", "อนุมัติแผนธุรกิจประจำปีและแผนระยะยาว", "พิจารณาการลงทุน การกู้ยืม และการขยายกิจการ", "แต่งตั้ง ถอดถอน และประเมิน CEO ตามข้อบังคับ", "ตรวจสอบผลประกอบการและความเสี่ยง", "กำกับให้การดำเนินงานเป็นไปตามกฎหมาย"],
+ q:["ตามข้อบังคับบริษัท · กรรมการผู้มีอำนาจลงนามตามหนังสือรับรอง: นางกรรณิการ์ วิฑูรย์ และ นางสาวประภาวรินท์ ลองงาม"]},
+{g:"ผู้บริหารเครือ",n:"ประธานเจ้าหน้าที่บริหาร",e:"CEO",lv:"ผู้บริหารระดับสูง (C-level เดียว)",d:"–",s:"บริหาร",r:"คณะกรรมการบริษัท",src:"เดิม",m:"ปรับตามร่างคู่มือ: เป็น C-level เดียว งานปฏิบัติการไปที่ MD",
+ p:"ผู้บริหารสูงสุดของเครือ รับผิดชอบกลยุทธ์ การเติบโต การลงทุน และผลสำเร็จโดยรวม ไม่สั่งการงานประจำวันของพนักงานโดยตรง",
+ k:["กำหนดกลยุทธ์การเติบโตของเครือธุรกิจ", "กำหนดเป้าหมายรายได้ กำไร และความสามารถในการแข่งขัน", "กำกับการบริหารงานของ MD", "อนุมัติงบประมาณภายในวงเงินที่ Board มอบหมาย (ไม่เกิน 2,000,000 บาท/รายการ)", "พิจารณาการลงทุนและการขยายธุรกิจ", "สร้างพันธมิตรทางธุรกิจและเครือข่ายองค์กร", "กำกับภาพลักษณ์และชื่อเสียงขององค์กร", "ติดตามผลประกอบการและความเสี่ยงทุกหน่วยธุรกิจ", "รายงานต่อ Board"],
+ q:["ปริญญาโทขึ้นไป ด้านบริหารธุรกิจ การจัดการโรงพยาบาล หรือที่เกี่ยวข้อง", "ประสบการณ์บริหารระดับสูงในธุรกิจ Healthcare หรือ Nursing Home", "ภาวะผู้นำสูง ตัดสินใจเชิงกลยุทธ์ได้", "เข้าใจธุรกิจการฟื้นฟูสมองและระบบประสาท"]},
+{g:"ผู้บริหารเครือ",n:"กรรมการผู้จัดการ",e:"Managing Director (MD)",lv:"ผู้บริหารระดับสูง",d:"–",s:"บริหาร",r:"CEO",src:"ควบ",m:"แทน MD และงานผู้อำนวยการฝ่ายปฏิบัติการเดิม",
+ p:"บริหารทุกหน่วยธุรกิจโดยตรงภายใต้กรอบงบประมาณ นโยบาย และวงเงินที่ได้รับอนุมัติ (ไม่เกิน 500,000 บาท/รายการ)",
+ k:["บริหารและควบคุมธุรกิจทั้ง 5 หน่วยโดยตรง", "ควบคุมผลประกอบการของทุกหน่วยธุรกิจ", "จัดทำแผนปฏิบัติการตามกลยุทธ์ CEO", "บริหารงบประมาณ รายได้ รายจ่าย และกระแสเงินสดร่วมกับฝ่ายการเงิน", "กำกับการบริหารบุคลากรและอัตรากำลัง", "ควบคุมมาตรฐานบริการและคุณภาพ", "ติดตาม KPI ของ Unit Directors และ Group Managers", "แก้ไขปัญหาการดำเนินงานและความเสี่ยง", "จัดประชุม Executive Management ทุกสัปดาห์", "รายงานผลต่อ CEO ทุกเดือน (10 รายงาน ดูแท็บธรรมาภิบาล)"],
+ q:["ปริญญาโท ด้านบริหารธุรกิจ การจัดการ พยาบาลศาสตร์ หรือที่เกี่ยวข้อง", "ประสบการณ์บริหารปฏิบัติการใน Healthcare อย่างน้อย 8 ปี", "บริหารคนและจัดการความขัดแย้งได้ดี", "เข้าใจมาตรฐาน Nursing Home และโรงพยาบาล"]},
+{g:'ผู้บริหารเครือ',n:'ที่ปรึกษา',e:'Consultant / Advisor',lv:'–',d:'–',s:'บริหาร',r:'ให้คำปรึกษา CEO',src:'เดิม',
+ p:'ให้คำปรึกษาเชิงวิชาการและวิชาชีพ เพื่อยกระดับมาตรฐานการฟื้นฟูเฉพาะทาง',
+ k:['ให้คำแนะนำด้านการแพทย์ การพยาบาล หรือการฟื้นฟูสมองและระบบประสาท','ช่วยพัฒนาระบบการดูแลผู้ป่วยกลุ่ม Alzheimer\'s และ Swallowing training','เป็นที่ปรึกษาในการพัฒนาศักยภาพทีมสหวิชาชีพ','ให้ความเห็นต่อทิศทางการเติบโตและเทคโนโลยีใหม่ในธุรกิจ Nursing Home','ร่วมตรวจสอบและรับรองมาตรฐานการให้บริการของศูนย์'],
+ q:['ผู้เชี่ยวชาญด้านอายุรกรรมระบบประสาท พยาบาลศาสตร์ กายภาพบำบัด หรือการบริหารสถานพยาบาล','มีผลงานหรือชื่อเสียงเป็นที่ยอมรับ','ให้คำปรึกษาและถ่ายทอดความรู้ได้ดี','เป็นกลางและยึดมั่นจริยธรรมวิชาชีพ']},
+{g:"ส่วนกลาง (Group Office)",n:"ผู้จัดการฝ่ายการเงินและบัญชีกลุ่ม",e:"Group Finance & Accounting Manager",lv:"ผู้จัดการกลุ่ม (L2)",d:"–",s:"บริหาร",r:"MD",src:"ควบ",m:"แทนผู้อำนวยการฝ่ายการเงินเดิม",
+ p:"หน่วยงานส่วนกลางภายใต้ MD ให้บริการทุกหน่วยธุรกิจ",
+ k:["จัดทำงบประมาณรวมของเครือธุรกิจ", "ควบคุมรายรับ รายจ่าย และกระแสเงินสด", "จัดทำงบกำไรขาดทุนรายหน่วยธุรกิจ", "ตรวจสอบบัญชีและภาษี", "ควบคุมต้นทุนและรายงานผลประกอบการ", "ตรวจสอบเอกสารจัดซื้อและการเบิกจ่าย", "จัดทำ Financial Dashboard รายเดือน"],
+ q:["วุฒิด้านบัญชี การเงิน หรือ MBA", "CPA หรือประสบการณ์บริหารการเงิน 7–10 ปี", "ใช้ระบบ ERP และซอฟต์แวร์บัญชีได้เชี่ยวชาญ"]},
+{g:"ส่วนกลาง (Group Office)",n:"ผู้จัดการฝ่ายทรัพยากรบุคคลกลุ่ม",e:"Group Human Resources Manager",lv:"ผู้จัดการกลุ่ม (L2)",d:"–",s:"บริหาร",r:"MD",src:"คู่มือ",
+ p:"หน่วยงานส่วนกลางภายใต้ MD ให้บริการทุกหน่วยธุรกิจ",
+ k:["จัดทำโครงสร้างตำแหน่งและอัตรากำลัง", "สรรหาและคัดเลือกบุคลากร", "จัดทำระบบเงินเดือนและสวัสดิการ", "ประเมินผลงานและ KPI", "จัดทำแผนพัฒนาบุคลากร", "ควบคุมระเบียบวินัยและนโยบาย HR", "วางแผนกำลังคนรองรับการขยายธุรกิจ (118 คนสำหรับ รพ. + Villa)"],
+ q:["ปริญญาด้านบริหารทรัพยากรมนุษย์หรือที่เกี่ยวข้อง", "ประสบการณ์ HR ในธุรกิจ Healthcare 5 ปีขึ้นไป", "รู้กฎหมายแรงงานและใบอนุญาตวิชาชีพ"]},
+{g:"ส่วนกลาง (Group Office)",n:"ผู้จัดการฝ่ายปฏิบัติการกลุ่ม",e:"Group Operations Manager",lv:"ผู้จัดการกลุ่ม (L2)",d:"–",s:"บริหาร",r:"MD",src:"คู่มือ",
+ p:"หน่วยงานส่วนกลางภายใต้ MD ให้บริการทุกหน่วยธุรกิจ",
+ k:["วางระบบการปฏิบัติงานกลาง", "จัดทำ SOP และมาตรฐานการทำงาน", "ตรวจสอบประสิทธิภาพการดำเนินงาน", "ควบคุมต้นทุนและการใช้ทรัพยากร", "ติดตามผลการปฏิบัติงานแต่ละหน่วยธุรกิจ", "ประสานแก้ไขปัญหาระหว่างหน่วยงาน", "ดูแลแพลตฟอร์มระบบหลังบ้าน (ข้อเสนอ)"],
+ q:["ปริญญาด้านการจัดการ วิศวกรรมอุตสาหการ หรือที่เกี่ยวข้อง", "ประสบการณ์วางระบบปฏิบัติการ 5 ปีขึ้นไป", "วิเคราะห์กระบวนการและข้อมูลได้ดี"]},
+{g:"ส่วนกลาง (Group Office)",n:"ผู้จัดการฝ่ายคุณภาพและการกำกับดูแลกลุ่ม",e:"Group Quality & Compliance Manager",lv:"ผู้จัดการกลุ่ม (L2)",d:"–",s:"บริหาร",r:"MD",src:"คู่มือ",
+ p:"หน่วยงานส่วนกลางภายใต้ MD ให้บริการทุกหน่วยธุรกิจ",
+ k:["จัดทำมาตรฐานคุณภาพองค์กร", "ตรวจสอบการปฏิบัติตามกฎหมายและข้อกำหนด (ใบอนุญาตสถานพยาบาล ใบอนุญาตวิชาชีพ ม.38 โฆษณา)", "บริหารระบบความเสี่ยง", "ตรวจสอบข้อร้องเรียนและอุบัติการณ์", "จัดทำแผน Internal Audit", "ติดตาม CAPA", "ประสานระบบคุณภาพโรงพยาบาลและ Nursing Home", "ยกระดับรายงานความเสี่ยงร้ายแรงต่อ CEO ได้โดยตรง"],
+ q:["ปริญญาด้านพยาบาลศาสตร์ สาธารณสุข หรือการจัดการคุณภาพ", "ประสบการณ์ระบบคุณภาพ (HA/JCI/ISO) 5 ปีขึ้นไป", "รู้กฎหมายสถานพยาบาลและการคุ้มครองข้อมูลส่วนบุคคล"]},
+{g:"ส่วนกลาง (Group Office)",n:"ผู้จัดการฝ่ายการตลาดและสื่อสารองค์กรกลุ่ม",e:"Group Marketing & Corporate Communication Manager",lv:"ผู้จัดการกลุ่ม (L2)",d:"–",s:"บริหาร",r:"MD",src:"ควบ",m:"แทนงานการตลาดของ Group Marketing เดิม",
+ p:"หน่วยงานส่วนกลางภายใต้ MD ให้บริการทุกหน่วยธุรกิจ",
+ k:["วางกลยุทธ์การตลาดของทุกแบรนด์", "บริหารช่องทางออนไลน์และสื่อประชาสัมพันธ์", "วางแผนการขายและเพิ่มจำนวนลูกค้า (lead 96 รายปี 2570)", "บริหารฐานข้อมูลลูกค้าและ CRM", "วิเคราะห์ตลาดและคู่แข่ง", "ประเมินผลตอบแทนจากการตลาด", "ดูแลตลาดต่างประเทศ Tranquila International"],
+ q:["ปริญญาด้านการตลาดหรือการบริหารธุรกิจ", "ประสบการณ์การตลาด 5–7 ปี", "วัด ROI และปรับแผนจากข้อมูล", "รู้ข้อห้ามโฆษณาสถานพยาบาล (ม.38)"]},
+{g:"ส่วนกลาง (Group Office)",n:"ผู้จัดการฝ่ายพัฒนาธุรกิจกลุ่ม",e:"Group Business Development Manager",lv:"ผู้จัดการกลุ่ม (L2)",d:"–",s:"บริหาร",r:"MD",src:"ควบ",m:"รับงานกลยุทธ์และพันธมิตรจาก Group BD เดิม",
+ p:"หน่วยงานส่วนกลางภายใต้ MD ให้บริการทุกหน่วยธุรกิจ",
+ k:["วิเคราะห์โอกาสทางธุรกิจใหม่", "จัดทำ Business Plan และ Feasibility Study", "วางแผนการขยายสาขา", "ประสานนักลงทุนและพันธมิตร", "วิเคราะห์ความคุ้มค่าการลงทุน", "ติดตามความคืบหน้าโครงการใหม่"],
+ q:["ปริญญาโทด้านบริหารธุรกิจหรือการเงิน", "ประสบการณ์ Business Development หรือการลงทุน 5 ปีขึ้นไป", "ทำแบบจำลองการเงินได้"]},
+{g:"ผู้บริหารหน่วยธุรกิจ",n:"ผู้อำนวยการโรงพยาบาล",e:"Hospital Director (Unit 1 · Neuro Specialty Hospital)",lv:"ผู้อำนวยการหน่วยธุรกิจ (L2)",d:"–",s:"บริหาร",r:"MD",src:"คู่มือ",
+ p:"รับผิดชอบผลการดำเนินงานของหน่วยธุรกิจ",
+ k:["ควบคุมการดำเนินงานโรงพยาบาล (OPD + IPD 50 เตียง) และคลินิกหน้า รพ. ช่วง ม.ค.–ก.ย. 70", "บริหารรายได้และต้นทุน", "ควบคุมการใช้ทรัพยากรและอัตรากำลัง", "ประสาน Medical Director และ Nursing Director", "ควบคุมมาตรฐานบริการ", "ติดตาม Occupancy และ Patient Satisfaction", "รายงานผลต่อ MD", "<b>ไม่แทรกแซงการตัดสินใจทางคลินิก</b> ที่เป็นอำนาจของ Medical Director, Nursing Director และผู้ดำเนินการสถานพยาบาลตามกฎหมาย"],
+ q:["ปริญญาโทด้านการบริหารโรงพยาบาลหรือสาธารณสุข", "ประสบการณ์บริหารโรงพยาบาล 5 ปีขึ้นไป"]},
+{g:"ผู้บริหารหน่วยธุรกิจ",n:"ผู้อำนวยการศูนย์",e:"Facility Director (Unit 2 · Chiangmai Nursing Homecare)",lv:"ผู้อำนวยการหน่วยธุรกิจ (L2)",d:"–",s:"บริหาร",r:"MD",src:"คู่มือ",
+ p:"รับผิดชอบผลการดำเนินงานของหน่วยธุรกิจ",
+ k:["บริหารศูนย์ดูแลผู้สูงอายุและผู้ป่วย (สาขา 1–4 · 80 เตียง)", "ควบคุมจำนวนเตียงและอัตราการเข้าพัก", "บริหารบุคลากรและตารางเวร", "ควบคุมคุณภาพการดูแล", "ควบคุมรายได้ ค่าใช้จ่าย และต้นทุนต่อเตียง", "ดูแลความพึงพอใจของผู้รับบริการและญาติ", "รายงานผลต่อ MD"],
+ q:["ปริญญาด้านพยาบาลศาสตร์หรือการจัดการ", "ประสบการณ์บริหาร Nursing Home 5 ปีขึ้นไป"]},
+{g:"ผู้บริหารหน่วยธุรกิจ",n:"ผู้อำนวยการ Villa",e:"Villa Director (Unit 3 · Tranquila Elderly Care Villa)",lv:"ผู้อำนวยการหน่วยธุรกิจ (L2)",d:"–",s:"บริหาร",r:"MD",src:"คู่มือ",
+ p:"รับผิดชอบผลการดำเนินงานของหน่วยธุรกิจ",
+ k:["บริหาร Villa Nursing Home และ Daycare (40 เตียง · Day Care 10–15 คน)", "ควบคุมจำนวนผู้พักอาศัย", "บริหารรายได้ Villa และ Daycare", "ควบคุมมาตรฐานบริการและประสบการณ์ลูกค้า", "บริหารบุคลากร", "ดูแลการตลาดและการรับลูกค้าใหม่ร่วมกับ Group Marketing", "รายงานผลต่อ MD"],
+ q:["ปริญญาด้านพยาบาลศาสตร์ การโรงแรม หรือการจัดการ", "ประสบการณ์บริการผู้สูงอายุระดับพรีเมียม", "สื่อสารภาษาอังกฤษได้ (ลูกค้าต่างชาติ)"]},
+{g:"ผู้บริหารหน่วยธุรกิจ",n:"ผู้อำนวยการศูนย์ฝึกอบรม",e:"Training Director (Unit 4 · CMCC Training Center)",lv:"ผู้อำนวยการหน่วยธุรกิจ (L2)",d:"–",s:"บริหาร",r:"MD",src:"คู่มือ",
+ p:"รับผิดชอบผลการดำเนินงานของหน่วยธุรกิจ",
+ k:["บริหารศูนย์ฝึกอบรม", "จัดทำหลักสูตรและแผนการเรียน", "ควบคุมมาตรฐานการฝึกอบรม", "บริหารวิทยากรและผู้สอน", "บริหารรายได้และต้นทุนหลักสูตร", "ประเมินผลผู้เรียน", "พัฒนาความร่วมมือกับสถานศึกษาและหน่วยงานที่เกี่ยวข้อง", "รายงานผลต่อ MD"],
+ q:["ปริญญาด้านพยาบาลศาสตร์หรือการศึกษา", "ประสบการณ์สอนหรือบริหารหลักสูตรผู้ดูแล"]},
+{g:"ผู้บริหารหน่วยธุรกิจ",n:"ผู้อำนวยการโครงการ Villa",e:"Project Director (Unit 5 · Villa Project = Villa 20 ห้อง ในโครงการ รพ.)",lv:"ผู้อำนวยการหน่วยธุรกิจ (L2)",d:"–",s:"บริหาร",r:"MD",src:"คู่มือ",
+ p:"รับผิดชอบผลการดำเนินงานของหน่วยธุรกิจ",
+ k:["ควบคุมโครงการก่อสร้างและพัฒนา Villa (ผู้รับเหมา DG เริ่มราว 1 ธ.ค. 69)", "ติดตามงบลงทุนและระยะเวลาก่อสร้าง", "ประสานผู้รับเหมาและที่ปรึกษา", "ควบคุมคุณภาพงานก่อสร้าง", "วางแผนจัดซื้อครุภัณฑ์", "วางแผนอัตรากำลังและการสรรหาบุคลากร (19 คน)", "จัดทำแผน Pre-opening (เปิด พ.ย. 70)", "วางแผนการตลาดและการรับผู้พักอาศัย", "รายงานความคืบหน้าต่อ MD ทุกสัปดาห์"],
+ q:["ปริญญาด้านวิศวกรรม สถาปัตยกรรม หรือการบริหารโครงการ", "ประสบการณ์บริหารโครงการก่อสร้างอาคารบริการ"]},
+{g:'หน่วยธุรกิจ · พยาบาล',n:'หัวหน้าเจ้าหน้าที่',e:'Head of Staff',lv:'หัวหน้างาน',d:'พยาบาล',s:'ปฏิบัติการ',r:'Nursing Manager / Unit Director',src:'เดิม',fix:'JD เดิมระบุสายงาน "บริหาร" ควรเป็น "ปฏิบัติการ"',
+ p:'บริหารทีมพยาบาลและเจ้าหน้าที่ดูแล ให้บริการการพยาบาลฟื้นฟูที่มีคุณภาพสูงสุด',
+ k:['วางแผนงานและจัดตารางเวรทีมพยาบาลและ NA','ควบคุมมาตรฐานการดูแลผู้ป่วยตามแผนการรักษาและฟื้นฟู','ให้คำปรึกษาและแก้ปัญหาด้านการพยาบาลแก่ทีม','ประสานกับแพทย์และนักวิชาชีพอื่นในการฟื้นฟูผู้ป่วย','อบรมและพัฒนาเจ้าหน้าที่ดูแลรุ่นใหม่'],
+ q:['ปริญญาตรีพยาบาลศาสตร์ มีใบอนุญาตประกอบวิชาชีพ','ประสบการณ์พยาบาลฟื้นฟูหรือดูแลผู้สูงอายุอย่างน้อย 5 ปี','บริหารทีมและมีภาวะผู้นำ','มีความรู้เฉพาะทางด้านการฟื้นฟูระบบประสาท']},
+{g:'หน่วยธุรกิจ · พยาบาล',n:'หัวหน้าสาขา',e:'Branch Manager',lv:'หัวหน้างาน',d:'พยาบาล',s:'ปฏิบัติการ',r:'Facility Director',src:'เดิม',
+ p:'บริหารและดูแลความเรียบร้อยโดยรวมของสาขาให้เป็นไปตามมาตรฐานบริษัท',
+ k:['ควบคุมการปฏิบัติงานของพนักงานทุกแผนกในสาขา','บริหารงบรายจ่ายและควบคุมต้นทุนของสาขา','ต้อนรับและให้ข้อมูลแก่ผู้มาติดต่อและญาติผู้ป่วย','จัดการข้อร้องเรียนและรักษาความสัมพันธ์กับชุมชน','รายงานผลการดำเนินงานและสถิติของสาขาต่อผู้บริหาร'],
+ q:['ปริญญาตรีขึ้นไป ด้านการจัดการหรือที่เกี่ยวข้อง','ประสบการณ์หัวหน้างานอย่างน้อย 3 ปี','Service Mind และแก้ปัญหาได้ดี','เป็นผู้นำ ทำงานภายใต้ความกดดันได้']},
+{g:'หน่วยธุรกิจ · พยาบาล',n:'พยาบาลวิชาชีพ',e:'Registered Nurse (RN)',lv:'เจ้าหน้าที่',d:'พยาบาล',s:'ปฏิบัติการ',r:'Head of Staff',src:'ใหม่',
+ p:'ให้การพยาบาลตามมาตรฐานวิชาชีพ และควบคุมการดูแลผู้พักในเวรให้ปลอดภัย',
+ k:['ประเมินอาการแรกรับและทำแผนการพยาบาลรายบุคคล','ทำหัตถการตามขอบเขตวิชาชีพ เช่น เปลี่ยนสาย NG ดูแล Tracheostomy tube ทำแผล','จัดยาตามคำสั่งแพทย์และบันทึก MAR','หัวหน้าเวร: มอบหมายงาน PN/NA ส่งเวร และตรวจบันทึก','เฝ้าระวังอาการเปลี่ยนแปลง รายงานแพทย์และญาติ และรายงานอุบัติการณ์'],
+ q:['ปริญญาตรีพยาบาลศาสตร์ ใบอนุญาตไม่หมดอายุ','ผ่าน BLS/CPR','มีประสบการณ์ดูแลผู้สูงอายุหรือผู้ป่วยระบบประสาท','สื่อสารและควบคุมทีมได้']},
+{g:'หน่วยธุรกิจ · พยาบาล',n:'ผู้ช่วยพยาบาล',e:'Practical Nurse (PN)',lv:'เจ้าหน้าที่',d:'พยาบาล',s:'ปฏิบัติการ',r:'RN หัวหน้าเวร',src:'ใหม่',
+ p:'ดูแลผู้พักตามแผนการพยาบาลภายใต้การกำกับของ RN',
+ k:['วัดสัญญาณชีพ บันทึก Intake/Output รายงานค่าผิดปกติต่อ RN','ให้อาหารทางสายและยาตามที่ RN มอบหมาย','ดูแลพลิกตัว ป้องกันแผลกดทับและพลัดตก','สอนและตรวจงาน NA ในเวร','บันทึกการดูแลและส่งเวร'],
+ q:['จบหลักสูตรผู้ช่วยพยาบาลที่สภาการพยาบาลรับรอง','ผ่าน BLS/CPR','ประสบการณ์ดูแลผู้สูงอายุอย่างน้อย 1 ปี','ทำงานเป็นกะได้']},
+{g:'หน่วยธุรกิจ · พยาบาล',n:'ผู้ช่วยเหลือคนไข้ / ผู้ดูแล',e:'Nurse Aide (NA)',lv:'เจ้าหน้าที่',d:'พยาบาล',s:'ปฏิบัติการ',r:'PN / RN หัวหน้าเวร',src:'ใหม่',
+ p:'ดูแลกิจวัตรประจำวันของผู้พักให้สะอาด ปลอดภัย และสุขสบาย',
+ k:['อาบน้ำ แต่งตัว เปลี่ยนผ้าอ้อม ทำความสะอาดหลังขับถ่าย','ป้อนอาหารทางปากและพลิกตัวตามตาราง','ช่วยเคลื่อนย้ายและพาเดินอย่างปลอดภัย','สังเกตอาการผิดปกติแล้วแจ้ง PN/RN ทันที','ดูแลความสะอาดเตียงและเครื่องใช้ (ไม่ทำหัตถการหรือให้ยาเอง)'],
+ q:['วุฒิ ม.3 ขึ้นไป ผ่านหลักสูตรผู้ดูแลผู้สูงอายุ หรือฝึกกับบริษัทก่อนขึ้นเวร','ผ่าน CPR พื้นฐาน','สุขภาพแข็งแรง ทำงานเป็นกะได้','ใจเย็น อดทน สุภาพกับผู้สูงอายุและญาติ']},
+{g:'หน่วยธุรกิจ · พยาบาล',n:'พนักงานขับรถและเคลื่อนย้ายผู้ป่วย',e:'Ambulance Driver & Porter',lv:'เจ้าหน้าที่',d:'พยาบาล',s:'ปฏิบัติการ',r:'Head of Staff (สาขา) / หัวหน้าพยาบาล IPD (รพ.)',src:'ควบ',m:'ควบ Ambulance Driver + เวรเปล (ตำแหน่งใหม่ของ รพ.)',
+ p:'รับส่งและเคลื่อนย้ายผู้รับบริการอย่างปลอดภัย ทั้งบนรถและภายในโรงพยาบาล และดูแลยานพาหนะให้พร้อมใช้',
+ k:['ขับรถพยาบาลหรือรถรับส่งผู้สูงอายุไปโรงพยาบาลหรือทำกิจกรรม','ช่วยพยาบาลเคลื่อนย้ายผู้ป่วยขึ้น-ลงรถ','<b>เคลื่อนย้ายผู้ป่วยภายใน รพ. ด้วยเปลหรือรถเข็น ระหว่าง OPD IPD และห้องตรวจ</b> (งานเวรเปล)','ดูแลความสะอาดรถ เปล และรถเข็น','ตรวจเครื่องยนต์ ลมยาง น้ำมัน ให้พร้อมใช้ และปฏิบัติตามกฎจราจรเคร่งครัด'],
+ q:['วุฒิ ม.3 ขึ้นไป มีใบขับขี่ประเภทที่กำหนด','ประสบการณ์ขับรถพยาบาลหรือรถสาธารณะอย่างน้อย 3 ปี','รู้เส้นทางในเชียงใหม่และพื้นที่ใกล้เคียง','ผ่านอบรมปฐมพยาบาลและการเคลื่อนย้ายผู้ป่วย']},
+{g:'หน่วยธุรกิจ · กายภาพบำบัด',n:'นักกายภาพบำบัด',e:'Physical Therapist (PT)',lv:'เจ้าหน้าที่',d:'กายภาพบำบัด',s:'ปฏิบัติการ',r:'Unit Director ของหน่วยที่สังกัด',src:'เดิม',
+ p:'ประเมินและทำหัตถการกายภาพบำบัดเพื่อฟื้นฟูสมรรถภาพทางกายให้ผู้รับบริการ',
+ k:['ประเมินร่างกายและวางแผนการรักษาทางกายภาพบำบัดรายบุคคล','ทำกายภาพบำบัดเพิ่มความแข็งแรงและการเคลื่อนไหว (Intensive PT)','ใช้เครื่องมือและเทคโนโลยีการฟื้นฟูอย่างถูกต้อง','บันทึกความก้าวหน้าและรายงานทีมสหวิชาชีพ','แนะนำญาติและผู้ดูแลเรื่องการออกกำลังกายต่อเนื่อง'],
+ q:['ปริญญาตรีกายภาพบำบัด มีใบอนุญาตประกอบวิชาชีพ','สนใจหรือเชี่ยวชาญ Neuro Rehabilitation','มนุษยสัมพันธ์ดีและอดทนสูง','สื่อสารสร้างกำลังใจให้ผู้ป่วยได้']},
+{g:'หน่วยธุรกิจ · กายภาพบำบัด',n:'ผู้ช่วยนักกายภาพบำบัด',e:'PT Assistant (PTA)',lv:'เจ้าหน้าที่',d:'กายภาพบำบัด',s:'ปฏิบัติการ',r:'Physical Therapist',src:'ใหม่',
+ p:'ช่วยผู้พักออกกำลังและฝึกการเคลื่อนไหวตามโปรแกรมที่นักกายภาพบำบัดกำหนด',
+ k:['ทำกายภาพตามแผน PT ในแพ็กเกจ Rehab (6 ครั้ง/สัปดาห์)','ช่วยฝึกเดิน การทรงตัว และการเคลื่อนย้ายตัว','เตรียมและดูแลเครื่องมือกายภาพ','บันทึกจำนวนครั้งและการตอบสนอง รายงาน PT','สอนท่าฝึกง่ายๆ ให้ NA และญาติ (ไม่ประเมินหรือเปลี่ยนแผนเอง)'],
+ q:['จบหลักสูตรผู้ช่วยนักกายภาพบำบัดหรือสาขาที่เกี่ยวข้อง','รู้หลักการเคลื่อนย้ายผู้ป่วยอย่างปลอดภัย','ผ่าน CPR','สื่อสารและให้กำลังใจผู้พักได้ดี']},
+{g:'หน่วยธุรกิจ · กิจกรรมบำบัด',n:'นักกิจกรรมบำบัด',e:'Occupational Therapist (OT)',lv:'เจ้าหน้าที่',d:'กิจกรรมบำบัด',s:'ปฏิบัติการ',r:'Unit Director ของหน่วยที่สังกัด',src:'เดิม',
+ p:'ฟื้นฟูทักษะการใช้ชีวิตประจำวันและการทำงานของสมองผ่านกิจกรรมบำบัด',
+ k:['ประเมินกิจวัตรประจำวัน (ADL) และการรับรู้ของผู้ป่วย','ออกแบบกิจกรรมฟื้นฟูกล้ามเนื้อมัดเล็กและการประสานงาน','ฝึกกลืน (Swallowing training) ร่วมกับทีมสหวิชาชีพ','จัดกิจกรรมกระตุ้นสมองสำหรับผู้ป่วย Alzheimer\'s','แนะนำการปรับสภาพแวดล้อมที่บ้านเพื่อความปลอดภัย'],
+ q:['ปริญญาตรีกิจกรรมบำบัด มีใบอนุญาตประกอบวิชาชีพ','คิดสร้างสรรค์ในการออกแบบกิจกรรมการรักษา','มีความรู้ประสาทวิทยาและจิตวิทยาผู้สูงอายุ','สื่อสารและรับฟังได้ดี']},
+{g:'หน่วยธุรกิจ · บริการ',n:'แม่ครัว',e:'Cook',lv:'เจ้าหน้าที่',d:'บริการลูกค้า',s:'ปฏิบัติการ',r:'Branch Manager',src:'เดิม',fix:'วัตถุประสงค์ใน JD เดิมคัดลอกมาจาก MD แก้เป็นข้อความด้านล่าง',
+ p:'ประกอบอาหารที่ปลอดภัย ถูกสุขอนามัย และเหมาะกับโรคของผู้รับบริการ',
+ k:['ประกอบอาหารเช้า กลางวัน เย็น สำหรับผู้รับบริการและพนักงาน','ทำอาหารเฉพาะโรคและอาหารฝึกกลืน (Soft diet, Blenderized diet)','ดูแลความสะอาดห้องครัวและเครื่องครัว','บริหารวัตถุดิบอาหารสดและของแห้ง','ตรวจคุณภาพและรสชาติอาหารให้ได้มาตรฐาน'],
+ q:['วุฒิ ม.3 ขึ้นไป หรือมีประสบการณ์ทำอาหาร','มีความรู้โภชนาการเบื้องต้นและอาหารเพื่อสุขภาพ','รักษาความสะอาดส่วนบุคคลและสุขอนามัยในการปรุงอาหาร','ใจเย็นและประณีต']},
+{g:'หน่วยธุรกิจ · บริการ',n:'แม่บ้าน',e:'Housekeeper',lv:'เจ้าหน้าที่',d:'บริการลูกค้า',s:'ปฏิบัติการ',r:'Branch Manager',src:'เดิม',
+ p:'ดูแลความสะอาดและสุขอนามัยของพื้นที่ให้บริการและห้องพักผู้ป่วย',
+ k:['ทำความสะอาดห้องพักผู้ป่วย ห้องน้ำ และพื้นที่ส่วนกลางทุกวัน','จัดการขยะติดเชื้อและขยะทั่วไปตามมาตรฐานสุขอนามัย','ดูแลความสะอาดผ้าปูที่นอน ผ้าเช็ดตัว และการส่งซักผ้า','ตรวจและแจ้งซ่อมเมื่อพบความชำรุดในพื้นที่','จัดเตรียมน้ำดื่มและของใช้จำเป็นในห้องพัก'],
+ q:['ไม่จำกัดวุฒิการศึกษา','ใจรักความสะอาดและมีระเบียบวินัย','อดทนและสุขภาพแข็งแรง','มีประสบการณ์แม่บ้านโรงพยาบาลหรือโรงแรมจะพิจารณาเป็นพิเศษ']},
+{g:'ส่วนกลาง · HR',n:'เจ้าหน้าที่บุคคลและธุรการ',e:'HR & Admin Officer',lv:'เจ้าหน้าที่',d:'บุคคลและธุรการ',s:'ส่วนกลาง',r:'Group HR Manager',src:'ควบ',m:'ควบ HR Officer + เจ้าหน้าที่ธุรการ (Admin)',
+ p:'สรรหา พัฒนา และดูแลพนักงาน พร้อมดูแลงานเอกสารและสำนักงานให้เรียบร้อย',
+ k:['สรรหาและคัดเลือกพนักงานให้ตรงความต้องการ','ทำเงินเดือน (Payroll) ภาษี และประกันสังคม','วางแผนฝึกอบรมและพัฒนาทักษะพนักงาน','ดูแลวินัย สวัสดิการ แรงงานสัมพันธ์ และกิจกรรมองค์กร','<b>งานธุรการ:</b> จัดทำและจัดเก็บเอกสาร จดหมายรับส่ง รับโทรศัพท์และประสานผู้มาติดต่อ','<b>งานธุรการ:</b> ดูแลอุปกรณ์สำนักงาน ประสานงานซ่อม จองยานพาหนะและที่พัก'],
+ q:['ปริญญาตรี ด้านการบริหารทรัพยากรมนุษย์ รัฐศาสตร์ หรือที่เกี่ยวข้อง','ประสบการณ์งาน HR 3–5 ปี (ระดับ HR) หรือประสบการณ์งานธุรการ (ระดับธุรการ)','รู้กฎหมายแรงงาน','สื่อสารและประสานงานดี ใช้ Microsoft Office ได้ชำนาญ']},
+{g:'ส่วนกลาง · การเงิน',n:'เจ้าหน้าที่บัญชีและการเงิน',e:'Accounting & Finance Officer',lv:'เจ้าหน้าที่',d:'บัญชีและการเงิน',s:'การเงิน',r:'Group Finance & Accounting Manager',src:'เดิม',
+ p:'จัดทำบัญชี รายรับ-รายจ่าย และเอกสารการเงินให้ถูกต้องตามมาตรฐาน',
+ k:['บันทึกบัญชีรายวัน รายรับ และรายจ่าย','ทำเอกสารวางบิล ใบแจ้งหนี้ และใบเสร็จรับเงิน','ตรวจความถูกต้องของเอกสารเบิกจ่าย','ประสานงานภาษีและการนำส่งงบการเงิน','สรุปรายงานการเงินรายเดือนเสนอผู้บริหาร'],
+ q:['ปริญญาตรี ด้านบัญชีหรือการเงิน','ประสบการณ์งานบัญชี 2–3 ปี','ละเอียดรอบคอบสูงและซื่อสัตย์','ใช้โปรแกรมบัญชีและ Excel ได้คล่อง']},
+{g:'ส่วนกลาง · การเงิน',n:'เจ้าหน้าที่จัดซื้อและคลังสินค้า',e:'Purchasing & Inventory Officer',lv:'เจ้าหน้าที่',d:'จัดซื้อและคลังสินค้า',s:'การเงิน',r:'Group Finance & Accounting Manager',src:'ควบ',m:'ควบ Purchasing & Procurement + Inventory Officer',
+ p:'จัดซื้อจัดจ้างอย่างโปร่งใสและคุ้มค่า และดูแลเวชภัณฑ์ วัสดุ และสินค้าคงคลังให้เพียงพอและถูกต้อง',
+ k:['จัดซื้อตามระบบ PR และ PO ให้ตรง SOP ของบริษัท 100%','ทำทะเบียนผู้ขาย (Approved Vendor List) และประเมินผู้ขายปีละครั้ง','เปรียบเทียบราคาจากผู้ขายอย่างน้อย 3 ราย สำหรับรายการเกินวงเงิน','ติดตามสัญญาและการส่งมอบให้ตรงเวลาและสเปก','<b>คลังสินค้า:</b> จัดเก็บ ทำบัญชีคลัง ควบคุมการเบิกจ่ายเวชภัณฑ์และอุปกรณ์','<b>คลังสินค้า:</b> ติดตามวันหมดอายุ ตั้งจุดสั่งซื้อ (Min–Max) และรายงานสินค้าคงคลังรายเดือน'],
+ q:['ปริญญาตรีหรือ ปวส. ขึ้นไป','รู้การจัดการจัดซื้อหรือคลังพัสดุ','ซื่อสัตย์สุจริต ยึดจรรยาบรรณจัดซื้อ','ละเอียดรอบคอบ เจรจาต่อรองได้ วิเคราะห์ราคาเป็น'],
+ ctl:'ผู้ตรวจรับสินค้าต้องไม่ใช่ผู้สั่งซื้อ ให้ผู้ขอซื้อหรือหัวหน้าแผนกร่วมตรวจรับ และให้บัญชีสุ่มนับสต็อกทุกเดือน'},
+{g:'ส่วนกลาง · การตลาด',n:'เจ้าหน้าที่ฝ่ายขายและการตลาด',e:'Marketing & Sales Officer',lv:'เจ้าหน้าที่',d:'การตลาด',s:'การตลาด',r:'Group Marketing Manager',src:'เดิม',
+ p:'สร้างยอดขายและสื่อสารภาพลักษณ์การเป็นผู้นำด้านการฟื้นฟูของ CMNH',
+ k:['วางแผนและทำกิจกรรมการตลาดทั้งออนไลน์และออฟไลน์','ติดต่อโรงพยาบาลและเอเจนซีเพื่อหาผู้รับบริการใหม่','ให้ข้อมูลบริการและปิดการขาย','ดูแลสื่อ Social Media ของแบรนด์','วิเคราะห์ข้อมูลการขายและทำรายงานสรุป'],
+ q:['ปริญญาตรี การตลาด นิเทศศาสตร์ หรือที่เกี่ยวข้อง','ประสบการณ์ขายหรือการตลาดในธุรกิจบริการสุขภาพ 3 ปีขึ้นไป','เจรจาต่อรองและโน้มน้าวใจได้','ใช้เครื่องมือการตลาดดิจิทัลได้ดี']}
+];
+const MERGE=[
+ ['CSO เดิม (ผู้อำนวยการฝ่ายกลยุทธ์)','Group Business Development (ส่วนกลาง)','ร่างคู่มือแยกงานพัฒนาธุรกิจเป็นฝ่ายกลาง','ประสานกับ CEO ในเรื่องกลยุทธ์ระยะยาว'],
+ ['Purchasing & Procurement + Inventory Officer','เจ้าหน้าที่จัดซื้อและคลังสินค้า','งานต่อกันเป็นวงจรเดียว (จุดสั่งซื้อ Min–Max ตรวจรับ เบิกจ่าย) และขึ้นกับ Group Finance ทั้งคู่','ต้องแยกคนตรวจรับออกจากคนสั่งซื้อ และให้บัญชีนับสต็อกทุกเดือน'],
+ ['HR Officer + เจ้าหน้าที่ธุรการ (Admin)','เจ้าหน้าที่บุคคลและธุรการ (ใต้ Group HR)','งานเอกสาร ประสานงาน และดูแลพนักงานทับกัน Admin ไม่เกี่ยวกับการตลาด','ปี 2570 ต้องรับคน รพ. 118 คน ควบ JD แต่ควรมี 2 คนในตำแหน่งนี้ (เน้น HR 1 · เน้นธุรการ 1)'],
+ ['Ambulance Driver + เวรเปล (ตำแหน่งใหม่ รพ.)','พนักงานขับรถและเคลื่อนย้ายผู้ป่วย','JD คนขับรถมีงานช่วยเคลื่อนย้ายผู้ป่วยอยู่แล้ว ไม่ต้องเขียน JD เวรเปลใหม่','จำนวนคนยังคิดตามเวรของ รพ. คนขับใช้เวลาว่างช่วยเวรเปลได้']
+];
+const NOMERGE=[
+ ['PT กับ OT','ใบอนุญาตคนละวิชาชีพ และใบอนุญาต รพ. กำหนดแยกกัน'],
+ ['RN · PN · NA','ขอบเขตวิชาชีพตามกฎหมายต่างกัน ต้องแยก JD'],
+ ['Head of Staff กับ Branch Manager','Head of Staff ดูมาตรฐานการพยาบาลทุกสาขา Branch Manager ดูภาพรวมสาขาเดียว'],
+ ['แม่ครัวกับแม่บ้าน','สุขอนามัยอาหารต่างจากงานทำความสะอาด ใช้ฝึกข้ามงานเป็นตัวสำรองแทน'],
+ ['CEO กับ MD','ตามร่างคู่มือ CEO ดูกลยุทธ์ MD บริหารงานประจำ แยกกันเพื่อไม่ให้ตัดสินใจติดคอขวด']
+];
+const COMMON=['พัฒนากระบวนการทำงานให้เป็นระบบ มีประสิทธิภาพ และได้มาตรฐาน','ส่งเสริมและพัฒนาทักษะของผู้ใต้บังคับบัญชาและตนเอง','นำทักษะการจัดการสมัยใหม่มาใช้ในงาน','ปฏิบัติตามนโยบายและให้ความร่วมมือกับหน่วยงานที่เกี่ยวข้อง','มีส่วนร่วมลดค่าใช้จ่ายให้สอดคล้องกับงบประมาณ'];
+
+const ORG=[["ส่วนกลาง (Group Corporate Office) · ภายใต้ MD", [["Group Finance & Accounting", ""], ["Group Human Resources", ""], ["Group Operations", "+ แพลตฟอร์มระบบหลังบ้าน (ข้อเสนอ)"], ["Group Quality & Compliance", "ยกระดับความเสี่ยงร้ายแรงถึง CEO ได้"], ["Group Marketing & Corporate Communication", "+ ตลาดต่างประเทศ"], ["Group Business Development", "+ CM Derma Plus (ข้อเสนอ)"]]], ["Unit 1 · Neuro Specialty Hospital", [["Hospital Director", "Medical Director · Nursing Director · Hospital Operations Manager · Finance & Admin Supervisor · Quality & Patient Safety Manager"], ["ขอบเขต", "OPD + IPD 50 เตียง (เปิด ต.ค. 70) · คลินิกหน้า รพ. ม.ค.–ก.ย. 70 · Single Procedure (เมื่อทนายยืนยัน)"], ["ผู้ดำเนินการตามกฎหมาย", "รพ. นพ.ณัฐวรรธ · คลินิก นพ.รังสรรค์"]]], ["Unit 2 · Chiangmai Nursing Homecare", [["Facility Director", "Nursing Manager · Care Manager · Operations Supervisor · Administration Supervisor"], ["ขอบเขต", "สาขา 1–4 · 80 เตียง"], ["ข้อเสนอรวมเข้า", "CMCC Home Care · CMNH Home Rehab · CMCC Health Product (เช่าออกซิเจน)"]]], ["Unit 3 · Tranquila Elderly Care Villa", [["Villa Director", "Nursing Manager · Care Manager · Daycare Supervisor · Administration Supervisor"], ["ขอบเขต", "40 เตียง (Villa + เตียงรวม) · Day Care 10–15 คน · ลูกค้าต่างชาติ"]]], ["Unit 4 · CMCC Training Center", [["Training Director", "Academic Supervisor · Training Coordinator · Student Affairs & Administration"], ["หมายเหตุ", "ยังไม่มีตัวเลขในแผนการเงินปี 2570"]]], ["Unit 5 · Villa Project", [["Project Director", "Construction & Facility · Project Finance & Procurement · Pre-opening Operations · Recruitment & Training · Marketing & Sales"], ["ขอบเขต", "Villa 20 ห้องในโครงการ รพ. (ร่างเรียก \"Nursing Home 100 Villa\") · เปิด พ.ย. 70"]]]];
+$('#orgg').innerHTML=ORG.map(([h,d])=>'<div class="card"><h4>'+h+'</h4><ul>'+d.map(x=>'<li><b>'+x[0]+'</b><br><span class="note">'+x[1]+'</span></li>').join('')+'</ul></div>').join('');
+const SRC={'เดิม':'','ใหม่':'<span class="tag">JD ใหม่</span>','ควบ':'<span class="tag warn">ควบรวม</span>','คู่มือ':'<span class="tag">ร่างคู่มือ</span>'};
+$('#rep').innerHTML='<tr><th>ตำแหน่ง</th><th>แผนก</th><th>ผู้บังคับบัญชาโดยตรง</th><th>หมายเหตุ</th></tr>'+JDS.map(j=>'<tr><td>'+j.n+' <span class="note">'+j.e+'</span></td><td>'+j.d+'</td><td>'+j.r+'</td><td>'+(SRC[j.src]||'')+(j.m?' <span class="note">'+j.m+'</span>':'')+(j.fix?' <span class="note">แก้: '+j.fix+'</span>':'')+'</td></tr>').join('');
+$('#merge').innerHTML='<tr><th>เดิม</th><th>หลังควบ</th><th>เหตุผล</th><th>ข้อควรระวัง</th></tr>'+MERGE.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('');
+$('#nomerge').innerHTML=NOMERGE.map(r=>'<li><b>'+r[0]+'</b> '+r[1]+'</li>').join('');
+$('#jdcommon').innerHTML=COMMON.map(x=>'<li>'+x+'</li>').join('');
+const GRPS=[...new Set(JDS.map(j=>j.g))];
+let jdf='ทั้งหมด';
+function jdRender(){const q=($('#jdq').value||'').trim().toLowerCase();
+ const list=JDS.filter(j=>(jdf==='ทั้งหมด'||j.g===jdf)&&(!q||(j.n+j.e+j.d+j.p+j.k.join(' ')).toLowerCase().includes(q)));
+ $('#jdcount').textContent=list.length+' ตำแหน่ง';
+ $('#jdall').innerHTML=GRPS.filter(g=>list.some(j=>j.g===g)).map(g=>'<h4 class="jdg">'+g+'</h4>'+list.filter(j=>j.g===g).map(j=>'<details class="jd"><summary><b>'+j.n+'</b> <span class="note">'+j.e+' · รายงานต่อ '+j.r+'</span> '+(SRC[j.src]||'')+'</summary>'
+ +'<table class="jdh"><tr><td>ระดับ</td><td>'+j.lv+'</td><td>แผนก</td><td>'+j.d+'</td></tr><tr><td>สายงาน</td><td>'+j.s+'</td><td>ผู้บังคับบัญชาโดยตรง</td><td>'+j.r+'</td></tr></table>'
+ +(j.m?'<p class="note"><b>ควบรวม:</b> '+j.m+'</p>':'')+(j.fix?'<p class="note"><b>แก้จาก JD เดิม:</b> '+j.fix+'</p>':'')
+ +'<p><b>วัตถุประสงค์</b><br>'+j.p+'</p><b>งานหลัก</b><ul>'+j.k.map(x=>'<li>'+x+'</li>').join('')+'</ul><b>ความรู้ ทักษะ ประสบการณ์</b><ul>'+j.q.map(x=>'<li>'+x+'</li>').join('')+'</ul>'
+ +(j.ctl?'<p class="note"><b>การควบคุมภายใน:</b> '+j.ctl+'</p>':'')+'<p class="note">+ งานด้านพัฒนาองค์กร 5 ข้อที่ใช้ร่วมทุกตำแหน่ง</p></details>').join('')).join('')||'<p class="note">ไม่พบตำแหน่ง</p>';}
+$('#jdfil').innerHTML=['ทั้งหมด',...GRPS].map(g=>'<button class="chip'+(g===jdf?' on':'')+'" data-g="'+g+'">'+g+'</button>').join('');
+$('#jdfil').querySelectorAll('button').forEach(b=>b.onclick=()=>{jdf=b.dataset.g;$('#jdfil').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));jdRender()});
+$('#jdq').oninput=jdRender;
+$('#jdopen').onclick=()=>{const d=$('#jdall').querySelectorAll('details');const open=![...d].every(x=>x.open);d.forEach(x=>x.open=open)};
+jdRender();
+
+// ---------- KPI
+// เป้ารายเดือนตามชีต "ติดตาม KPI 2570" · null = ไม่วัดเดือนนั้น · ตัวที่ลิงก์แผนการเงินคำนวณจาก model(P)
+const Q4=v=>[null,null,v,null,null,v,null,null,v,null,null,v],K12=v=>Array(12).fill(v);
+function kpiList(){
+  const m=model(P).slice(0,12);
+  return [
+  ['งานในตารางงานเสร็จตามกำหนด','CEO','%','↑',Q4(90),'วัดรายไตรมาส'],
+  ['อัตราเข้าพัก สาขา 1–4','MD','%','↑',K12(85),'ปรับตามค่าฐาน 2569'],
+  ['อัตราเข้าพัก TQL','MD','%','↑',K12(80),'เพิ่มเมื่อมีผู้พักต่างชาติ'],
+  ['อัตราเข้าพัก IPD','MD','%','↑',m.map(x=>x.i>=P.ipdOpen?Math.round(x.oi*100):null),'ตามแผนการเงิน (เปิด '+mlabel(P.ipdOpen)+')'],
+  ['อัตราเข้าพัก Villa','MD','%','↑',m.map(x=>x.i>=P.villaOpen?Math.round(x.ov*100):null),'ตามแผนการเงิน (เปิด '+mlabel(P.villaOpen)+')'],
+  ['ผู้ป่วยคลินิก (หน้า รพ. → OPD รพ.)','MD','ราย/เดือน','↑',[40,60,80,100,120,140,160,180,200,300,350,400],'สมมติ ให้ Group Marketing/Group Finance ยืนยัน'],
+  ['พลัดตกใหม่','MD','ครั้ง/1,000 วันนอน','↓',K12(1),''],
+  ['แผลกดทับใหม่','MD','ครั้ง/1,000 วันนอน','↓',K12(1),''],
+  ['อัตราลาออกพนักงาน','MD + HR','%/เดือน','↓',K12(2),'ราว 24% ต่อปี'],
+  ['ใบอนุญาตวิชาชีพหมดอายุขณะทำงาน','MD + HR','คน','↓',K12(0),'HR เตือนล่วงหน้า 90 วัน'],
+  ['ผู้ใช้ Day Care / Home Care','MD','ราย','↑',K12(null),'รอค่าฐาน ม.ค. แล้วตั้ง +20% ภายใน ธ.ค.'],
+  ['รายได้รวมบริษัท','Group Finance','บาท','↑',K12(null),'รอตัวเลขธุรกิจเดิม 2569'],
+  ['รายได้คลินิกหน้า รพ.','Group Finance','บาท','↑',m.map(x=>x.i>=P.clinicOpen&&x.i<P.opdOpen?P.clinicCost:null),'≥ ค่าใช้จ่ายคลินิก (คุ้มทุน)'],
+  ['ค่าใช้จ่ายโครงการ รพ. + Villa','Group Finance','บาท','↓',m.map(x=>Math.round(x.cost)),'ไม่เกินแผนการเงิน'],
+  ['ปิดงบรายเดือนภายในวันที่','Group Finance','วันที่','↓',K12(10),'ของเดือนถัดไป'],
+  ['หนี้ค้างชำระเกิน 30 วัน','Group Finance','% ของรายได้','↓',K12(5),''],
+  ['งบก่อสร้าง รพ. ใช้จริงเทียบแผน','Group Finance','%','↓',K12(100),'เกิน 5% ต้องขออนุมัติ'],
+  ['เงินสดสะสมโครงการ รพ.','Group Finance','บาท','↑',m.map(x=>Math.round(x.cum)),'ไม่ต่ำกว่าแผนการเงิน'],
+  ['ผู้สนใจ (lead) รพ. + Villa','Group Marketing','ราย','↑',m.map((x,j)=>j===6?5:j===7?10:j===8?20:(x.lead||null)),'หาก่อนเปิด ก.ค.–ก.ย. แล้วตามแผนการขาย'],
+  ['อัตราปิดการขาย','Group Marketing','%','↑',m.map(x=>x.i>=P.ipdOpen?Math.round(P.conv*100):null),''],
+  ['คะแนนความพึงพอใจญาติ','Group Marketing','คะแนน (5)','↑',Q4(4.5),'วัดรายไตรมาส'],
+  ['เรื่องร้องเรียน','Group Marketing','เรื่อง/เดือน','↓',K12(2),''],
+  ['ตปท.: ผู้แนะนำที่ติดต่อได้ สะสม','Group Marketing','ราย','↑',Q4(null).map((_,j)=>[null,null,3,null,null,10,null,null,20,null,null,30][j]),'ผ่าน Swiss Helping Point'],
+  ['ตปท.: lead ต่างชาติ','Group Marketing','ราย','↑',[null,null,null,null,null,null,2,3,4,5,5,6],'ทาง A · ทาง B ใช้ ต.ค.–ธ.ค. 2–3 ราย/เดือน'],
+  ['ตปท.: ผู้พักต่างชาติใหม่ สะสม','Group Marketing','คน','↑',[null,null,null,null,null,null,null,null,null,null,1,3],'ทาง A · ทาง B เริ่มปี 2571'],
+  ['ตปท.: พนักงาน TQL ผ่านอบรมอังกฤษ','MD + HR','%','↑',[null,null,null,null,null,30,null,null,50,null,null,70],'']];
+}
+const kfmt=v=>v==null||v===''?'':(Math.abs(v)>=1000?fmt(v):String(v));
+const knum=v=>{if(v==null||v==='')return null;const n=parseFloat(String(v).replace(/,/g,''));return isNaN(n)?null:n};
+let kv=store.get('kpi3',{});
+const KLINES=['ทั้งหมด','CEO','MD','Group Finance','Group Marketing','HR'];
+let kline='ทั้งหมด',kmon=matchMedia('(max-width:640px)').matches?(new Date().getFullYear()===2027?new Date().getMonth():0):-1;
+function kpiFilters(){
+  $('#kf').innerHTML=KLINES.map(l=>'<button class="'+(l===kline?'on':'')+'" data-l="'+l+'">'+(l==='ทั้งหมด'?'ทุกสาย':l)+'</button>').join('')
+   +'<select id="kmon" aria-label="เลือกเดือน"><option value="-1">ทุกเดือน</option>'+MON.map((m,j)=>'<option value="'+j+'"'+(j===kmon?' selected':'')+'>'+m+' 70</option>').join('')+'</select>';
+  $('#kf').querySelectorAll('button').forEach(b=>b.onclick=()=>{kline=b.dataset.l;kpiFilters();kpiRender()});
+  $('#kmon').onchange=e=>{kmon=+e.target.value;kpiRender()};
+}
+function kpiRender(){
+  if(!$('#kf').innerHTML)kpiFilters();
+  const K=kpiList(),MS=kmon<0?MON.map((_,j)=>j):[kmon];
+  $('#kt').classList.toggle('one',kmon>=0);
+  $('#kt').innerHTML='<tr><th>KPI</th><th>สาย</th><th>หน่วย</th><th>ผ่าน</th>'+MS.map(j=>'<th>'+MON[j]+'</th>').join('')+'</tr>'
+   +K.map((k,i)=>(kline==='ทั้งหมด'||k[1].includes(kline))?'<tr data-i="'+i+'"><td>'+k[0]+' <span class="note">'+k[3]+(k[5]?' · '+k[5]:'')+'</span></td><td>'+k[1]+'</td><td class="note">'+k[2]+'</td><td class="kpass"></td>'
+   +MS.map(j=>{const t=k[4][j],tv=kv[i+'-t'+j]??kfmt(t),av=kv[i+'-a'+j]??'';return '<td class="m" data-label="'+MON[j]+'"><input class="kp kt" data-k="'+i+'-t'+j+'" value="'+tv+'" placeholder="–" title="เป้า"><input class="kp ka" data-k="'+i+'-a'+j+'" value="'+av+'" placeholder="ผล" title="ผล"></td>'}).join('')+'</tr>':'').join('');
+  const mark=tr=>{const k=K[+tr.dataset.i];let ok=0,n=0;
+    tr.querySelectorAll('input.ka').forEach((el,j)=>{const t=knum(tr.querySelectorAll('input.kt')[j].value),a=knum(el.value);el.classList.remove('good','bad');
+      if(t==null||a==null)return;n++;const pass=k[3]==='↑'?a>=t:a<=t;if(pass)ok++;el.classList.add(pass?'good':'bad')});
+    tr.querySelector('.kpass').textContent=n?ok+'/'+n:''};
+  $('#kt').querySelectorAll('tr[data-i]').forEach(mark);
+  $('#kt').querySelectorAll('input').forEach(el=>{el.oninput=()=>{if(el.value==='')delete kv[el.dataset.k];else kv[el.dataset.k]=el.value;store.set('kpi3',kv);mark(el.closest('tr'))};
+    el.onblur=()=>{const n=knum(el.value);if(n!=null&&Math.abs(n)>=1000&&el.value!==fmt(n)){el.value=fmt(n);kv[el.dataset.k]=el.value;store.set('kpi3',kv)}}});
+}
+
+// ---------- details & documents per quarter item
+const T=(h,rows)=>'<table><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</table>';
+const CK=a=>'<div>'+a.map(x=>'<div style="padding:3px 0"><span class="box"></span>'+x+'</div>').join('')+'</div>';
+const BL='<span class="blank">&nbsp;</span>';
+const SIGN=(a)=>'<table><tr>'+a.map(x=>'<td style="height:70px;vertical-align:bottom;text-align:center">ลงชื่อ '+BL+'<br>'+x+'<br>วันที่ '+BL+'</td>').join('')+'</tr></table>';
+const ITEMS=[
+{id:'licconfirm',q:1,key:0,t:'ติดตามคำขอใบอนุญาต รพ. (ส.พ.) + ถาม สสจ. เรื่อง Villa',own:'MD',due:'31 ม.ค. 70',
+ goal:'คำขอ ส.พ.3/4/5/6/18 ที่ยื่นแล้ว (28 ต.ค. 69) ผ่านการพิจารณาโดยไม่ถูกตีกลับ และรู้ว่า Villa ต้องใช้ใบอนุญาตอะไร (คลินิกที่อาคารหน้า รพ. ดูงานถัดไป)',
+ out:'เอกสารแก้ไขครบ 11 จุด · ผลพิจารณาแผนจัดตั้ง · คำตอบ สสจ. เรื่อง Villa · วันเปิดในแผนการเงินตรงกับความจริง',
+ steps:[['28 ต.ค. 69','ยื่นชุดคำขอ ส.พ.3 ส.พ.4 ส.พ.5 ส.พ.6 ส.พ.18 ✓ เสร็จแล้ว','MD'],['พ.ย.–ธ.ค. 69','ส่งเอกสารแก้ไข 11 จุด (แหล่งเงิน 110% · ข้อ 8 · ระยะเวลา · ชื่อ Hospital · ที่อยู่ · เวลาทำการ · เอกสารบุคลากร)','MD + Group Finance'],['ธ.ค. 69','สอบถาม สสจ. เรื่องผลพิจารณาแผนจัดตั้งและระยะเวลา','MD'],['ม.ค. 70','ถาม Villa ใช้ใบอนุญาตร่วมกับ รพ. หรือต้องแยก','MD'],['ม.ค. 70','ปรับวันเปิด OPD / IPD / Villa ในแผนการเงินตามคำตอบ','Group Finance']],
+ docs:[['สถานะชุดคำขอใบอนุญาต รพ. (ส.พ.)',
+ '<p class="note">โรงพยาบาลเฉพาะทางระบบประสาท สมอง และไขสันหลัง เชียงใหม่ มาสเตอร์พีซ · 50 เตียง · ยื่น 28 ต.ค. 69</p>'+T(['แบบ','เรื่อง','สถานะ'],[['ส.พ.3','คำขออนุมัติแผนงานการจัดตั้งสถานพยาบาลประเภทรับผู้ป่วยไว้ค้างคืน','ยื่นแล้ว ✓'],['ส.พ.4','แผนงานการจัดตั้ง (ลักษณะ รพ. เงินลงทุน แหล่งเงิน เหตุผล ระยะเวลา)','ยื่นแล้ว ✓ · ต้องแก้ 5 จุด'],['ส.พ.5','คำขออนุญาตให้ประกอบกิจการสถานพยาบาล','ยื่นแล้ว ✓ · ต้องแก้ 3 จุด'],['ส.พ.6','หนังสือแสดงความจำนงเป็นผู้ปฏิบัติงานของผู้ประกอบวิชาชีพ','ยื่นแล้ว ✓ · ใส่วันที่และเอกสารบุคลากรให้ครบ'],['ส.พ.18','คำขอรับใบอนุญาตให้ดำเนินการสถานพยาบาล','ยื่นแล้ว ✓ · แก้เวลาทำการ และชื่อ Hospital']])+'<h4>จุดที่ต้องแก้ 11 จุด</h4>'+CK(['ส.พ.4 ข้อ 5: แหล่งเงินรวม 110% แก้ให้รวม 100%','ส.พ.4 ข้อ 7: เขียนเอกชน "3 แห่ง" แต่รายการมี 5 แห่ง','ส.พ.4 ข้อ 8: เหตุผลที่สมควรลงทุน (มีร่างในเอกสารแผน)','ส.พ.4 ข้อ 11: ระยะเวลาดำเนินการ ให้ตรงสัญญา DG','ส.พ.4 ข้อ 10: ระบุผู้อำนวยการฝ่ายการแพทย์และฝ่ายการพยาบาล','ส.พ.5 กับ ส.พ.18: วันเวลาทำการไม่ตรงกัน','ส.พ.5, 6, 18: แก้ "Hospipal" เป็น "Hospital"','ที่อยู่: "สันทรายน้อย" กับ "สันทราย" และเลขที่ตั้งยังว่าง','ส.พ.5 ข้อ (ง): ผังติดตั้งเครื่องมือพิเศษ รอ DG','ถาม สสจ. ว่าต้องมีหนังสือเห็นชอบรายงานผลกระทบสิ่งแวดล้อมหรือไม่','ส.พ.6: ใส่วันที่ และแนบเอกสารบุคลากรให้ครบ (ตอนนี้มี RN 1 · เภสัชกร 1 · PN 4)'])+'<h4>คำถามที่ต้องถาม สสจ.</h4>'+T(['#','คำถาม','คำตอบ'],[[1,'แผนจัดตั้งจะได้ผลพิจารณาเมื่อไร',BL],[2,'คลินิกที่อาคารหน้า รพ. (ที่ดินเดียวกัน) เมื่อย้ายเข้า รพ. ต้องเลิกใบอนุญาตอย่างไร',BL],[3,'แพทย์คนเดียวกันเป็นผู้ดำเนินการคลินิกและ รพ. ได้หรือไม่',BL],[4,'Villa ใช้ใบอนุญาตร่วมกับ รพ. ได้หรือไม่',BL],[5,'ต้องมีหนังสือเห็นชอบรายงานผลกระทบสิ่งแวดล้อมหรือไม่',BL]])+'<h4>บันทึกการติดต่อ</h4>'+T(['วันที่','หน่วยงาน','ผู้ให้ข้อมูล','สรุป'],[[BL,BL,BL,BL],[BL,BL,BL,BL]])]]},
+{id:'clinic',q:1,key:0,t:'คลินิกเวชกรรมระบบประสาทและสมอง + กายภาพ ที่อาคารสำนักงานหน้า รพ. (ยื่น พ.ย. 69 · เปิด ม.ค. 70)',own:'MD',due:'31 ม.ค. 70',
+ goal:'บริษัท ซีเอ็มเอ็นเอช 2012 (นิติบุคคล) เปิดสหคลินิกแพทย์ + กายภาพบำบัดที่อาคารสำนักงานหลังใหม่ด้านหน้าโรงพยาบาล (หมู่ 6 ถ.เชียงใหม่–แม่โจ้ ต.หนองจ๊อม อ.สันทราย) ม.ค. 70 · ผู้ดำเนินการ นพ.รังสรรค์ วิฑูรย์ (ใบอนุญาตใหม่ แยกจากคลินิกหมอต้นที่ยังเปิดที่เดิม) · นักกายภาพ นายโยธิน โพธาศักดิ์ · เมื่อ รพ. ด้านหลังเปิด ย้ายคลินิกเข้าเป็น OPD แล้วอาคารกลับเป็นออฟฟิศ · ไม่ให้บริการก่อนได้ใบอนุญาต',
+ out:'ใบอนุญาตคลินิก · เปิดให้บริการ ม.ค. 70 (เลื่อนตามวันอาคารเสร็จ) · รายได้ ≥302,000 บาท/เดือน (เท่าทุน)',
+ steps:[['10–16 พ.ย. 69','ขั้น 1 เตรียมและยืนยัน: CEO อนุมัติ (D1) · ส่งหนังสือหารือ สสจ. (D2) · ตรวจคุณสมบัติ นพ.รังสรรค์ + นายโยธิน (D3) · ตรวจแบบและวันเสร็จอาคาร (D4) · ดึงเอกสารจากระบบ (D5) → Gate 1','CEO + MD'],['17–30 พ.ย. 69','ขั้น 2 จัดทำเอกสารและยื่น: ผังคลินิก (D6) · ข้อตกลงแพทย์/PT (D7) · กรอก ส.พ.5/18/6 (D8) · มอบอำนาจ (D9) · ตรวจ 2 คน (D10) → Gate 2 ได้เลขรับคำขอ','MD'],['1–31 ธ.ค. 69','ขั้น 3 อาคารและรับตรวจ: รับมอบอาคาร + เลขที่บ้าน + อ.6 · ตกแต่งภายใน ≤200,000 · ย้ายเครื่องมือ (D11) · mock inspection 18 ธ.ค. (D12) → Gate 3 วันที่ 26 ธ.ค.','MD'],['ม.ค.–ต.ค. 70','ขั้น 4 เปิดและกำกับ: อัตราค่าบริการ (D13) · SOP + ส่งต่อ (D14) · รายงานรายสัปดาห์ (D15) · ทบทวนเดือน 4 · ย้ายเข้า OPD รพ. แล้วคืนอาคารเป็นออฟฟิศ','MD + Group Finance']],
+ docs:[['แผน 4 ขั้น + Gate',
+ '<p class="note">เอกสารฉบับเต็มพร้อมแบบฟอร์ม D1–D15: <a href="https://claude.ai/artifact/Y6qCXiZmFgq3fGQpcUtXdt" target="_blank">แผนปฏิบัติการเปิดคลินิก</a> · ทำทีละขั้น ขั้นถัดไปเริ่มได้เมื่อผ่าน Gate</p>'+T(['ขั้น','ช่วงเวลา','Gate (เงื่อนไขผ่าน)','ผู้อนุมัติ','ผ่าน'],[['1 เตรียมและยืนยัน','10–16 พ.ย. 69','คำตอบ สสจ. + แพทย์/PT ผ่าน D3 + อาคารมีวันเสร็จชัด + CEO ลงนาม D1','CEO','<span class="box"></span>'],['2 จัดทำเอกสารและยื่น','17–30 พ.ย. 69','ได้เลขรับคำขอ / ใบรับเรื่อง','MD','<span class="box"></span>'],['3 อาคารและรับตรวจ','1–31 ธ.ค. 69','26 ธ.ค.: อาคารเสร็จ + ได้ใบอนุญาต → เปิด ม.ค. · ยัง → เลื่อนตามวันอาคารเสร็จ (สำรอง 1 ก.พ.)','CEO','<span class="box"></span>'],['4 เปิดและกำกับ','ม.ค.–ต.ค. 70','รายได้ ≥302,000/เดือน ภายในเดือน 4 · ย้ายเข้า OPD เมื่อ รพ. เปิด','CEO','<span class="box"></span>']])+'<h4>ต้องเคลียร์ก่อนใช้เงิน</h4>'+CK(['ตรวจ นพ.รังสรรค์ ตาม D3: ใบอนุญาต · ไม่ได้ดำเนินการสถานพยาบาลอื่นครบ 2 แห่ง · ถ้าเป็นข้าราชการต้องมีหนังสือต้นสังกัด · เวลาทำงานที่อื่นไม่ซ้อน','อาคารสำนักงานใหม่เสร็จทัน ธ.ค. 69 มีเลขที่บ้านและ อ.6','นักกายภาพคนที่ 2 (น.ส.กรณิการ์ อับดุลสลาม) ใบอนุญาตหมดอายุ 9 ส.ค. 69 ต้องต่ออายุก่อนยื่น','ทุกคนในคลินิกทำ ส.พ.6 ฉบับใหม่ที่ระบุชื่อคลินิก','ใช้ อ.สันทราย ในทุกแบบฟอร์ม (ไม่ใช่ "สันทรายน้อย")','ประเภทคลินิก: นพ.รังสรรค์เป็นสาขาอายุรกรรม ถ้าจะขอเป็นคลินิกเฉพาะทางประสาท ผู้ดำเนินการต้องมีวุฒิบัตรสาขานั้น ให้ สสจ. ยืนยัน (D2)','หมอต้น (นพ.ณัฐวรรธ) เป็นผู้ดำเนินการ รพ. ไม่อยู่ในคำขอคลินิกนี้','ไม่ให้บริการก่อนได้ใบอนุญาต แม้ทดลองฟรี'])+'<h4>อนุมัติเปิด</h4>'+SIGN(['MD','CEO'])],
+ ['งานรายขั้น',
+ '<h4>ขั้น 1 (10–16 พ.ย. 69)</h4>'+T(['#','งาน','ผู้รับผิดชอบ','เอกสาร','กำหนด'],[['1.1','CEO อนุมัติโครงการและงบ 200,000 + 302,000/เดือน','MD / CEO','D1','11 พ.ย.'],['1.2','ส่งหนังสือหารือ สสจ.เชียงใหม่','MD','D2','11 พ.ย.'],['1.3','ตรวจคุณสมบัติ นพ.รังสรรค์ + นายโยธิน','MD + HR','D3','13 พ.ย.'],['1.4','ตรวจแบบอาคารใหม่ ขอวันเสร็จจาก DG','MD + ช่าง','D4','13 พ.ย.'],['1.5','ดึงเอกสารจากระบบ','ธุรการ','D5','14 พ.ย.'],['1.6','ประชุม Gate 1','CEO','D1','16 พ.ย.']])+'<h4>ขั้น 2 (17–30 พ.ย. 69)</h4>'+T(['#','งาน','ผู้รับผิดชอบ','เอกสาร','กำหนด'],[['2.1','ผังคลินิก ส่งผู้รับเหมา','MD','D6','19 พ.ย.'],['2.2','ข้อตกลงแพทย์/PT ให้ทนายตรวจ','HR + ทนาย','D7','21 พ.ย.'],['2.3','กรอก ส.พ.5 / 18 / 6','MD','D8','24 พ.ย.'],['2.4','หนังสือมอบอำนาจ ติดอากร','ธุรการ','D9','24 พ.ย.'],['2.5','ตรวจชุดยื่น 2 คน','MD + Group Finance','D10','26 พ.ย.'],['2.6','ยื่นคำขอ รับเลขรับ','MD','D10','27–30 พ.ย.']])+'<h4>ขั้น 3 (1–31 ธ.ค. 69)</h4>'+T(['#','งาน','ผู้รับผิดชอบ','เอกสาร','กำหนด'],[['3.1','รับมอบอาคาร + เลขที่บ้าน/อ.6 · ตกแต่งภายใน ≤200,000','MD','D6','1–15 ธ.ค.'],['3.2','ป้ายชื่อ ประเภท เลขใบอนุญาต เวลาทำการ ห้ามสูบบุหรี่','MD','D12','15 ธ.ค.'],['3.3','ย้ายเครื่องมือพร้อมใบส่งมอบ','หัวหน้ากายภาพ','D11','10–15 ธ.ค.'],['3.4','ยา เวชภัณฑ์ ชุดฉุกเฉิน','นพ.รังสรรค์','D12, D14','15 ธ.ค.'],['3.5','SOP + แผนส่งต่อ','นพ.รังสรรค์','D14','15 ธ.ค.'],['3.6','อัตราค่าบริการ','Group Finance + MD','D13','18 ธ.ค.'],['3.7','Mock inspection','MD','D12','18 ธ.ค.'],['3.8','รับตรวจ สสจ.','MD','D12','ตามนัด']])+'<h4>ขั้น 4 (ม.ค.–ต.ค. 70)</h4>'+T(['#','งาน','ผู้รับผิดชอบ','เอกสาร','กำหนด'],[['4.1','เปิดบริการ ประกาศช่องทางนัด','MD + การตลาด','D13','ม.ค. 70'],['4.2','รายงานรายสัปดาห์','ผู้จัดการคลินิก','D15','ทุกจันทร์'],['4.3','เทียบจุดคุ้มทุน 302,000','Group Finance','D15','ทุกสิ้นเดือน'],['4.4','ทบทวนเดือน 4: ต่ำกว่า 60% = ปรับแผน','CEO','D15','30 เม.ย. 70'],['4.5','ย้ายเข้า OPD รพ. แล้วคืนอาคารเป็นออฟฟิศ','MD','D11','ต.ค. 70']])],
+ ['แนวทางกำกับ + RACI',
+ '<p class="note">MD เจ้าของโครงการ · Hospital Director งานใบอนุญาต · Group Finance คุมงบ · CEO อนุมัติทุก Gate · ประชุมทุกจันทร์ 15 นาที · Gate: 16 พ.ย. · 30 พ.ย. · 26 ธ.ค. 69 · 30 เม.ย. 70</p>'+CK(['ไม่จ่ายเงินก่อนผ่าน Gate 1','เอกสารยื่นราชการตรวจ 2 คน (คนกรอก ≠ คนตรวจ)','ใช้เกินงบเกิน 10% ต้องขอ CEO','งานเลยกำหนด แจ้ง CEO ภายในวันเดียวกันพร้อมวันใหม่','เก็บสำเนาที่ยื่นไว้แฟ้มกลาง ห้ามส่งสำเนาบัตรในแชทกลุ่ม'])+T(['งาน','CEO','MD','MD','Group Finance','HR/ธุรการ','แพทย์ผู้ดำเนินการ'],[['อนุมัติโครงการและงบ','A','R','C','C','I','I'],['หารือ สสจ. และยื่นคำขอ','A','C','R','I','C','C'],['คัดเลือกแพทย์/PT','A','C','R','I','R','—'],['อาคารและตกแต่ง','A','R','C','C','I','C'],['ย้ายเครื่องมือ','I','A','I','C','I','R'],['SOP และความปลอดภัยผู้ป่วย','I','C','C','I','I','A/R'],['อัตราค่าบริการ','A','R','I','R','I','C'],['รายงานหลังเปิด','I','A','I','R','I','C']])+'<p class="note">R ทำ · A อนุมัติ · C ปรึกษา · I แจ้งให้ทราบ</p>'],
+ ['เอกสารกำกับ D1–D15 + ที่ต้องดึงจากระบบ',
+ '<p class="note">แบบฟอร์มพร้อมกรอกอยู่ใน <a href="https://claude.ai/artifact/Y6qCXiZmFgq3fGQpcUtXdt" target="_blank">แผนปฏิบัติการเปิดคลินิก</a> (แท็บขั้น 1–4)</p>'+T(['ขั้น','เอกสาร','ใช้ทำอะไร','เสร็จ'],[[1,'D1 บันทึกขออนุมัติ CEO','อนุมัติงบ + บันทึก Gate 1',BL],[1,'D2 หนังสือหารือ สสจ.','ประเภทคลินิก แบบฟอร์ม ผู้ดำเนินการ ที่ดินเดียวกับ รพ.',BL],[1,'D3 แบบตรวจคุณสมบัติ','นพ.รังสรรค์ + นายโยธิน',BL],[1,'D4 แบบสำรวจอาคารใหม่','เกณฑ์พื้นที่ เลขที่บ้าน อ.6 ทางเข้าแยกจากเขตก่อสร้าง',BL],[1,'D5 เอกสารจากระบบ','ตารางด้านล่าง',BL],[2,'D6 ข้อกำหนดผัง','ให้ผู้รับเหมา + แนบคำขอ',BL],[2,'D7 ร่างข้อตกลงแพทย์/PT','ให้ทนายตรวจ',BL],[2,'D8 ร่างกรอก ส.พ.5/18/6','ทีละช่อง',BL],[2,'D9 หนังสือมอบอำนาจ','อากร 10/30 บาท',BL],[2,'D10 เช็กลิสต์ชุดยื่น','ตรวจ 2 คน',BL],[3,'D11 ใบส่งมอบเครื่องมือ','ย้ายเข้า + ย้ายออก',BL],[3,'D12 เช็กลิสต์รับตรวจ','mock 18 ธ.ค. + Gate 3',BL],[4,'D13 อัตราค่าบริการ','ติดประกาศ',BL],[4,'D14 SOP + แผนส่งต่อ','8 เรื่อง',BL],[4,'D15 รายงานรายสัปดาห์','+ เกณฑ์ทบทวน',BL]])+'<h4>D5 เอกสารที่ต้องดึงจากระบบ</h4>'+T(['เอกสาร','ดึงจาก','ผู้ดึง','เงื่อนไข'],[['หนังสือรับรองบริษัท','DBD e-Service','ธุรการ','≤6 เดือน · วัตถุประสงค์ครอบคลุมสถานพยาบาล'],['สำเนาบัตรกรรมการ 2 ท่าน','ตัวจริง','ธุรการ','รับรองสำเนา'],['แบบ ส.พ.5 / 18 / 6 ล่าสุด','สบส. / สสจ.เชียงใหม่','MD','ฉบับที่ใช้ปัจจุบัน'],['ผลตรวจใบอนุญาตแพทย์','แพทยสภา','HR','แนบ D3'],['ผลตรวจใบอนุญาต PT','สภากายภาพบำบัด','HR','แนบ D3'],['ทะเบียนบ้านอาคารใหม่ + อ.6 + โฉนด','อปท. / ต้นฉบับบริษัท','ธุรการ','ขอเลขที่บ้านทันทีที่อาคารเสร็จ'],['ใบรับรองแพทย์ + รูป 2.5×3 ซม. 3 ใบ','แพทย์ผู้ดำเนินการ','HR','อายุตามที่ สสจ. กำหนด']])],
+ ['ทีม 8 คน + เครื่องมือที่ย้ายมา',
+ T(['ตำแหน่ง','คน','ค่าจ้าง/เดือน','ชื่อ','สถานะ'],[['แพทย์ (ผู้ดำเนินการ)',1,'135,000','นพ.รังสรรค์ วิฑูรย์ (ว 8541 อายุรกรรม)','มีแล้ว · ไม่ได้ทำงานที่อื่น'],['นักกายภาพบำบัด (PT)',2,'50,000','นายโยธิน โพธาศักดิ์ (ก.8788 ถึง 19 ส.ค. 72) + น.ส.กรณิการ์ อับดุลสลาม (ก.11262)','<b>คนที่ 2 ใบอนุญาตหมดอายุ 9 ส.ค. 69 ต้องต่ออายุ</b>'],['ผู้ช่วยนักกายภาพ (PTA)',1,'15,000',BL,'โยก/จ้าง'],['พยาบาลวิชาชีพ (RN)',1,'25,000','นางกรรณิการ์ วิฑูรย์ (ถึง 19 ก.ค. 73) หรือโยก/จ้าง','ตัดสินใจ'],['ผู้ช่วยพยาบาล (PN)',1,'15,000',BL,'โยก/จ้าง'],['ต้อนรับ / การเงิน',1,'20,000',BL,'จ้าง'],['แม่บ้าน',1,'12,000',BL,'จ้าง'],['<b>รวม</b>','<b>8</b>','<b>272,000</b>','','']])+'<p class="note">+ น้ำไฟ วัสดุ ขยะติดเชื้อ ~30,000/เดือน (สมมติ) = 302,000 · ปรับปรุง ~200,000 (สมมติ)</p><h4>เครื่องมือกายภาพที่ย้ายมา</h4><p class="note">ย้ายได้เฉพาะชิ้นที่ที่เดิมยังให้บริการต่อได้ ถ้าขาดให้ซื้อเฉพาะชิ้นนั้น</p>'+T(['เครื่องมือ','ย้ายจาก','ตรวจสภาพ/สอบเทียบ','ที่เดิมยังใช้ได้'],[['เตียงกายภาพ',BL,BL,BL],['เครื่องอัลตราซาวด์เพื่อการรักษา',BL,BL,BL],['เครื่องกระตุ้นไฟฟ้า',BL,BL,BL],['Hot pack + หม้อต้ม',BL,BL,BL],['ราวฝึกเดิน / อุปกรณ์ออกกำลังกาย',BL,BL,BL],['TMS / PMS (ถ้าย้ายมา)',BL,BL,BL],[BL,BL,BL,BL]])]]},
+{id:'mgmt',q:1,key:0,t:'วางรูปแบบการจัดการใหม่',own:'MD',due:'31 มี.ค. 70',
+ goal:'ให้ทุกสาขาบริหารด้วยจังหวะประชุม อำนาจอนุมัติ และการรายงานแบบเดียวกัน',
+ out:'คู่มือรูปแบบการจัดการ 1 ฉบับ ประกาศใช้ทุกสาขา',
+ steps:[['ม.ค. 70','เก็บปัญหาการบริหารจากหัวหน้าแต่ละสาขา (สัมภาษณ์ 30 นาที/สาขา)','MD'],['ก.พ. 70','ร่างจังหวะประชุม อำนาจอนุมัติ และรายงาน','MD + Group Finance'],['ก.พ. 70','ทดลองใช้ 2 สัปดาห์ที่ 1 สาขา','Branch Manager'],['มี.ค. 70','ปรับแก้และประกาศใช้ทุกสาขา','CEO']],
+ docs:[['รูปแบบการจัดการใหม่ (ร่าง)',
+ '<h4>1. จังหวะการประชุม</h4>'+T(['การประชุม','ความถี่','ใคร','เนื้อหา','เวลา'],[['Huddle ประจำเวร','ทุกวัน','หัวหน้าเวร + ทีม','ผู้พักที่ต้องเฝ้าระวัง อุบัติการณ์ งานวันนี้','10 นาที'],['ประชุมแผนก','ทุกสัปดาห์','หัวหน้าแผนก + ทีม','งานค้าง ปัญหา ตาราง','30 นาที'],['ประชุมสาขา','ทุกสัปดาห์','Branch Manager + หัวหน้าแผนก','อัตราเข้าพัก เรื่องร้องเรียน กำลังคน','45 นาที'],['ประชุมผู้บริหาร','ทุกเดือน (หลังวันที่ 5)','CEO + C-level + MD','KPI งบเทียบแผน เงินสด งานในแผน','2 ชั่วโมง'],['ทบทวนไตรมาส','ทุกไตรมาส','ผู้บริหาร + หัวหน้าแผนก','ผลไตรมาส ปรับแผน','ครึ่งวัน']])+'<h4>2. อำนาจอนุมัติ (ข้อเสนอ กรอกวงเงินให้ CEO อนุมัติ)</h4>'+T(['เรื่อง','หัวหน้าแผนก','Branch Manager','C-level / MD','CEO'],[['จัดซื้อในงบ','ไม่เกิน '+BL,'ไม่เกิน '+BL,'ไม่เกิน '+BL,'เกินกว่านั้น'],['จัดซื้อนอกงบ','–','–','ไม่เกิน '+BL,'เกินกว่านั้น'],['รับพนักงานตามอัตรา','เสนอ','อนุมัติ','–','–'],['รับพนักงานเพิ่มอัตรา','–','เสนอ','เสนอ','อนุมัติ'],['ส่วนลดค่าบริการ','–','ไม่เกิน '+BL+'%','ไม่เกิน '+BL+'%','เกินกว่านั้น']])+'<h4>3. การรายงาน</h4>'+T(['รายงาน','ส่งเมื่อ','ผู้ส่ง','ผู้รับ'],[['อุบัติการณ์รุนแรง','ภายใน 24 ชม.','Branch Manager','MD + CEO'],['KPI และรายได้รายเดือน','วันที่ 5','หัวหน้าแผนก / Group Finance','ประชุมผู้บริหาร'],['เงินสดคงเหลือ','ทุกสัปดาห์','Group Finance','CEO']])+'<h4>4. อนุมัติประกาศใช้</h4>'+SIGN(['MD','CEO'])]]},
+{id:'comm',q:1,key:0,t:'สื่อสารยุทธศาสตร์ 2570',own:'CEO + MD',due:'31 ม.ค. 70',
+ goal:'พนักงานทุกคนรู้เป้าหมายปี 2570 และบทบาทของแผนกตัวเอง',
+ out:'กรรมการอนุมัติยุทธศาสตร์ และพนักงานเซ็นรับทราบครบทุกแผนก',
+ steps:[['ต้น ม.ค. 70','กรรมการอนุมัติยุทธศาสตร์และแผนปี','CEO'],['กลาง ม.ค. 70','ประชุมพนักงานทั้งหมด (Town hall) 1 ชั่วโมง','CEO + MD'],['ปลาย ม.ค. 70','หัวหน้าแผนกชี้แจงในแผนก และเก็บใบรับทราบ','หัวหน้าแผนก'],['ม.ค. 70','ติดสรุปยุทธศาสตร์ 1 หน้าในทุกสาขา','Group HR (ธุรการ)']],
+ docs:[['วาระ Town hall + สรุปยุทธศาสตร์ 1 หน้า + ใบรับทราบ',
+ '<h4>วาระ Town hall (60 นาที)</h4>'+T(['เวลา','หัวข้อ','ผู้พูด'],[['10 นาที','ผลปี 2569 และขอบคุณทีม','CEO'],['15 นาที','เป้าหมายปี 2570: 4 เรื่องหลัก','CEO'],['10 นาที','โครงสร้าง CEO–MD–5 หน่วยธุรกิจ และผู้รับผิดชอบ','MD'],['10 นาที','KPI และการประเมินผลปีนี้','HR'],['15 นาที','ถาม-ตอบ','ทุกคน']])+'<h4>สรุปยุทธศาสตร์ปี 2570 (สำหรับติดประกาศ)</h4><p><b>ครึ่งปีแรก จัดระบบ:</b> เปิดคลินิกเวชกรรม · โครงสร้าง CEO–MD–5 หน่วยธุรกิจ · KPI ทุกแผนก</p><p><b>ครึ่งปีหลัง ขยาย:</b> วางโครงสร้างโรงพยาบาล · เปิด Villa · เริ่มตลาดต่างประเทศ</p><p><b>หลักการบริการ:</b> Human Centric Care · Care + Service + Mind + Innovation</p><h4>ใบรับทราบยุทธศาสตร์</h4><p>ข้าพเจ้า '+BL+' ตำแหน่ง '+BL+' แผนก '+BL+' ได้รับฟังและเข้าใจยุทธศาสตร์ปี 2570 และบทบาทของแผนก</p>'+SIGN(['พนักงาน','หัวหน้าแผนก'])]]},
+{id:'org',q:1,key:0,t:'ผังใหม่ CEO–MD + แต่งตั้งผู้บริหาร',own:'CEO + HR',due:'31 มี.ค. 70',
+ goal:'ประกาศโครงสร้าง CEO → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ แต่งตั้งผู้รับผิดชอบ และทำ JD ให้ตรงผัง (ตามร่างคู่มือ docs/08)',
+ out:'คำสั่งแต่งตั้ง ผังองค์กร และ JD ที่แก้ไขแล้ว ประกาศใช้',
+ steps:[['ม.ค. 70','CEO อนุมัติผังและสายบังคับบัญชา','CEO'],['ม.ค. 70','แก้ JD 3 จุดที่ไม่ตรงผัง เติมช่องผู้บังคับบัญชาโดยตรงทุกใบ','HR'],['ก.พ. 70','คัดเลือกและแต่งตั้งหัวหน้าแผนก','CEO + MD'],['ก.พ. 70','ออกคำสั่งบริษัทและแจ้งพนักงาน','HR'],['มี.ค. 70','พนักงานเซ็นรับ JD ใหม่','หัวหน้าแผนก']],
+ docs:[['คำสั่งแต่งตั้งหัวหน้าแผนก + เช็กลิสต์แก้ JD',
+ '<p style="text-align:center"><b>บริษัท ซีเอ็มเอ็นเอช 2012 จำกัด</b><br>คำสั่งที่ '+BL+' / 2570<br>เรื่อง แต่งตั้งผู้บริหารตามโครงสร้างองค์กรใหม่</p><p>เพื่อให้การบริหารงานเป็นไปตามโครงสร้างองค์กรปี 2570 บริษัทจึงแต่งตั้งบุคคลต่อไปนี้ มีผลตั้งแต่วันที่ '+BL+'</p>'+T(['ตำแหน่ง','สังกัด','ผู้ได้รับแต่งตั้ง','รายงานต่อ'],[['Group Finance & Accounting Manager','ส่วนกลาง',BL,'MD'],['Group Human Resources Manager','ส่วนกลาง',BL,'MD'],['Group Operations Manager','ส่วนกลาง',BL,'MD'],['Group Quality & Compliance Manager','ส่วนกลาง',BL,'MD'],['Group Marketing & Corporate Communication Manager','ส่วนกลาง',BL,'MD'],['Group Business Development Manager','ส่วนกลาง',BL,'MD'],['Hospital Director','Unit 1 Neuro Specialty Hospital',BL,'MD'],['Facility Director','Unit 2 Chiangmai Nursing Homecare',BL,'MD'],['Villa Director','Unit 3 Tranquila Elderly Care Villa',BL,'MD'],['Training Director','Unit 4 CMCC Training Center',BL,'MD'],['Project Director','Unit 5 Villa Project',BL,'MD']])+'<p>สั่ง ณ วันที่ '+BL+'</p>'+SIGN(['ประธานเจ้าหน้าที่บริหาร'])+'<h4>เช็กลิสต์แก้ JD</h4>'+CK(['ควบ CSO เดิม → Group Business Development (ส่วนกลาง) · การตลาดไป Group Marketing','ควบ Purchasing + Inventory → เจ้าหน้าที่จัดซื้อและคลังสินค้า (ใต้ Group Finance)','ควบ HR + Admin → เจ้าหน้าที่บุคคลและธุรการ (ใต้ Group HR)','ควบ Ambulance Driver + เวรเปล → พนักงานขับรถและเคลื่อนย้ายผู้ป่วย','Head of Staff: สายงาน บริหาร → ปฏิบัติการ','แม่ครัว: แก้วัตถุประสงค์ที่คัดลอกจาก MD','เติม "ผู้บังคับบัญชาโดยตรง" ทั้ง 21 ใบ','เพิ่ม JD ใหม่: RN, PN, NA, PTA'])]]},
+{id:'kpi',q:1,key:0,t:'กำหนด KPI รายแผนก',own:'ทุกหน่วย (HR ประสาน)',due:'31 มี.ค. 70',
+ goal:'ทุกแผนกมี KPI 3–5 ตัว มีค่าฐานปี 2569 ค่าเป้า และน้ำหนัก',
+ out:'ข้อตกลง KPI ที่หัวหน้าแผนกและ Unit Director เซ็นครบทุกหน่วย',
+ steps:[['ม.ค. 70','เก็บค่าฐานปี 2569 (อัตราเข้าพัก รายได้ อุบัติการณ์ ลาออก)','Group Finance + HR'],['ก.พ. 70','Workshop ตั้งค่าเป้ากับหัวหน้าแผนก ครึ่งวัน','Group HR + Unit Directors'],['ก.พ. 70','กรอกข้อตกลง KPI รายแผนก','หัวหน้าแผนก'],['มี.ค. 70','เซ็นข้อตกลง และกรอกเป้าในชีตติดตาม KPI','HR']],
+ docs:[['ข้อตกลง KPI รายแผนก (แบบฟอร์ม)',
+ '<p>แผนก '+BL+' &nbsp; หัวหน้าแผนก '+BL+' &nbsp; สาย '+BL+' &nbsp; รอบปี 2570</p>'+T(['#','KPI','สูตรคำนวณ','ค่าฐาน 2569','เป้า 2570','น้ำหนัก','แหล่งข้อมูล'],[[1,BL,BL,BL,BL,BL+'%',BL],[2,BL,BL,BL,BL,BL+'%',BL],[3,BL,BL,BL,BL,BL+'%',BL],[4,BL,BL,BL,BL,BL+'%',BL],[5,BL,BL,BL,BL,BL+'%',BL],['','<b>รวม</b>','','','','<b>100%</b>','']])+'<h4>ตัวอย่างการกรอก (แผนกพยาบาล)</h4>'+T(['KPI','สูตร','เป้า','น้ำหนัก'],[['แผลกดทับใหม่','ครั้ง ÷ วันนอน × 1,000','ลดลงจากฐาน','30%'],['พลัดตก','ครั้ง ÷ วันนอน × 1,000','ลดลงจากฐาน','30%'],['คะแนนความพึงพอใจญาติ','เฉลี่ยแบบสอบถาม','ไม่ต่ำกว่าฐาน','20%'],['อัตราลาออกในแผนก','ลาออก ÷ พนักงานเฉลี่ย','ไม่เกินฐาน','20%']])+'<h4>เกณฑ์ให้คะแนน</h4>'+T(['ผลเทียบเป้า','คะแนน'],[['≥ 110%','5'],['100–109%','4'],['90–99%','3'],['80–89%','2'],['< 80%','1']])+SIGN(['หัวหน้าแผนก','ผู้บริหารสาย','HR'])]]},
+{id:'kpieval',q:2,key:0,t:'ประเมิน KPI รอบแรก',own:'HR',due:'30 มิ.ย. 70',
+ goal:'ดูผล KPI ครึ่งปีแรกเทียบเป้า และหาแผนแก้ข้อที่ต่ำกว่าเป้า',
+ out:'รายงานผล KPI ครึ่งปีแรก เสนอประชุมผู้บริหาร',
+ steps:[['เม.ย. 70','ตรวจข้อมูลผลจริง ม.ค.–มี.ค. ในชีตติดตาม KPI','HR + Group Finance'],['พ.ค. 70','คำนวณคะแนน KPI รายแผนก','HR'],['พ.ค. 70','หัวหน้าแผนกเขียนแผนแก้ KPI ที่ต่ำกว่าเป้า','หัวหน้าแผนก'],['มิ.ย. 70','นำเสนอประชุมผู้บริหาร','HR']],
+ docs:[['แบบรายงานผล KPI รายแผนก',
+ '<p>แผนก '+BL+' &nbsp; รอบ ม.ค.–มิ.ย. 2570</p>'+T(['KPI','เป้า','ผลจริง','% ของเป้า','คะแนน (1–5)','น้ำหนัก','คะแนนถ่วง','สถานะ'],[[BL,BL,BL,BL,BL,BL,BL,'เขียว / เหลือง / แดง'],[BL,BL,BL,BL,BL,BL,BL,''],[BL,BL,BL,BL,BL,BL,BL,''],[BL,BL,BL,BL,BL,BL,BL,''],['<b>รวม</b>','','','','','100%',BL,'']])+'<p class="note">เขียว ≥ 100% · เหลือง 90–99% · แดง < 90%</p><h4>แผนแก้ KPI สีแดง</h4>'+T(['KPI','สาเหตุ','สิ่งที่จะทำ','ผู้รับผิดชอบ','เสร็จภายใน'],[[BL,BL,BL,BL,BL],[BL,BL,BL,BL,BL]])+SIGN(['หัวหน้าแผนก','ผู้บริหารสาย'])]]},
+{id:'perf',q:2,key:0,t:'ประเมิน Performance',own:'HR + หัวหน้าแผนก',due:'30 มิ.ย. 70',
+ goal:'ประเมินพนักงานรายคน ใช้ผลวางแผนพัฒนาและพิจารณาค่าตอบแทนปลายปี',
+ out:'ผลประเมินรายคนครบทุกคน พร้อมแผนพัฒนา',
+ steps:[['เม.ย. 70','ชี้แจงหัวหน้าแผนกเรื่องแบบฟอร์มและเกณฑ์','HR'],['พ.ค. 70','พนักงานประเมินตนเอง หัวหน้าประเมิน','หัวหน้าแผนก'],['พ.ค. 70','คุยผลประเมินรายคน 15–20 นาที','หัวหน้าแผนก'],['มิ.ย. 70','HR รวมผล ตรวจความเป็นธรรมข้ามแผนก','HR']],
+ docs:[['แบบประเมินผลการปฏิบัติงาน',
+ '<p>ชื่อ '+BL+' &nbsp; ตำแหน่ง '+BL+' &nbsp; แผนก '+BL+' &nbsp; ผู้ประเมิน '+BL+'</p><h4>ส่วนที่ 1 ผลงานตาม KPI (70%)</h4>'+T(['KPI ของตำแหน่ง','เป้า','ผลจริง','คะแนน 1–5'],[[BL,BL,BL,BL],[BL,BL,BL,BL],[BL,BL,BL,BL]])+'<h4>ส่วนที่ 2 สมรรถนะ (30%)</h4>'+T(['สมรรถนะ','ตัวอย่างพฤติกรรม','ตนเอง','หัวหน้า'],[['ใส่ใจผู้รับบริการ (Human Centric Care)','สุภาพ เคารพผู้สูงอายุ แจ้งญาติเมื่อมีอาการเปลี่ยน','',''],['ความปลอดภัย','ทำตาม SOP รายงานอุบัติการณ์ทันที','',''],['ทำงานเป็นทีม','ส่งเวรครบ ช่วยงานเพื่อน','',''],['ความรับผิดชอบ','มาตรงเวลา งานเสร็จตามมอบหมาย','',''],['พัฒนาตนเอง','เข้าอบรม นำความรู้มาใช้','','']])+'<p class="note">สเกล 5 = เกินความคาดหวังมาก · 3 = ตามความคาดหวัง · 1 = ต่ำกว่ามาก</p><h4>ส่วนที่ 3 แผนพัฒนา</h4>'+T(['เรื่องที่ต้องพัฒนา','วิธี (อบรม/โค้ช/หมุนงาน)','ภายใน'],[[BL,BL,BL],[BL,BL,BL]])+'<p>คะแนนรวม = KPI × 0.7 + สมรรถนะ × 0.3 = '+BL+'</p>'+SIGN(['พนักงาน','ผู้ประเมิน','HR'])]]},
+{id:'midyear',q:2,key:0,t:'ทบทวนแผนกลางปี',own:'CEO',due:'30 มิ.ย. 70',
+ goal:'ตัดสินใจครึ่งปีหลังจากข้อมูลจริง โดยเฉพาะวันเปิด IPD และเงินที่ต้องเตรียม',
+ out:'บันทึกมติ และแผนครึ่งปีหลังที่ปรับแล้ว',
+ steps:[['ต้น มิ.ย. 70','Group Finance อัปเดตแผนการเงินรายเดือนด้วยตัวเลขจริง','Group Finance'],['กลาง มิ.ย. 70','ประชุมทบทวนกลางปี ครึ่งวัน','CEO + ผู้บริหาร'],['ปลาย มิ.ย. 70','ประกาศแผนครึ่งปีหลังที่ปรับแล้ว','CEO']],
+ docs:[['วาระประชุมทบทวนกลางปี + บันทึกมติ',
+ '<h4>วาระ (ครึ่งวัน)</h4>'+T(['#','หัวข้อ','นำเสนอ','เวลา'],[['1','ผล KPI ครึ่งปีแรก และแผนแก้','HR','30 นาที'],['2','รายได้ ค่าใช้จ่าย เงินสด เทียบแผน','Group Finance','30 นาที'],['3','คลินิกเวชกรรม: ผู้ป่วยและรายได้จริงเทียบเป้า 1.10 ล้านบาท/เดือน','MD','20 นาที'],['4','ความคืบหน้าก่อสร้าง รพ. และ Villa / ใบอนุญาต','MD','30 นาที'],['5','ตัดสินใจ: วันเปิด IPD และ Villa','CEO','30 นาที'],['6','ผู้จองล่วงหน้าและแผนการขาย','Group Marketing','20 นาที'],['7','สรุปมติและผู้รับผิดชอบ','CEO','20 นาที']])+'<h4>บันทึกมติ</h4>'+T(['เรื่อง','มติ','ผู้รับผิดชอบ','ภายใน'],[['วันเปิด IPD',BL,BL,BL],['วันเปิด Villa',BL,BL,BL],['งบประมาณครึ่งปีหลัง',BL,BL,BL],['อื่นๆ',BL,BL,BL]])+SIGN(['ผู้บันทึก','CEO'])]]},
+{id:'recruit',q:2,key:1,t:'เริ่มสรรหาบุคลากร รพ.',own:'HR',due:'30 มิ.ย. 70',
+ goal:'มีผู้สมัครพร้อมเริ่มงานก่อนเปิด IPD โดยเฉพาะ RN ซึ่งหายาก',
+ out:'รายชื่อผู้สมัครที่ผ่านคัดเลือกและผู้สมัครสำรองทุกตำแหน่งหลัก',
+ steps:[['เม.ย. 70','ทำแผนอัตรากำลังรายเดือนจากแผนการเงิน','HR + Group Finance'],['เม.ย. 70','ประกาศรับ RN PN NA PTA แพทย์ เภสัชกร หลายช่องทาง','HR'],['พ.ค. 70','ติดต่อวิทยาลัยพยาบาล/สถาบันผู้ช่วยพยาบาลในเชียงใหม่','HR'],['มิ.ย. 70','สัมภาษณ์ คัดเลือก และทำสัญญาจ้างล่วงหน้า','HR + Head of Staff'],['ส.ค.–ก.ย. 70','เริ่มงานชุดแรกก่อนเปิด 1 เดือน และอบรม SOP','HR']],
+ docs:[['แผนสรรหาบุคลากรโรงพยาบาล',
+ T(['ตำแหน่ง','ต้องการตอนเปิด','ตอนเต็ม','เริ่มประกาศ','เริ่มงาน','ความยาก'],[['แพทย์ (IPD)','1','1','เม.ย. 70','ก.ย. 70','สูง'],['RN (IPD)','4','4','เม.ย. 70','ก.ย. 70','สูงมาก'],['ผู้ช่วยพยาบาล PN/NA (IPD)','6','37','เม.ย. 70','ก.ย. 70 แล้วเพิ่มตามผู้พัก','กลาง'],['PT / PTA (IPD)','1 / 3','1 / 3','พ.ค. 70','ก.ย. 70','กลาง'],['เภสัชกร (OPD)','2','2','ม.ค. 70','มี.ค. 70','สูง'],['Care manager (Villa)','1','1','ก.ค. 70','ต.ค. 70','กลาง'],['ผู้ช่วยพยาบาล (Villa)','3','12','ก.ค. 70','ต.ค. 70','กลาง']])+'<h4>ช่องทางสรรหา</h4>'+CK(['วิทยาลัยพยาบาลและสถาบันผลิตผู้ช่วยพยาบาลในภาคเหนือ','เว็บไซต์หางานและกลุ่มโซเชียลพยาบาล','พนักงานแนะนำเพื่อน (ค่าแนะนำเมื่อผ่านทดลองงาน)','รับย้ายพนักงานเก่งจากสาขา 1–4 และ TQL'])+'<h4>ติดตามรายสัปดาห์</h4>'+T(['ตำแหน่ง','ผู้สมัคร','สัมภาษณ์','รับแล้ว','สำรอง'],[[BL,BL,BL,BL,BL],[BL,BL,BL,BL,BL]])]]},
+{id:'hosp',q:3,key:1,t:'วางโครงสร้าง รพ.',own:'MD + Group Finance',due:'30 ก.ย. 70',
+ goal:'กำหนดแผนก อัตรากำลัง คณะกรรมการ และแผนรับคนของโรงพยาบาลก่อนเปิด IPD',
+ out:'ผังองค์กร รพ. อัตรากำลัง 118 คน แผนรับคน และงบดำเนินงาน',
+ steps:[['ก.ค. 70','ยืนยันวันส่งมอบอาคารจาก DG และเงื่อนไขธนาคาร','MD + Group Finance'],['ก.ค. 70','กำหนดแผนกและหัวหน้าแผนกของ รพ.','MD'],['ส.ค. 70','เขียน JD ตำแหน่งใหม่ (แพทย์ เภสัชกร เวรเปล ยาม care manager)','HR'],['เม.ย.–มิ.ย. 70','สรรหา RN PN NA PTA (ดูงาน "เริ่มสรรหาบุคลากร รพ." ใน Q2)','HR'],['ก.ย. 70','ตั้งคณะกรรมการคุณภาพ และเตรียม SOP IPD','MD + Head of Staff'],['ก.ย. 70','พนักงานชุดแรกเริ่มงานก่อนเปิด 1 เดือน','HR']],
+ docs:[['กรอบโครงสร้างโรงพยาบาลเชียงใหม่ มาสเตอร์พีซ (CMNH)',
+ '<h4>1. แผนกของโรงพยาบาล</h4>'+T(['แผนก','หน้าที่','รายงานต่อ'],[['องค์กรแพทย์','ตรวจรักษา OPD/IPD เวรแพทย์','ผู้อำนวยการ รพ. (แพทย์ผู้ดำเนินการ)'],['การพยาบาล OPD','ห้องตรวจ ซักประวัติ หัตถการ','Head of Staff'],['การพยาบาล IPD','โซนรวม ห้องพิเศษ','Head of Staff'],['เภสัชกรรม','จ่ายยา คลังยา ความปลอดภัยด้านยา','ผู้อำนวยการ รพ.'],['เวชระเบียน / ประชาสัมพันธ์','ลงทะเบียน เวชระเบียน คิว','MD'],['เวชศาสตร์ฟื้นฟู','PT PTA TMS/PMS','MD'],['สนับสนุน','เวรเปล ยาม แม่บ้าน แม่ครัว','Branch Manager']])+'<h4>2. อัตรากำลังตอนเปิดเต็ม</h4>'+T(['โซน','คน','ค่าจ้าง/เดือน'],[['OPD','31','822,000'],['IPD 50 เตียง (ตามใบอนุญาต)','68','1,442,000'],['Villa 20 ห้อง','19','285,000'],['<b>รวม</b>','<b>118</b>','<b>2,549,000</b>']])+'<h4>3. แผนรับคน (เปิด IPD ต.ค. 70)</h4>'+T(['ช่วง','รับใคร','จำนวน'],[['ส.ค. 70','ประกาศรับ RN PN NA PTA','–'],['ก.ย. 70','แพทย์ 1 · RN 4 · PT 1 · PTA 3 · แม่บ้าน 3 · แม่ครัว 2 · การเงิน 2 · ยาม 1 · ผู้ช่วยพยาบาล 6','23'],['ต.ค. 70 เป็นต้นไป','ผู้ช่วยพยาบาลเพิ่มตามจำนวนผู้พัก','จนถึง 37']])+'<h4>4. คณะกรรมการที่ควรมี</h4>'+CK(['ควบคุมการติดเชื้อ','ความปลอดภัยด้านยา','บริหารความเสี่ยงและอุบัติการณ์','พัฒนาคุณภาพ'])]]},
+{id:'mktplan',q:1,key:0,span:1,t:'วางรากฐาน Tranquila International (ต่อเนื่องถึง Q2)',own:'CEO + Group Marketing',due:'30 มิ.ย. 70',
+ goal:'ตอบ 8 คำถามจากการประชุม 3 ก.ย. 69 ทำแพ็กเกจ A เซ็นข้อตกลงกับ Swiss Helping Point และเตรียมทีมให้พร้อมรับผู้สนใจจากสวิส',
+ out:'เอกสารแนวคิดแบรนด์ แพ็กเกจ A พร้อมราคา ข้อตกลง SHP เว็บไซต์ EN/DE และผู้แนะนำ 10 ราย',
+ steps:[['ม.ค. 70','เจ้าของและ GM ตอบ 8 คำถาม ส่งให้ Mr. Ferdinand','CEO + GM TQL'],['ก.พ. 70','ร่างแพ็กเกจ A และแบบทดลองพัก 2–4 สัปดาห์ พร้อมราคา','Group Marketing + Group Finance'],['ก.พ. 70','เริ่มอบรมภาษาอังกฤษและคำเยอรมันพื้นฐานให้พนักงาน TQL','HR'],['มี.ค. 70','คุยขอบเขตงานและค่าตอบแทนกับ SHP · ติดต่อผู้แนะนำ 3 ราย','CEO + Group Marketing'],['เม.ย.–พ.ค. 70','เว็บไซต์ EN/DE แผ่นพับภาษาเยอรมัน WhatsApp Business','Group Marketing'],['พ.ค. 70','ตรวจใบอนุญาตและคุณสมบัติพนักงานทุกคน','MD + HR'],['มิ.ย. 70','เซ็นข้อตกลง SHP · ผู้แนะนำสะสม 10 ราย','CEO']],
+ docs:[['ร่างคำตอบ 8 คำถาม + แพ็กเกจ A',
+ '<p class="note">ที่มา: Marketing/Sales Plan set-up และบันทึกประชุม 3 ก.ย. 69 (Mr. Ferdinand Hoekstra) · ร่างให้เจ้าของแก้</p>'+T(['#','คำถาม','ร่างคำตอบ'],[['1','แนวคิดหลัก','บ้านพักดูแลระยะยาวในเครือโรงพยาบาลระบบประสาท สำหรับผู้สูงอายุชาวยุโรป เป้าระยะยาว 40 คน'],['2','กลุ่มเป้าหมาย','ผู้สูงอายุชาวสวิส (สมองเสื่อม หลังอัมพาต) · ลูกหลานผู้ตัดสินใจ · ชาวสวิส/ยุโรปในไทย · ผู้แนะนำ 13 กลุ่ม'],['3','แนวทางสื่อสาร','ปลอดภัยและไว้ใจได้ · ดูแลแบบมืออาชีพ · ศักดิ์ศรีและคุณภาพชีวิต · ค่าใช้จ่ายรวมต่ำกว่า'],['4','แพ็กเกจเด่น','แพ็กเกจ A (ด้านล่าง)'],['5','ทำไมเชียงใหม่','อากาศ การดูแลแบบอบอุ่น พนักงานดูแลใกล้ชิด อยู่ใกล้โรงพยาบาล'],['6','บทบาท SHP','ตัวแทนในสวิส คัดกรองผู้สนใจ แนะนำเครือข่าย ช่วยวีซ่า ประกัน เอกสาร'],['7','ช่องทาง','เว็บไซต์ EN/DE · Facebook · Instagram · WhatsApp (ตอบใน 24 ชม.) · แผ่นพับเยอรมัน · เยี่ยมชมออนไลน์'],['8','เหตุผลเพิ่มเติม','ดูแลเฉพาะตัวกว่า คุณภาพชีวิตดีกว่า ลดภาระญาติ ค่าใช้จ่ายรวมต่ำกว่าการดูแลในสวิสมาก']])+'<h4>แพ็กเกจ A (ร่าง)</h4>'+CK(['ห้องเดี่ยวหรือ Villa','ทีมพยาบาลมีใบอนุญาต ดูแล 24 ชม.','พนักงานพูดอังกฤษ + คำเยอรมันพื้นฐาน','แพทย์ระบบประสาทดูแลต่อเนื่อง','อัปเดตญาติทางวิดีโอทุกสัปดาห์','รับส่งสนามบิน','SHP ช่วยเรื่องวีซ่า ประกัน เอกสาร','แบบทดลองพัก 2–4 สัปดาห์'])+'<p>ราคา/เดือน '+BL+' &nbsp; ราคาทดลองพัก '+BL+' (Group Finance กำหนด)</p>'],
+ ['รายชื่อผู้แนะนำ (multipliers) ที่ต้องติดต่อ',
+ T(['#','กลุ่ม','ชื่อ/องค์กร','ติดต่อผ่าน','สถานะ'],['แพทย์ครอบครัว','แพทย์ผู้สูงอายุ','แพทย์ระบบประสาท','คลินิกความจำ','Spitex','ศูนย์ปรึกษาสมองเสื่อม','พยาบาล','นักสังคมสงเคราะห์','Case Manager','ผู้ช่วย','ผู้ดูแลทรัพย์สิน (Trustee)','ทนายคุ้มครองผู้ใหญ่','ที่ปรึกษาด้านผู้สูงอายุ'].map((g,i)=>[i+1,g,BL,'SHP / ตรง',BL]))]]},
+{id:'villapermit',q:3,key:0,span:1,t:'ยื่นขออนุญาต Villa (ต่อเนื่องถึง Q4)',own:'MD',due:'30 พ.ย. 70',
+ goal:'รู้ว่า Villa ต้องใช้ใบอนุญาตประเภทใด และได้ใบอนุญาตก่อนเริ่มรับผู้พัก',
+ out:'ใบอนุญาตตามประเภทที่ถูกต้อง ก่อนเปิด พ.ย. 70',
+ steps:[['ม.ค. 70','ยืนยันประเภทใบอนุญาตกับหน่วยงาน (ทำแล้วในงาน Q1)','MD'],['ก.ค. 70','เตรียมเอกสารตามประเภทที่ยืนยัน','MD'],['ส.ค. 70','ยื่นคำขอ','MD'],['ก.ย.–ต.ค. 70','รับตรวจสถานที่และแก้ไขตามข้อสังเกต','MD + DG'],['พ.ย. 70','ได้ใบอนุญาต เปิดรับผู้พัก','MD']],
+ docs:[['เช็กลิสต์ใบอนุญาต Villa',
+ '<p class="note">ประเภทใบอนุญาตขึ้นกับรูปแบบบริการที่เลือก ต้องยืนยันกับหน่วยงานก่อน เอกสารนี้เป็นรายการคำถามและการเตรียม ไม่ใช่ข้อสรุปทางกฎหมาย</p><h4>1. ตัดสินใจรูปแบบบริการก่อน</h4>'+T(['คำถาม','คำตอบ'],[['Villa ให้บริการทางการแพทย์/การพยาบาลเอง หรือรับบริการจาก รพ. CMNH',BL],['ผู้พักเป็นผู้สูงอายุทั่วไป หรือผู้มีภาวะพึ่งพิง/ผู้ป่วย',BL],['Villa อยู่ในใบอนุญาตเดียวกับ รพ. หรือแยก',BL]])+'<h4>2. หน่วยงานที่ต้องสอบถาม</h4>'+CK(['สำนักงานสาธารณสุขจังหวัดเชียงใหม่ (กรณีเป็นส่วนหนึ่งของสถานพยาบาล)','สำนักงานสนับสนุนบริการสุขภาพเขต / กรม สบส. (กรณีสถานประกอบการเพื่อสุขภาพ)','เทศบาล/องค์กรปกครองส่วนท้องถิ่น (ใบอนุญาตกิจการและอาคาร)'])+'<h4>3. เอกสารที่มักต้องเตรียม</h4>'+CK(['แบบแปลนอาคารและใบอนุญาตก่อสร้าง/ใช้อาคาร','หนังสือรับรองบริษัทและผู้มีอำนาจ','รายชื่อและคุณสมบัติผู้ดำเนินการ (care manager) และผู้ดูแล','แผนป้องกันอัคคีภัยและอุปกรณ์ความปลอดภัย','มาตรฐานบริการและ SOP'])+'<h4>4. ติดตาม</h4>'+T(['ขั้น','วันที่','ผล'],[['ปรึกษาหน่วยงาน',BL,BL],['ยื่นคำขอ',BL,BL],['ตรวจสถานที่',BL,BL],['ได้ใบอนุญาต',BL,BL]])]]},
+{id:'yearend',q:4,key:0,t:'สรุปผลปี + แผน 2571',own:'CEO',due:'31 ธ.ค. 70',
+ goal:'สรุปผลปี 2570 และทำแผนปี 2571 ให้พร้อมใช้ตั้งแต่ 1 ม.ค.',
+ out:'รายงานผลปี และแผนปี 2571 ที่กรรมการอนุมัติ',
+ steps:[['ต.ค. 70','แต่ละสายสรุปผล KPI ม.ค.–ก.ย.','ทุกสาย'],['พ.ย. 70','Group Finance ทำงบปี 2571 จากแผนการเงินรายเดือน','Group Finance'],['พ.ย. 70','Workshop แผนปี 2571 หนึ่งวัน','CEO + ผู้บริหาร'],['ธ.ค. 70','เสนอกรรมการอนุมัติ','CEO']],
+ docs:[['โครงรายงานผลปี 2570 และแผนปี 2571',
+ '<h4>ส่วนที่ 1 รายงานผลปี 2570</h4>'+CK(['สรุป 1 หน้า: เป้า 4 เรื่องหลักทำได้แค่ไหน','KPI ทั้งปีเทียบเป้า รายสาย','การเงิน: รายได้ ค่าใช้จ่าย เงินสด เทียบแผน','คลินิกเวชกรรม รพ. และ Villa: ผู้พัก/ผู้ป่วยจริงเทียบแผน','บุคลากร: จำนวน ลาออก ผลประเมิน','บทเรียนที่ได้ 3–5 ข้อ'])+'<h4>ส่วนที่ 2 แผนปี 2571</h4>'+CK(['เป้าหมายหลัก 3–4 เรื่อง','แผนรายไตรมาส','งบประมาณและเงินสดรายเดือน','KPI และค่าเป้ารายสาย','โครงสร้างและอัตรากำลังที่เปลี่ยน','ความเสี่ยงและเกณฑ์ Go / No-go'])+'<h4>ปฏิทิน</h4>'+T(['วันที่','งาน'],[['15 ต.ค.','ส่งสรุปผลรายสาย'],['15 พ.ย.','ร่างงบปี 2571'],['30 พ.ย.','Workshop แผน'],['15 ธ.ค.','ส่งกรรมการ'],['31 ธ.ค.','ประกาศแผนปี 2571']])]]},
+{id:'mktlaunch',q:3,key:0,span:1,opt:'B: ทดลองขาย Q4 ขายเต็มปี 2571',t:'เปิดตัว Tranquila International ในสวิส (ต่อเนื่องถึง Q4)',own:'Group Marketing',due:'31 ธ.ค. 70',
+ goal:'ได้ lead ต่างชาติต่อเนื่อง และรับผู้พักทดลองชุดแรก (ทาง A: 3 คนภายใน ธ.ค.)',
+ out:'lead ต่างชาติ 25 ราย ผู้แนะนำ 30 ราย ผู้พักต่างชาติ 1–3 คน และงบตลาดปี 2571',
+ steps:[['ก.ค. 70','เปิดตัวผ่านเครือข่าย SHP ในสวิส (ทาง B: เริ่มกับชาวสวิสในไทย)','Group Marketing + SHP'],['ส.ค. 70','เยี่ยมชมออนไลน์สำหรับญาติและผู้แนะนำ','Marketing & Sales'],['ก.ย. 70','ผู้แนะนำสะสม 20 ราย · ตอบ lead ทุกรายใน 24 ชม.','Group Marketing'],['ต.ค.–พ.ย. 70','รับผู้พักทดลอง 2–4 สัปดาห์','MD + GM TQL'],['ธ.ค. 70','สรุปผล ปรับราคา/ช่องทาง ตั้งงบปี 2571','Group Marketing + Group Finance']],
+ docs:[['แผนเปิดตัว + บันทึก lead ต่างชาติ',
+ '<h4>แผน 90 วันแรก</h4>'+T(['สัปดาห์','งาน','เสร็จ'],[['1–2','ส่งแผ่นพับเยอรมันให้ SHP และผู้แนะนำ','<span class="box"></span>'],['3–4','โพสต์เรื่องเล่าผู้พักและทีม EN/DE สัปดาห์ละ 2 ครั้ง','<span class="box"></span>'],['5–6','เยี่ยมชมออนไลน์ครั้งแรก','<span class="box"></span>'],['7–8','ติดตามผู้แนะนำทุกราย','<span class="box"></span>'],['9–12','นัดทดลองพัก ตอบ lead ภายใน 24 ชม.','<span class="box"></span>']])+'<h4>บันทึก lead</h4>'+T(['วันที่','ชื่อ','ประเทศ','ผู้แนะนำ/ช่องทาง','ความต้องการ','สถานะ','ผู้ดูแล'],[[BL,BL,BL,BL,BL,'ใหม่ / คุยวิดีโอ / ทดลองพัก / จอง / ไม่สนใจ',BL],[BL,BL,BL,BL,BL,'',BL],[BL,BL,BL,BL,BL,'',BL]])]]},
+{id:'villaop',q:4,key:1,t:'เปิดให้บริการ Villa ใหม่',own:'MD',due:'31 ธ.ค. 70',
+ goal:'เปิด Villa 20 ห้องอย่างปลอดภัย รับผู้พักชุดแรกตามแผน (3 คนเดือนแรก)',
+ out:'Villa เปิดรับผู้พัก ผ่านเกณฑ์ Go / No-go',
+ steps:[['ต.ค. 70','รับ care manager และผู้ช่วยพยาบาลชุดแรก 3 คน','HR'],['ต.ค. 70','อบรม SOP และซ้อมแผนฉุกเฉิน','Head of Staff'],['ต.ค. 70','เปิดรับจองล่วงหน้า','Group Marketing'],['พ.ย. 70','ผ่านเกณฑ์ Go / No-go แล้วเปิด','MD'],['ธ.ค. 70','ทบทวนเดือนแรก ปรับ SOP','MD']],
+ docs:[['เช็กลิสต์เปิด Villa และ 30 วันแรก',
+ '<h4>ก่อนเปิด</h4>'+CK(['ได้ใบอนุญาตตามประเภทที่ยืนยัน','ห้องพร้อม: เตียงปรับระดับ ราวจับ กริ่งเรียก ไฟฉุกเฉิน','อุปกรณ์ฉุกเฉิน: ชุดกู้ชีพ ออกซิเจน เส้นทางส่งต่อ รพ. CMNH','care manager + ผู้ช่วยพยาบาล 3 คน ผ่านอบรม','สัญญาบริการ ราคาแพ็กเกจ Villa ยืนยันแล้ว','ผู้จองอย่างน้อย 3 ห้อง'])+'<h4>วันรับผู้พัก</h4>'+CK(['ประเมินแรกรับ (ADL Barthel) และแผนดูแลรายบุคคล','รับยาและคำสั่งแพทย์','แนะนำญาติ: ช่องทางติดต่อ เวลาเยี่ยม การรายงาน'])+'<h4>ติดตาม 30 วันแรก</h4>'+T(['ตัวชี้วัด','เป้า','สัปดาห์ 1','2','3','4'],[['ผู้พัก (คน)','3','','','',''],['อุบัติการณ์','0','','','',''],['เรื่องร้องเรียน','0','','','',''],['ความพึงพอใจญาติ','≥ 4/5','','','','']])+SIGN(['care manager','MD'])]]}
+];
+const ITEM=Object.fromEntries(ITEMS.map(x=>[x.id,x]));
+const QH=[['Q1 · ตั้งระบบ','ม.ค. – มี.ค.'],['Q2 · วัดผล','เม.ย. – มิ.ย.'],['Q3 · วางแผนขยาย','ก.ค. – ก.ย.'],['Q4 · เริ่มดำเนินการ','ต.ค. – ธ.ค.']];
+$('#qboard').innerHTML=QH.map((h,k)=>'<div class="qcol"><h4>'+h[0]+'</h4><small>'+h[1]+'</small>'+ITEMS.filter(x=>x.q===k+1).map(x=>'<div class="item'+(x.key?' key':'')+(x.span?' span':'')+'" data-id="'+x.id+'">'+x.t+'<span class="dc">'+x.steps.length+' ขั้น · เอกสาร'+(x.opt?' · <b style="color:#B45309">'+x.opt+'</b>':'')+'</span></div>').join('')+'</div>').join('');
+document.querySelectorAll('#qboard .item').forEach(el=>el.onclick=()=>openItem(el.dataset.id));
+$('#docgrid').innerHTML=QH.map((h,k)=>'<h3>'+h[0]+'</h3><div class="doclist">'+ITEMS.filter(x=>x.q===k+1).map(x=>x.docs.map(d=>'<div class="card" data-id="'+x.id+'"><b>'+d[0]+'</b><div class="note">'+x.t+' · '+x.own+'</div></div>').join('')).join('')+'</div>').join('');
+document.querySelectorAll('#docgrid .card').forEach(el=>el.onclick=()=>openItem(el.dataset.id,true));
+function openItem(id,toDoc){
+  const x=ITEM[id];
+  $('#mbody').innerHTML='<h2>'+x.t+'</h2><div class="meta"><span class="tag">Q'+x.q+'</span><span class="tag">ผู้รับผิดชอบ: '+x.own+'</span><span class="tag warn">ส่งภายใน '+x.due+'</span>'+(x.opt?'<span class="tag warn">ทางเลือก '+x.opt+'</span>':'')+'</div>'
+   +'<p><b>เป้าหมาย:</b> '+x.goal+'</p><p><b>ผลลัพธ์ที่ต้องได้:</b> '+x.out+'</p>'
+   +'<h3>ขั้นตอนย่อย</h3>'+T(['ช่วงเวลา','งาน','ผู้รับผิดชอบ'],x.steps)
+   +x.docs.map((d,i)=>'<div class="doc" id="doc'+i+'"><h3>เอกสาร: '+d[0]+'</h3><p class="note">บริษัท ซีเอ็มเอ็นเอช 2012 จำกัด · ร่างเพื่อใช้ในแผนปี 2570</p>'+d[1]+'</div>').join('');
+  $('#modal').classList.add('on');$('#mbox').scrollIntoView();
+  if(toDoc){const d=$('#doc0');if(d)setTimeout(()=>d.scrollIntoView({behavior:'smooth'}),50)}
+}
+$('#mclose').onclick=()=>$('#modal').classList.remove('on');
+$('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')};
+$('#mprint').onclick=()=>printNode($('#mbody'),($('#mbody h2')||{}).textContent||'เอกสาร',false,true,$('#mprint'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('on')});
+
+buildCtrl();drawTasks();run();show('sum');
+
+// ---------- mobile: label table cells ----------
+const MC=['tt','rep','merge','opt','st','qt','scnTable','revTable'];
+function labelTables(){
+ MC.concat(['kt']).forEach(id=>{const t=document.getElementById(id);if(!t)return;
+  if(id!=='kt')t.classList.add('mc');
+  const rows=t.querySelectorAll('tr');if(!rows.length)return;
+  const hs=[...rows[0].children].map(c=>c.textContent.trim());
+  rows.forEach((r,i)=>{if(i===0)return;[...r.children].forEach((c,j)=>{if(!c.dataset.label)c.dataset.label=hs[j]||''})});
+ });}
+let _lt;new MutationObserver(()=>{clearTimeout(_lt);_lt=setTimeout(labelTables,60)}).observe(document.querySelector('main'),{childList:true,subtree:true});
+labelTables();
+document.body.insertAdjacentHTML('beforeend','<button id="totop" aria-label="กลับขึ้นบน">↑</button>');
+document.getElementById('totop').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>window.scrollTo({top:0})));
+// ---------- shared data (Supabase via supabase-bridge.js): tasks, data checklist, go/no-go, KPI
+const SHARED={tstat4:v=>{tstat=v;drawTasks()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
+const SCUR={tstat4:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
+let sdb=null,sro=false;const sq={},stm={},sbusy={};
+function syncBadge(t,c){const b=$('#sync');b.textContent=t;b.className='sync '+(c||'')}
+function kpiDefer(){const a=document.activeElement;if(a&&$('#kt').contains(a)){a.addEventListener('blur',()=>setTimeout(kpiRender,0),{once:true})}else kpiRender()}
+const _lset=store.set.bind(store);
+store.set=(k,v)=>{_lset(k,v);if(sdb&&!sro&&SHARED[k]){sq[k]=JSON.parse(JSON.stringify(v));clearTimeout(stm[k]);stm[k]=setTimeout(()=>sflush(k),700)}};
+async function sflush(k){
+  if(sbusy[k]){stm[k]=setTimeout(()=>sflush(k),400);return}
+  if(!(k in sq))return;const v=sq[k];delete sq[k];sbusy[k]=1;syncBadge('กำลังบันทึก…');
+  try{await sdb.doc('shared/'+k).set({v,at:Date.now()});syncBadge('ข้อมูลร่วมกับทีม','ok')}
+  catch(e){if(e&&e.code==='invalid_argument'){sro=true;syncBadge('ดูได้อย่างเดียว','warn')}else if(e&&e.code==='quota_exceeded'){syncBadge('พื้นที่เก็บเต็ม','warn')}else syncBadge('บันทึกไม่สำเร็จ','warn')}
+  sbusy[k]=0;
+}
+(async()=>{
+  let db=null;try{if(window.claude&&claude.use)db=await claude.use('db')}catch(e){}
+  if(!db){syncBadge('เก็บในเครื่องนี้');return}
+  sdb=db;syncBadge('กำลังเชื่อมต่อ…');
+  const tm=setTimeout(()=>syncBadge('ยังเชื่อมข้อมูลทีมไม่ได้','warn'),10000);
+  Object.keys(SHARED).forEach(k=>db.doc('shared/'+k).onSnapshot(sn=>{
+    if(!sn.metadata.fromCache){clearTimeout(tm);if(!sbusy[k]&&!(k in sq))syncBadge(sro?'ดูได้อย่างเดียว':'ข้อมูลร่วมกับทีม',sro?'warn':'ok')}
+    if(!sn.exists||sn.metadata.hasPendingWrites||(k in sq))return;
+    const d=sn.data();if(!d||d.v==null)return;const j=JSON.stringify(d.v);
+    if(j===JSON.stringify(SCUR[k]()))return;
+    _lset(k,JSON.parse(j));SHARED[k](JSON.parse(j));
+  },e=>{clearTimeout(tm);syncBadge(e&&e.code==='revoked'?'เก็บในเครื่องนี้':'เชื่อมข้อมูลทีมไม่ได้','warn')}));
+})();
+// sticky header height for sticky finance stats; keep active tab visible
+function setHH(){document.documentElement.style.setProperty('--hh',document.querySelector('header').offsetHeight+'px')}
+addEventListener('resize',setHH);setHH();
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>b.scrollIntoView({block:'nearest',inline:'center'})));
+// window.print is blocked inside the claude.ai frame
+
+// ---------- print: real print dialog when opened as a file; PDF via downloads inside claude.ai (print is blocked there)
+const INFRAME=window.self!==window.top;let dl=null;
+(async()=>{try{if(window.claude&&claude.use)dl=await claude.use('downloads')}catch(e){}})();
+document.body.insertAdjacentHTML('beforeend','<div id="toast" role="status"></div>');
+function toast(t,ms){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);if(ms!==0)e._t=setTimeout(()=>e.style.display='none',ms||3500)}
+function freeze(src,dst){const a=src.querySelectorAll('input,select'),b=dst.querySelectorAll('input,select');
+  b.forEach((el,i)=>{const o=a[i];let t,c='val';
+    if(o.type==='checkbox'){t=o.checked?'☑':'☐';c+=' cb'}else if(o.tagName==='SELECT')t=(o.options[o.selectedIndex]||{}).text||'';
+    else if(o.type==='range')t=o.value+'%';else t=o.value||'';
+    if(o.classList.contains('kt'))c+=' vt';if(o.classList.contains('good'))c+=' good';if(o.classList.contains('bad'))c+=' bad';
+    const sp=document.createElement('span');sp.className=c;sp.textContent=t||' ';el.replaceWith(sp)})}
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fname=t=>('CMNH 2570 - '+t).replace(/[\\/:*?"<>|]/g,' ').replace(/\s+/g,' ').trim().slice(0,90)+' (พิมพ์).html';
+function printHTML(node,title,landscape){
+  const c=node.cloneNode(true);freeze(node,c);c.classList.add('on');c.querySelectorAll('.mtools,#kf,#tf,.filters,#reset').forEach(e=>e.remove());
+  const css=document.querySelector('style').textContent;
+  return '<!DOCTYPE html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&family=Trirong:wght@500;600;700&display=swap" rel="stylesheet"><title>'+esc('CMNH 2570 · '+title)+'</title><style>'+css
+   +'\n@page{size:A4 '+(landscape?'landscape':'portrait')+';margin:12mm}body{background:#fff!important}main.pdfmain{max-width:'+(landscape?'1100px':'820px')+';margin:0 auto;padding:16px;background:#fff!important;border:0;box-shadow:none}'
+   +'.pbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:0 0 14px}.pbar button{font:inherit;font-size:15px;padding:8px 18px;border-radius:8px;border:1px solid #1F4D3E;background:#1F4D3E;color:#fff;cursor:pointer}@media print{.pbar{display:none}}'
+   +'</style></head><body class="pdf"><main class="pdfmain"><div class="pbar"><span class="note">กดพิมพ์ แล้วเลือกเครื่องพิมพ์ หรือ "บันทึกเป็น PDF"</span><button onclick="print()">🖨 พิมพ์</button></div>'
+   +'<div class="pdfhead"><b>CMNH แผนงานปี 2570 · '+esc(title)+'</b><span>พิมพ์ '+new Date().toLocaleDateString('th-TH')+'</span></div>'+c.outerHTML
+   +'</main><script>addEventListener("load",function(){setTimeout(function(){print()},400)})<\/script></body></html>';
+}
+function loadJS(src,ok){return ok()?Promise.resolve():new Promise((res,rej)=>{const sc=document.createElement('script');sc.src=src;sc.onload=()=>ok()?res():rej(new Error('load'));sc.onerror=rej;document.head.appendChild(sc)})}
+function prepClone(node){const c=node.cloneNode(true);freeze(node,c);c.classList.add('on');c.querySelectorAll('.mtools,#kf,#tf,.filters,#reset,.pbar').forEach(e=>e.remove());return c}
+async function saveFile(name,data){
+  if(dl){await dl.save({filename:name,data});return}
+  if(!INFRAME){const u=URL.createObjectURL(data instanceof Blob?data:new Blob([data],{type:'text/html'}));const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);return}
+  throw {code:'unavailable'};
+}
+async function buildPDF(node,title,landscape){
+  await loadJS('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',()=>window.jspdf&&window.jspdf.jsPDF);
+  const W=landscape?1080:760,MW=landscape?277:190,MH=landscape?186:273,pageH=Math.floor(MH*W/MW);
+  const box=document.createElement('div');box.className='pdf';
+  box.style.cssText='position:absolute;left:-30000px;top:0;width:'+W+'px;padding:0;background:#fff;color:#222;font-family:'+getComputedStyle(document.body).fontFamily.replace(/"/g,"'")+';font-size:15px;line-height:1.55';
+  box.innerHTML='<div class="pdfhead"><b>CMNH แผนงานปี 2570 · '+esc(title)+'</b><span>พิมพ์ '+new Date().toLocaleDateString('th-TH')+'</span></div>';
+  box.appendChild(prepClone(node));document.body.appendChild(box);
+  try{
+    if(document.fonts)await document.fonts.ready;
+    const H=Math.ceil(box.scrollHeight),top0=box.getBoundingClientRect().top;
+    const blocks=[...box.querySelectorAll('tr,.card,.item,h2,h3,h4,p,li,.stat,.pdfhead,.meta,label,details')].map(e=>{const r=e.getBoundingClientRect();return [r.top-top0,r.bottom-top0]}).filter(r=>r[1]-r[0]<pageH*.8);
+    const cuts=[];let y=0;
+    while(y<H){let end=y+pageH;if(end<H){const cr=blocks.filter(([t,bm])=>t<end&&bm>end&&t>y+pageH*.4).map(r=>r[0]);if(cr.length)end=Math.min(...cr)}cuts.push([y,Math.min(end,H)]);y=end}
+    const css=document.querySelector('style').textContent;
+    const xhtml=new XMLSerializer().serializeToString(box).replace(/left:\s*-30000px/,'left: 0px');
+    const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'"><foreignObject x="0" y="0" width="'+W+'" height="'+H+'"><div xmlns="http://www.w3.org/1999/xhtml"><style><![CDATA['+css+']]></style>'+xhtml+'</div></foreignObject></svg>';
+    const img=new Image();img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);await img.decode();
+    const pdf=new jspdf.jsPDF({unit:'mm',format:'a4',orientation:landscape?'landscape':'portrait'}),S=2,k=MW/W;
+    cuts.forEach(([a,b],i)=>{const cv=document.createElement('canvas');cv.width=W*S;cv.height=Math.ceil((b-a)*S);const g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,cv.width,cv.height);g.scale(S,S);g.drawImage(img,0,-a);
+      if(i)pdf.addPage();pdf.addImage(cv.toDataURL('image/jpeg',.9),'JPEG',10,10,MW,(b-a)*k);pdf.setFontSize(8);pdf.setTextColor(120);pdf.text((i+1)+' / '+cuts.length,(landscape?297:210)-10,(landscape?210:297)-6,{align:'right'})});
+    return pdf.output('blob');
+  }finally{box.remove()}
+}
+async function doPrint(kind,node,title,landscape,isDoc){
+  const btns=[$('#pbtn'),$('#mprint')];btns.forEach(x=>x.disabled=true);
+  try{
+    if(kind==='pdf'){toast('กำลังสร้าง PDF…',0);let blob;
+      try{blob=await buildPDF(node,title,landscape)}catch(e){console.error('pdf',e&&e.name,e&&e.message);toast('เครื่องนี้สร้าง PDF ไม่ได้ ใช้ "พิมพ์" แล้วเลือกบันทึกเป็น PDF แทน',6000);return}
+      await saveFile(fname(title).replace(' (พิมพ์).html','.pdf'),blob);toast('บันทึก PDF แล้ว');return}
+    if(!INFRAME){if(isDoc)document.body.classList.add('pdoc');window.print();setTimeout(()=>document.body.classList.remove('pdoc'),500);return}
+    await saveFile(fname(title),printHTML(node,title,landscape));toast('บันทึกแล้ว เปิดไฟล์ หน้าต่างพิมพ์จะขึ้นเอง',5000);
+  }catch(e){toast(e&&e.code==='declined'?'ยกเลิกการบันทึก':e&&e.code==='rate_limited'?'มีหน้าต่างบันทึกเปิดอยู่ ลองใหม่อีกครั้ง':e&&e.code==='unavailable'?'บันทึกไฟล์จากหน้านี้ไม่ได้':'ไม่สำเร็จ ลองใหม่อีกครั้ง')}
+  finally{btns.forEach(x=>x.disabled=false)}
+}
+document.body.insertAdjacentHTML('beforeend','<div id="pmenu" role="menu"><button data-k="pdf" role="menuitem">📄 บันทึกเป็น PDF<small>ได้ไฟล์ PDF เก็บไว้หรือส่งต่อ</small></button><button data-k="print" role="menuitem">🖨 พิมพ์<small>'+(INFRAME?'บันทึกไฟล์พร้อมพิมพ์ เปิดแล้วหน้าต่างพิมพ์ขึ้นเอง':'เปิดหน้าต่างพิมพ์ของเบราว์เซอร์')+'</small></button></div>');
+let pjob=null;
+function printNode(node,title,landscape,isDoc,btn){pjob=[node,title,landscape,isDoc];const m=$('#pmenu'),r=(btn||$('#pbtn')).getBoundingClientRect();m.classList.add('on');
+  m.style.top=Math.min(r.bottom+6,innerHeight-m.offsetHeight-8)+'px';m.style.left=Math.max(8,Math.min(r.right-m.offsetWidth,innerWidth-m.offsetWidth-8))+'px';}
+$('#pmenu').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('#pmenu').classList.remove('on');if(pjob)doPrint(b.dataset.k,...pjob)});
+document.addEventListener('click',e=>{if(!e.target.closest('#pmenu,#pbtn,#mprint'))$('#pmenu').classList.remove('on')});
+$('#pbtn').onclick=()=>{const sec=document.querySelector('section.on'),t=(tabs.find(x=>x[0]===sec.id)||[0,'หน้า'])[1];printNode(sec,t,['kpi','plan','tasks','fin'].includes(sec.id),false,$('#pbtn'))};
+</script>
 </body>
 </html>
