@@ -12,6 +12,19 @@
 --arrow:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%235A4A2A' stroke-width='1.8' stroke-linecap='round'/></svg>");
 --ok:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%231E6B3A' stroke-width='2.4' stroke-linecap='round'/></svg>");
 --no:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 4l8 8M12 4l-8 8' fill='none' stroke='%23A4161A' stroke-width='2.4' stroke-linecap='round'/></svg>")}
+/* ---- charts ---- */
+.cv{width:100%;display:block;overflow:visible}
+.cv text{font-family:inherit}
+.cv .ax{stroke:#E6DCC6;stroke-width:1}.cv .ax0{stroke:#B9AA88;stroke-width:1}
+.cv [data-tip]{cursor:default}.cv [data-tip]:hover{opacity:.82}
+.cleg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--mute);margin:2px 0 6px}
+.cleg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.cleg i.ln{height:3px;border-radius:2px;vertical-align:3px}
+.ccard{background:linear-gradient(#FFFEFA,#F8F2E4);border:1px solid #DCCFB2;border-radius:7px;padding:12px 14px 8px;box-shadow:inset 0 1px 0 #fff,0 4px 10px -6px rgba(80,60,20,.3)}
+.ccard h4{margin:0 0 2px;font-size:14.5px;color:#20392F}.ccard .note{margin:0 0 4px}
+#ctip{position:fixed;z-index:60;pointer-events:none;background:#20392F;color:#F6EBCB;font-size:12.5px;line-height:1.45;padding:6px 10px;border-radius:7px;box-shadow:0 6px 16px rgba(0,0,0,.3);display:none;max-width:260px}
+.kspark{display:block;margin-top:3px}
+@media print{.ccard{break-inside:avoid}.cv *{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 /* ---- year at a glance ---- */
 .yhero{position:relative;overflow:hidden;border-radius:12px;padding:30px 32px 26px;color:#F3EBD6;margin:0 0 22px;
  background:var(--noise),radial-gradient(ellipse at 85% -30%,#4E8C74 0%,transparent 55%),radial-gradient(ellipse at 10% 120%,#0F2E24 0%,transparent 60%),linear-gradient(135deg,#24584A,#173D31);
@@ -473,6 +486,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
   <div class="scroll"><table id="scnTable"></table></div>
   <h3>ที่มาของรายได้ (ตามค่าที่เลือกด้านบน)</h3>
   <p class="note" style="margin-top:-4px">ค่าเริ่มต้นมีรายได้จากค่าเตียงทางเดียว แถวที่เป็น 0 คือรายได้ที่ยังไม่มีประมาณการ</p>
+  <div class="grid g2" style="margin-bottom:12px"><div class="ccard"><h4>สัดส่วนรายได้ตามแหล่ง</h4><p class="note">แต่ละแถว = 100% · ชี้ที่แถบเพื่อดูยอดเงิน</p><div id="revMix"></div></div><div class="ccard"><h4>ค่าใช้จ่ายต่อเดือนตอนเปิดเต็ม</h4><p class="note">รวม 4.53 ล้าน/เดือน (รวมค่าผ่อนธนาคาร)</p><div id="costMix"></div></div></div>
   <div class="scroll"><table id="revTable"></table></div>
   <details class="card" style="margin-top:10px"><summary>ราคาค่าห้องและการคิดจำนวนผู้พัก</summary><div id="revHow"></div></details>
   <h3>สรุปรายไตรมาส (บาท)</h3>
@@ -503,6 +517,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
   <p class="lead">ช่องบน (พื้นเหลือง) คือเป้ารายเดือนที่กรอกไว้ให้ตามชีต "ติดตาม KPI 2570" ช่องล่างคือผลจริง กรอกทุกวันที่ 5 ของเดือนถัดไป ผลจะเป็นสีเขียวเมื่อถึงเป้า สีแดงเมื่อไม่ถึง ประชุมผู้บริหารเดือนละครั้ง</p>
   <p class="note">เป้าที่ผูกกับแผนการเงิน (อัตราเข้าพัก ค่าใช้จ่าย เงินสด lead รายได้คลินิก) เปลี่ยนตามสมมติฐานในแท็บการเงิน · ช่องว่างคือยังไม่วัดเดือนนั้นหรือรอค่าฐาน 2569 · ผลที่กรอกแชร์กับทีมเมื่อเข้าสู่ระบบ ไฟล์หลักยังเป็น Excel</p>
   <div class="filters" id="kf"></div>
+  <div class="ccard" style="margin:10px 0 12px"><h4 id="kpiSumT">ผล KPI แยกตามสาย</h4><p class="note">นับเฉพาะ KPI ที่กรอกทั้งเป้าและผลแล้ว</p><div id="kpiSum"></div></div>
   <div class="scroll"><table id="kt"></table></div>
 </section>
 
@@ -603,6 +618,11 @@ function drawRev(m){
   const nt=[S(y1,'net'),S(y2,'net'),last.net];
   h+='<tr><th>กำไร/ขาดทุน</th>'+nt.map(v=>'<th class="n '+(v<0?'neg':'pos')+'">'+fmt(v)+'</th>').join('')+'<th class="note">'+(last.net<0?'ตอนเต็มยังขาด '+fmt(-last.net)+'/เดือน ≈ '+fmt(-last.net/Math.max(1,last.rt))+' บาท/ผู้พัก':'ตอนเต็มมีกำไร')+'</th></tr>';
   $('#revTable').innerHTML=h;
+  const RS=rows.map(([n,k],j)=>({n,k,c:CAT[j]}));
+  $('#revMix').innerHTML=legend(RS.map(r=>({n:r.n,c:r.c})))+hStack({pct:1,lw:110,inl:1,rows:[['ปี 2570',y1],['ปี 2571',y2],['ต่อเดือนตอนเต็ม',[last]]].map(([l,a])=>({l,parts:RS.map(r=>({n:r.n,c:r.c,v:S(a,r.k)}))}))});
+  const CS=[['OPD',822000],['IPD',1442000],['Villa',285000],['เช่า น้ำ ไฟ อาหาร ซักล้าง',1080000],['ค่าผ่อนธนาคาร',901000]];
+  $('#costMix').innerHTML=legend(CS.map((x,j)=>({n:x[0],c:CAT[j]})))+hStack({lw:10,rh:40,pct:1,inl:1,rows:[{l:'',parts:CS.map((x,j)=>({n:x[0],c:CAT[j],v:x[1]}))}]})
+   +'<p class="note" style="margin:6px 0 0">IPD เป็นก้อนใหญ่สุด (32%) รองลงมาคือค่าดำเนินงานทั่วไปและค่าผ่อนธนาคาร</p>';
   const t=P.tier-1;
   $('#revHow').innerHTML='<p class="note">ราคาจากชีต "ราคาแพ็กเกจ" ระดับราคา '+P.tier+' · ค่าเตียงเฉลี่ยถ่วงตามสัดส่วนกลุ่มอาการที่เลือก</p>'
    +'<div class="scroll"><table><tr><th>กลุ่มอาการ</th><th class="n">สัดส่วน</th><th class="n">โซนรวม (38)</th><th class="n">ห้องคู่ (10)</th><th class="n">ห้องเดี่ยว (2)</th><th class="n">เฉลี่ย IPD</th><th class="n">Villa (20)</th></tr>'
@@ -642,6 +662,46 @@ function buildCtrl(){
 $('#reset').onclick=()=>applyScn(0);
 
 function stat(l,v,cls,box){return '<div class="card stat '+(box||'')+'"><div class="l">'+l+'</div><div class="v '+(cls||'')+'">'+v+'</div></div>'}
+// ---------- chart helpers (SVG, hover tooltip via data-tip; tables stay as the exact-number view)
+var CAT=['#14805A','#C9822F','#3A63A8','#B5485E','#6F9230','#9B5BA8'],CNEU='#D9CCAE',CGOOD='#1E6B3A',CBAD='#A4161A';
+const cesc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const cmp=v=>{const a=Math.abs(v);if(a<1e3)return String(Math.round(v*10)/10);return a>=1e6?(v/1e6).toFixed(a>=1e7?0:1).replace(/\.0$/,'')+' ล.':a>=1e3?Math.round(v/1e3)+'K':String(Math.round(v))};
+const niceStep=mx=>{const r=mx/4,p=Math.pow(10,Math.floor(Math.log10(r||1))),f=r/p;return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p};
+const rrect=(x,y,w,h,r,top)=>{r=Math.min(r,w/2,Math.abs(h));if(h<=0)return '';return top?'M'+x+','+(y+h)+'V'+(y+r)+'Q'+x+','+y+' '+(x+r)+','+y+'H'+(x+w-r)+'Q'+(x+w)+','+y+' '+(x+w)+','+(y+r)+'V'+(y+h)+'Z'
+  :'M'+x+','+y+'H'+(x+w-r)+'Q'+(x+w)+','+y+' '+(x+w)+','+(y+r)+'V'+(y+h-r)+'Q'+(x+w)+','+(y+h)+' '+(x+w-r)+','+(y+h)+'H'+x+'Z'};
+function legend(items){return '<div class="cleg">'+items.map(x=>'<span><i class="'+(x.line?'ln':'')+'" style="background:'+x.c+'"></i>'+x.n+'</span>').join('')+'</div>'}
+// grouped columns (+ optional line on the same baht axis). o:{cats,bars:[{n,c,v}],line:{n,c,v},max,unit}
+const narrow=()=>matchMedia('(max-width:640px)').matches;
+function colChart(o){const W=narrow()?420:600,H=o.h||250,pl=52,pr=10,pt=14,pb=28,cw=(W-pl-pr)/o.cats.length;
+  const all=o.bars.flatMap(b=>b.v).concat(o.line?o.line.v:[]),mx=o.max||Math.max(...all),st=niceStep(mx),top=Math.ceil(mx/st)*st,Y=v=>pt+(top-v)*(H-pt-pb)/top;
+  let g='<svg class="cv" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+cesc(o.title||'')+'">';
+  for(let t=0;t<=top+1;t+=st)g+='<line class="'+(t?'ax':'ax0')+'" x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(pl-6)+'" y="'+(Y(t)+4)+'" font-size="12" text-anchor="end" fill="#55493A">'+cmp(t)+'</text>';
+  const nb=o.bars.length,bw=Math.min(18,(cw*.7-2*(nb-1))/nb);
+  o.cats.forEach((c,i)=>{const x0=pl+i*cw+(cw-(nb*bw+2*(nb-1)))/2,tip=cesc(c)+'<br>'+o.bars.map(b=>b.n+' '+fmt(Math.round(b.v[i]))).join('<br>')+(o.line?'<br><b>'+o.line.n+' '+fmt(Math.round(o.line.v[i]))+'</b>':'');
+    g+='<rect x="'+(pl+i*cw)+'" y="'+pt+'" width="'+cw+'" height="'+(H-pt-pb)+'" fill="transparent" data-tip="'+tip+'"/>';
+    o.bars.forEach((b,k)=>g+='<path d="'+rrect(x0+k*(bw+2),Y(b.v[i]),bw,Y(0)-Y(b.v[i]),4,1)+'" fill="'+b.c+'" pointer-events="none"/>');
+    if(nb===1&&!o.line)g+='<text x="'+(x0+bw/2)+'" y="'+(Y(o.bars[0].v[i])-6)+'" font-size="12.5" font-weight="700" text-anchor="middle" fill="#2B2416">'+cmp(o.bars[0].v[i])+'</text>';
+    g+='<text x="'+(pl+i*cw+cw/2)+'" y="'+(H-9)+'" font-size="12.5" text-anchor="middle" fill="#55493A">'+c+'</text>'});
+  if(o.line){const P=o.line.v.map((v,i)=>[pl+i*cw+cw/2,Y(v)]);g+='<polyline fill="none" stroke="'+o.line.c+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="'+P.map(p=>p.join(',')).join(' ')+'" pointer-events="none"/>'
+    +P.map(p=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4.5" fill="'+o.line.c+'" stroke="#FFFDF8" stroke-width="2" pointer-events="none"/>').join('');
+    const lo=o.line.v.indexOf(Math.min(...o.line.v));g+='<text x="'+P[lo][0]+'" y="'+(P[lo][1]-10)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#2B2416">'+cmp(o.line.v[lo])+'</text>'}
+  return g+'</svg>'}
+// horizontal stacked bars. o:{rows:[{l,parts:[{n,c,v}],lab}],pct,max,lw}
+function hStack(o){const W=narrow()?Math.min(o.W||600,440):(o.W||600),lw=o.lw||120,rh=o.rh||30,bh=Math.min(20,rh-8),pr=o.pct&&!o.rows.some(r=>r.lab)?10:o.pr||70,H=o.rows.length*rh+4,mx=o.max||Math.max(...o.rows.map(r=>r.parts.reduce((a,x)=>a+x.v,0)));
+  let g='<svg class="cv" viewBox="0 0 '+W+' '+H+'" role="img">';
+  o.rows.forEach((r,i)=>{const y=i*rh+(rh-bh)/2,tot=r.parts.reduce((a,x)=>a+x.v,0),S=(W-lw-pr)/(o.pct?tot||1:mx);let x=lw;
+    g+='<text x="'+(lw-8)+'" y="'+(y+bh/2+4)+'" font-size="12.5" text-anchor="end" fill="#2B2416">'+r.l+'</text>';
+    r.parts.forEach((p,k)=>{const w=p.v*S;if(w<=0)return;const last=k===r.parts.length-1||r.parts.slice(k+1).every(q=>!q.v);
+      g+='<path d="'+rrect(x,y,Math.max(w-(last?0:2),1),bh,last?4:0,0)+'" fill="'+p.c+'" data-tip="'+cesc(r.l)+'<br>'+cesc(p.n)+': '+(o.fmt?o.fmt(p.v):fmt(Math.round(p.v)))+(o.pct&&tot?' ('+Math.round(p.v/tot*100)+'%)':'')+'"/>';
+      if(o.inl&&w>46)g+='<text x="'+(x+w/2-1)+'" y="'+(y+bh/2+4)+'" font-size="11.5" text-anchor="middle" fill="#fff" pointer-events="none">'+(o.pct?Math.round(p.v/tot*100)+'%':o.inl(p))+'</text>';x+=w});
+    if(r.lab)g+='<text x="'+(x+6)+'" y="'+(y+bh/2+4)+'" font-size="12" fill="#2B2416">'+r.lab+'</text>'});
+  return g+'</svg>'}
+document.body.insertAdjacentHTML('beforeend','<div id="ctip"></div>');
+(()=>{const tp=document.getElementById('ctip');
+  document.addEventListener('mouseover',e=>{const t=e.target.closest&&e.target.closest('[data-tip]');if(!t||!t.closest('.cv')){tp.style.display='none';return}tp.innerHTML=t.getAttribute('data-tip');tp.style.display='block'});
+  document.addEventListener('mousemove',e=>{if(tp.style.display!=='block')return;const w=tp.offsetWidth;tp.style.left=Math.min(innerWidth-w-8,e.clientX+14)+'px';tp.style.top=(e.clientY+14)+'px'});
+  document.addEventListener('touchstart',e=>{const t=e.target.closest&&e.target.closest('.cv [data-tip]');if(!t){tp.style.display='none';return}const r=t.getBoundingClientRect();tp.innerHTML=t.getAttribute('data-tip');tp.style.display='block';tp.style.left=Math.max(8,Math.min(innerWidth-tp.offsetWidth-8,r.left))+'px';tp.style.top=(r.bottom+8)+'px'},{passive:true});
+  addEventListener('scroll',()=>{tp.style.display='none'},{passive:true})})();
 function lineChart(el,vals,labels,opt){
   const W=1000,H=opt.h||260,pl=70,pr=16,pt=16,pb=34;
   const mn=Math.min(0,...vals),mx=Math.max(0,...vals),rng=(mx-mn)||1;
@@ -943,18 +1003,29 @@ function kpiFilters(){
   $('#kf').querySelectorAll('button').forEach(b=>b.onclick=()=>{kline=b.dataset.l;kpiFilters();kpiRender()});
   $('#kmon').onchange=e=>{kmon=+e.target.value;kpiRender()};
 }
+function kVals(k,i){const t=[],a=[];for(let j=0;j<12;j++){t.push(knum(kv[i+'-t'+j]??kfmt(k[4][j])));a.push(knum(kv[i+'-a'+j]))}return [t,a]}
+function kSpark(k,i){const [t,a]=kVals(k,i);if(!a.some(v=>v!=null))return '';
+  return '<svg class="kspark" width="140" height="28" viewBox="0 0 140 28" aria-label="แนวโน้ม '+cesc(k[0])+'">'+(()=>{const vs=t.concat(a).filter(v=>v!=null),mn=Math.min(...vs),mx=Math.max(...vs),r=(mx-mn)||1,X=j=>5+j*130/11,Y=v=>23-(v-mn)*18/r;
+   let d='',on=0;t.forEach((v,j)=>{if(v==null){on=0;return}d+=(on?'L':'M')+X(j)+','+Y(v);on=1});
+   return '<path d="'+d+'" fill="none" stroke="#C9BA97" stroke-width="2" stroke-linecap="round"/>'+a.map((v,j)=>{if(v==null)return '';const ok=t[j]==null?null:(k[3]==='↑'?v>=t[j]:v<=t[j]);
+     return '<circle cx="'+X(j)+'" cy="'+Y(v)+'" r="4" fill="'+(ok==null?'#55493A':ok?CGOOD:CBAD)+'" stroke="#FFFDF8" stroke-width="2"><title>'+MON[j]+': ผล '+v+(t[j]!=null?' / เป้า '+t[j]:'')+'</title></circle>'}).join('')})()+'</svg>'}
+function kpiSummary(K){const MS2=kmon<0?MON.map((_,j)=>j):[kmon];
+  $('#kpiSumT').textContent='ผล KPI แยกตามสาย · '+(kmon<0?'ทุกเดือน':MON[kmon]+' 70');
+  const rows=KLINES.slice(1).map(l=>{let ok=0,bad=0,no=0;K.forEach((k,i)=>{if(!k[1].includes(l))return;const [t,a]=kVals(k,i);MS2.forEach(j=>{if(t[j]==null||a[j]==null){no++;return}(k[3]==='↑'?a[j]>=t[j]:a[j]<=t[j])?ok++:bad++})});
+    return {l,parts:[{n:'✓ ผ่าน',c:CGOOD,v:ok},{n:'✗ ไม่ผ่าน',c:CBAD,v:bad},{n:'ยังไม่กรอก',c:CNEU,v:no}],lab:(ok+bad)?'ผ่าน '+ok+'/'+(ok+bad):'ยังไม่มีผล'}});
+  $('#kpiSum').innerHTML=legend([{n:'✓ ผ่าน',c:CGOOD},{n:'✗ ไม่ผ่าน',c:CBAD},{n:'ยังไม่กรอกผล',c:CNEU}])+hStack({rows,W:1060,lw:130,rh:30,pr:110,pct:1,fmt:v=>v+' ข้อ'})}
 function kpiRender(){
   if(!$('#kf').innerHTML)kpiFilters();
   const K=kpiList(),MS=kmon<0?MON.map((_,j)=>j):[kmon];
   $('#kt').classList.toggle('one',kmon>=0);
   $('#kt').innerHTML='<tr><th>KPI</th><th>สาย</th><th>หน่วย</th><th>ผ่าน</th>'+MS.map(j=>'<th>'+MON[j]+'</th>').join('')+'</tr>'
-   +K.map((k,i)=>(kline==='ทั้งหมด'||k[1].includes(kline))?'<tr data-i="'+i+'"><td>'+k[0]+' <span class="note">'+k[3]+(k[5]?' · '+k[5]:'')+'</span></td><td>'+k[1]+'</td><td class="note">'+k[2]+'</td><td class="kpass"></td>'
+   +K.map((k,i)=>(kline==='ทั้งหมด'||k[1].includes(kline))?'<tr data-i="'+i+'"><td>'+k[0]+' <span class="note">'+k[3]+(k[5]?' · '+k[5]:'')+'</span>'+kSpark(k,i)+'</td><td>'+k[1]+'</td><td class="note">'+k[2]+'</td><td class="kpass"></td>'
    +MS.map(j=>{const t=k[4][j],tv=kv[i+'-t'+j]??kfmt(t),av=kv[i+'-a'+j]??'';return '<td class="m" data-label="'+MON[j]+'"><input class="kp kt" data-k="'+i+'-t'+j+'" value="'+tv+'" placeholder="–" title="เป้า"><input class="kp ka" data-k="'+i+'-a'+j+'" value="'+av+'" placeholder="ผล" title="ผล"></td>'}).join('')+'</tr>':'').join('');
   const mark=tr=>{const k=K[+tr.dataset.i];let ok=0,n=0;
     tr.querySelectorAll('input.ka').forEach((el,j)=>{const t=knum(tr.querySelectorAll('input.kt')[j].value),a=knum(el.value);el.classList.remove('good','bad');
       if(t==null||a==null)return;n++;const pass=k[3]==='↑'?a>=t:a<=t;if(pass)ok++;el.classList.add(pass?'good':'bad')});
     tr.querySelector('.kpass').textContent=n?ok+'/'+n:''};
-  $('#kt').querySelectorAll('tr[data-i]').forEach(mark);
+  $('#kt').querySelectorAll('tr[data-i]').forEach(mark);kpiSummary(K);
   $('#kt').querySelectorAll('input').forEach(el=>{el.oninput=()=>{if(el.value==='')delete kv[el.dataset.k];else kv[el.dataset.k]=el.value;store.set('kpi3',kv);mark(el.closest('tr'))};
     el.onblur=()=>{const n=knum(el.value);if(n!=null&&Math.abs(n)>=1000&&el.value!==fmt(n)){el.value=fmt(n);kv[el.dataset.k]=el.value;store.set('kpi3',kv)}}});
 }
@@ -1934,6 +2005,15 @@ function drawAct(){const el=$('#act');if(!el)return;
   let h='<div class="grid g4">'+cs.map(([c,k])=>'<div class="card"><b>'+c.id+'</b><div class="note">'+c.name+'</div><div style="font-size:22px;font-weight:700;margin-top:6px">'+b0(k.avg)+'</div><div class="note">กำไรเฉลี่ย/เดือน หลังหักภาษีและรายการนอกตาราง</div></div>').join('')
    +'<div class="card"><b>รวม 2 บริษัท</b><div style="font-size:22px;font-weight:700;margin-top:6px">'+b0(tot)+'</div><div class="note">ต่อเดือน ≈ '+b0(tot*12)+' บาท/ปี ใช้เทียบกับเงินสดที่ต้องเตรียมในแท็บการเงิน</div></div>'
    +'<div class="card"><b>อัตราเข้าพัก '+ACT.asof+'</b>'+cs.map(([c])=>'<div>'+c.id+' '+(c.id==='TQL'?'IPD ':'')+pct(c.occ[0],c.occ[1])+' <span class="note">('+c.occ[0]+'/'+c.occ[1]+')</span></div>').join('')+'<div class="note">Day Care TQL '+ACT.co[1].dc[0]+'/'+ACT.co[1].dc[1]+'</div></div></div>';
+  if(ACT.co[0].mon){const mx=Math.max(...ACT.co.flatMap(c=>c.mon.flat()));
+    h+='<h4>รายรับ–รายจ่ายรายเดือน 2569 (ตารางผู้บริหาร)</h4>'+legend([{n:'รายรับ',c:CAT[0]},{n:'รายจ่าย',c:CNEU},{n:'กำไรคงเหลือ',c:CAT[1],line:1}])
+     +'<div class="grid g2" style="margin-bottom:14px">'+ACT.co.map(c=>'<div class="ccard"><h4>'+c.id+'</h4><p class="note">สเกลเดียวกันทั้ง 2 บริษัท · ตัวเลขบนเส้น = เดือนที่กำไรต่ำสุด</p>'
+     +colChart({title:c.id,cats:MON.slice(0,c.mon.length),max:mx,bars:[{n:'รายรับ',c:CAT[0],v:c.mon.map(x=>x[0])},{n:'รายจ่าย',c:CNEU,v:c.mon.map(x=>x[1])}],line:{n:'กำไร',c:CAT[1],v:c.mon.map(x=>x[0]-x[1])}})+'</div>').join('')+'</div>'}
+  const BR=ACT.co.flatMap(c=>c.beds.map(b=>({l:c.id+' · '+b[0],parts:[{n:'มีผู้ใช้',c:CAT[0],v:b[1]-b[2]},{n:'ว่าง',c:CNEU,v:b[2]}],lab:(b[1]-b[2])+'/'+b[1]})));
+  const SV=ACT.svc.map(x=>({l:x[0].replace(/ \(.*\)/,''),parts:[{n:'ผู้ใช้',c:CAT[2],v:x[1]}],lab:String(x[1])}));
+  h+='<div class="grid g2" style="margin-bottom:14px"><div class="ccard"><h4>เตียงมีผู้ใช้ / ว่าง ('+ACT.asof+')</h4>'+legend([{n:'มีผู้ใช้',c:CAT[0]},{n:'ว่าง',c:CNEU}])+hStack({rows:BR,lw:150,rh:28,fmt:v=>v+' เตียง'})+'</div>'
+   +'<div class="ccard"><h4>บริการเสริม CMNH ปี 2569 (ราย)</h4><p class="note">ฐานของ 6 โปรเจ็คต่อเนื่อง</p>'+hStack({rows:SV,lw:150,rh:28,fmt:v=>v+' ราย'})
+   +(ACT.trend?'<h4 style="margin-top:8px">'+ACT.trend.n+'</h4>'+colChart({title:ACT.trend.n,h:150,cats:ACT.trend.v.map(x=>MON[x[0]]),bars:[{n:'ราย',c:CAT[2],v:ACT.trend.v.map(x=>x[1])}]}):'')+'</div></div>';
   h+='<div class="scroll"><table><tr><th>'+ACT.period+'</th>'+cs.map(([c])=>'<th>'+c.id+'</th>').join('')+'</tr>'
    +[['รายรับ (ตารางผู้บริหาร)',([c])=>b0(c.mg.rev)],['รายจ่าย (ตารางผู้บริหาร)',([c])=>b0(c.mg.exp)],['กำไรคงเหลือ (รับ − จ่าย)',([c,k])=>'<b>'+b0(k.pm)+'</b>'],
      ['หัก: จ่ายแล้วแต่ยังไม่อยู่ในตาราง',([c,k])=>'−'+b0(k.ops)+'<div class="note">'+c.extra.filter(x=>!x[2]).map(x=>x[0]+' '+b0(x[1])).join(' · ')+'</div>'],
