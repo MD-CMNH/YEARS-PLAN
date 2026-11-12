@@ -16,6 +16,7 @@
 .dbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}.dbar input{flex:1 1 260px;font:inherit;padding:8px 12px;border:1px solid #C9BA97;border-radius:8px;background:#fff}.dbar select{font:inherit;padding:8px;border:1px solid #C9BA97;border-radius:8px;background:#fff}
 #dtype small{opacity:.7;margin-left:3px}
 .dgh{margin:16px 0 6px;color:#20392F}
+details.dgd>summary{cursor:pointer;list-style:none}details.dgd>summary::-webkit-details-marker{display:none}details.dgd>summary h4::before{content:"▸ ";color:var(--brand2)}details.dgd[open]>summary h4::before{content:"▾ "}
 table.dreg td{vertical-align:middle;padding:6px 8px}table.dreg .dc{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;white-space:nowrap;color:#3A3222}
 table.dreg a,#lichub a{color:#1F4D3E;font-weight:600;text-decoration:none;border-bottom:1px dotted #2F6B57}table.dreg a:hover,#lichub a:hover{color:#B8702E}
 .dtask{font-size:12px;color:var(--mute);background:#F3EAD6;border-radius:99px;padding:1px 8px;display:inline-block;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
@@ -76,6 +77,9 @@ select.st-0{background:#FFF6DC}select.st-1{background:#FDE9D2}select.st-2{backgr
 .ychips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .ychips span{font-size:13px;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(233,207,142,.35)}
 .ychips b{color:var(--brass1)}
+.yprep{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:14px;font-size:13px;color:#E9DFC6}.yprep:empty{display:none}.yprep b{flex-basis:100%;color:var(--brass1);font-size:12.5px}
+.yprep .d{color:#FFF8E6}.yprep .i{color:#F4E2AE}.yprep .w{opacity:.7}
+.v.inv,.neg.inv{color:#7A5222}
 .yring{position:relative;width:150px;height:150px;flex:0 0 auto;z-index:1}
 .yring svg{transform:rotate(-90deg)}
 .yring .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -137,6 +141,8 @@ header p{margin:2px auto 10px;opacity:.85;font-size:13px;text-shadow:0 -1px 0 rg
 nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:2px}nav::-webkit-scrollbar{display:none}
 nav button{flex:0 0 auto;font:inherit;font-size:14px;cursor:pointer;white-space:nowrap;padding:9px 15px 8px;border-radius:9px 9px 0 0;color:#E9DFC6;
  background:linear-gradient(#2D6453,#204E40);border:1px solid #12342A;border-bottom:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.16);text-shadow:0 -1px 0 rgba(0,0,0,.5)}
+.ngrp{flex:0 0 auto;display:flex;flex-direction:column}.ngrp+.ngrp{margin-left:10px;padding-left:10px;border-left:1px solid rgba(233,207,142,.25)}
+.ngl{font-size:11.5px;color:var(--brass1);opacity:.85;padding:0 4px 2px;font-weight:600}.ngt{display:flex;gap:4px;margin-top:auto}
 nav button:hover{background:linear-gradient(#357260,#245647)}
 nav button.on{color:var(--ink);font-weight:700;background:linear-gradient(#FFFDF7,var(--paper));border-color:#CDBE9C;text-shadow:0 1px 0 #fff;box-shadow:0 -2px 4px rgba(0,0,0,.18);position:relative;top:1px}
 /* ---- paper page ---- */
@@ -153,7 +159,7 @@ h3::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,#D3C4A0,
  box-shadow:inset 0 1px 0 #fff,0 1px 1px rgba(80,60,20,.12),0 4px 10px -4px rgba(80,60,20,.3)}
 .stat .l{font-size:13px;color:var(--mute)}
 .stat .v{font-size:23px;font-weight:700;color:#21483B;text-shadow:0 1px 0 #fff;line-height:1.3}
-.stat .v.bad{color:var(--bad)}
+.stat .v.bad{color:var(--bad)}.stat .v.inv{color:#7A5222}
 .stat.hero{background:linear-gradient(#FFF6EC,#F6E6D2);border-color:#D9B79A}
 .stat.hero .v{font-size:28px}
 table{border-collapse:separate;border-spacing:0;width:100%;background:#FFFDF8;font-size:14px;border:1px solid #DCCFB2;border-radius:6px;overflow:hidden;box-shadow:0 2px 6px -3px rgba(80,60,20,.3)}
@@ -162,9 +168,21 @@ tr:nth-child(even) td{background:rgba(120,95,40,.025)}
 th{background:linear-gradient(#F3EAD6,#E5D8BB);font-weight:700;font-size:13px;color:#3A3020;text-shadow:0 1px 0 rgba(255,255,255,.8);border-bottom:2px solid #C9B88E}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 .neg{color:var(--bad)}.pos{color:var(--good)}
+.kbase{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)}.kbase>b{display:block;font-size:13.5px;margin-bottom:6px;color:#20392F}
+.kb{display:grid;grid-template-columns:190px 1fr 260px;gap:10px;align-items:center;font-size:13.5px;padding:3px 0}
+.kbt{position:relative;height:14px;background:#EFE6D2;border-radius:7px}.kbt i{position:absolute;left:0;top:0;bottom:0;background:#2F6B57;border-radius:7px}.kbt em{position:absolute;top:-4px;bottom:-4px;width:3px;margin-left:-1px;background:#B8702E;border-radius:2px}
+@media(max-width:640px){.kb{grid-template-columns:1fr}}
 .tag{display:inline-block;font-size:12px;font-weight:700;padding:0 8px;border-radius:4px;color:#22513F;border:1.5px solid #3C7A63;background:rgba(60,122,99,.06);letter-spacing:.2px}
 .tag.warn{color:#9A4A0B;border-color:#B8742F;background:rgba(184,116,47,.07)}
 ol.dec li{margin:6px 0}
+.dsum{display:flex;gap:8px;margin:0 0 10px;flex-wrap:wrap}.dsum span{font-size:13px;padding:3px 12px;border-radius:99px;border:1px solid var(--line);background:#FFFDF7}.dsum b{font-size:15px}
+.decs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin-bottom:18px}
+.dcard{padding:12px 14px;border-left:4px solid #C9822F;display:flex;flex-direction:column}.dcard.dc1{border-left-color:#2F6B57;opacity:.85}.dcard.dc2{border-left-color:#9AA0A6}
+.dcard p{margin:6px 0 10px;font-size:13.5px;color:var(--mute);flex:1}.dtop{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}.dtop b{font-size:15px}
+.dno{font:700 13px/22px Trirong,Georgia,serif;width:22px;text-align:center;border-radius:50%;background:#EFE6D2;flex:0 0 22px}
+.dwhen{margin-left:auto;font-size:12px;color:#9A5B0B;background:#FBEFD9;padding:1px 8px;border-radius:99px}
+.dbot{display:flex;gap:6px}.dbot select,.dbot input{font:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:#fff}.dbot input{flex:1;min-width:0}
+.dsum .dc0 b{color:#9A5B0B}.dsum .dc1 b{color:var(--good)}
 /* cork board */
 .q{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:16px;border-radius:8px;
  background:var(--noise),radial-gradient(circle at 20% 30%,rgba(255,255,255,.12) 0 2px,transparent 3px) 0 0/14px 14px,radial-gradient(circle at 70% 60%,rgba(90,50,10,.18) 0 1.5px,transparent 2.5px) 0 0/11px 11px,linear-gradient(#C9A06A,#B88B54);
@@ -286,7 +304,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
  header h1{font-size:16px}header p{display:none}
  .hrow{margin-bottom:6px}.sync{font-size:11px;padding:2px 8px}.pbtn{font-size:14px;padding:2px 9px}.pbtn .pl{display:none}header h1{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
  nav{gap:3px;padding-right:12px}
- nav button{padding:8px 12px 7px;font-size:13px}
+ nav button{padding:8px 12px 7px;font-size:13px}.ngrp+.ngrp{margin-left:6px;padding-left:6px}.ngl{font-size:10.5px}
  main{padding:16px 12px 70px;border-radius:0;border-left:0;border-right:0;margin-bottom:0}
  h2{font-size:19px}h3{font-size:16px;margin-top:22px}
  .lead{font-size:14px}
@@ -363,6 +381,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
     <h2>ปีแห่งการวาง<em>ระบบ</em> สู่การเปิด<em>โรงพยาบาล</em></h2>
     <p>ครึ่งปีแรกจัดระบบภายในให้แข็งแรง (คลินิกหน้า รพ. · โครงสร้าง CEO–MD · KPI · SOP) ครึ่งปีหลังเปิดโรงพยาบาล Villa และตลาดต่างประเทศ</p>
     <div class="ychips" id="ychips"></div>
+    <div class="yprep" id="yprep"></div>
    </div>
    <div class="yring" id="yring"></div>
   </div>
@@ -383,15 +402,8 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
   <p class="note">เทียบแผนเดิมกับแผนใหม่ (คลินิกอาคารหน้า รพ.) คำนวณสดจากสมมติฐานในแท็บการเงิน</p>
   <div class="scroll"><table id="opt"></table></div>
   <h3>เรื่องที่ต้องให้ CEO ตัดสินใจ</h3>
-  <ol class="dec">
-    <li>เสนอ Board อนุมัติโครงสร้าง CEO → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ และตารางอำนาจอนุมัติ (ร่างคู่มือในแท็บธรรมาภิบาล) แล้วประกาศใช้ภายใน 4 สัปดาห์</li>
-    <li>ยืนยันการแต่งตั้ง MD (ปฏิบัติงานอยู่แล้ว) ด้วยมติ Board ใน ม.ค. 70 และกำหนดว่าใครควบตำแหน่ง Group Manager และ Unit Director เพื่อรับงานต่อจาก MD (ตำแหน่งเหล่านี้ยังไม่มีงบในโมเดลการเงิน)</li>
-    <li>อนุมัติคลินิกแพทย์ + กายภาพที่อาคารหน้า รพ.: ยื่นคำขอภายใน 30 พ.ย. 2569 เปิด ม.ค. 2570 (ตัดสินใจ 26 ธ.ค.)</li>
-    <li>ให้ตัวเลขเงินลงทุน เงินกู้ ประมาณการรายได้ OPD และตัวเลขธุรกิจเดิมปี 2569</li>
-    <li>ยืนยันเดือนเปิด IPD (แผนสมมติ ต.ค. 70) ราคา Villa T.Tube และประเภทใบอนุญาต Villa</li>
-    <li>ให้แต่ละสายตั้งค่าเป้า KPI ให้เสร็จใน ม.ค. 2570</li>
-    <li>เลือกเวลาเริ่มขายตลาดต่างประเทศ A (ก.ค. 70) หรือ B (ทดลอง Q4)</li>
-  </ol>
+  <div class="dsum" id="decsum"></div>
+  <div class="decs" id="decs"></div>
   <h3>ผลจริงปี 2569 (ม.ค.–ก.ย.) ธุรกิจเดิม 2 บริษัท</h3>
   <p class="note">จาก Performance Review Sep 2026 · ตัวเลขเก็บในฐานข้อมูล แสดงเฉพาะผู้ที่เข้าระบบแล้ว</p>
   <div id="act"><div class="card note">กำลังโหลดตัวเลขจริง…</div></div>
@@ -519,7 +531,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
   <div class="card"><div class="ctrl" id="ctrl"></div>
     <p class="note" style="margin:10px 0 0"><button id="reset" class="btn">คืนค่าเริ่มต้น</button></p></div>
   <h3>เงินสดสะสม 24 เดือน</h3>
-  <p class="note" style="margin-top:-4px">เส้นต่ำลง = ใช้เงินมากขึ้น · จุดต่ำสุดของเส้นคือ "เงินที่ต้องเตรียมสูงสุด"</p>
+  <p class="note" style="margin-top:-4px">เส้นต่ำลง = ช่วงลงทุน (ใช้เงินมากกว่ารับ) · จุดต่ำสุดของเส้นคือ "เงินลงทุนที่ต้องเตรียมสูงสุด"</p>
   <div class="card" id="chart"></div>
   <h3>เทียบสถานการณ์ (คำนวณจากค่าเริ่มต้น)</h3>
   <p class="note" style="margin-top:-4px">ใช้ตอบคำถาม "ถ้า…จะเป็นอย่างไร" ในห้องประชุม · กดชื่อสถานการณ์เพื่อโหลดค่าขึ้นด้านบน</p>
@@ -557,7 +569,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
   <p class="lead">ช่องบน (พื้นเหลือง) คือเป้ารายเดือนที่กรอกไว้ให้ตามชีต "ติดตาม KPI 2570" ช่องล่างคือผลจริง กรอกทุกวันที่ 5 ของเดือนถัดไป ผลจะเป็นสีเขียวเมื่อถึงเป้า สีแดงเมื่อไม่ถึง ประชุมผู้บริหารเดือนละครั้ง</p>
   <p class="note">เป้าที่ผูกกับแผนการเงิน (อัตราเข้าพัก ค่าใช้จ่าย เงินสด lead รายได้คลินิก) เปลี่ยนตามสมมติฐานในแท็บการเงิน · ช่องว่างคือยังไม่วัดเดือนนั้นหรือรอค่าฐาน 2569 · ผลที่กรอกแชร์กับทีมเมื่อเข้าสู่ระบบ ไฟล์หลักยังเป็น Excel</p>
   <div class="filters" id="kf"></div>
-  <div class="ccard" style="margin:10px 0 12px"><h4 id="kpiSumT">ผล KPI แยกตามสาย</h4><p class="note">นับเฉพาะ KPI ที่กรอกทั้งเป้าและผลแล้ว</p><div id="kpiSum"></div></div>
+  <div class="ccard" style="margin:10px 0 12px"><h4 id="kpiSumT">ผล KPI แยกตามสาย</h4><p class="note" id="kpiSumN">นับเฉพาะ KPI ที่กรอกทั้งเป้าและผลแล้ว</p><div id="kpiSum"></div></div>
   <div class="scroll"><table id="kt"></table></div>
 </section>
 
@@ -583,8 +595,10 @@ const MON=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.
 const store={get(k,d){try{const v=localStorage.getItem('cmnh2570:'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('cmnh2570:'+k,JSON.stringify(v))}catch(e){}}};
 
 // ---------- nav
-const tabs=[['year','ภาพรวมปี'],['sum','สรุป CEO'],['plan','แผนไตรมาส'],['tasks','งาน'],['proj','โปรเจ็ค'],['org','โครงสร้าง'],['gov','ธรรมาภิบาล'],['fin','การเงิน'],['sales','การขาย'],['kpi','KPI'],['docs','เอกสาร']];
-tabs.forEach(([id,t],i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>show(id);b.dataset.id=id;$('#nav').appendChild(b)});
+const TGROUPS=[['ภาพรวม',[['year','ภาพรวมปี'],['sum','สรุป CEO'],['kpi','KPI']]],['แผนงาน',[['plan','แผนไตรมาส'],['tasks','งาน'],['proj','โปรเจ็ค'],['sales','การขาย']]],['องค์กร',[['org','โครงสร้าง'],['gov','ธรรมาภิบาล'],['fin','การเงิน'],['docs','เอกสาร']]]];
+const tabs=TGROUPS.flatMap(g=>g[1]);
+TGROUPS.forEach(([g,ts])=>{const w=document.createElement('div');w.className='ngrp';w.innerHTML='<span class="ngl">'+g+'</span><div class="ngt"></div>';
+  ts.forEach(([id,t])=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>show(id);b.dataset.id=id;w.lastChild.appendChild(b)});$('#nav').appendChild(w)});
 function show(id){document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.id===id));if(id==='fin'||id==='sales')run()}
 
 // ---------- model (same as Excel sheet แผนรายเดือน 2570-71)
@@ -679,8 +693,8 @@ function drawRev(m){
   const mi=$('#mixInfo');if(mi){const tot=(P.mix||DEF.mix).reduce((a,b)=>a+(+b||0),0);mi.innerHTML='รวม '+tot+'%'+(tot!==100?' <span class="tag warn">ไม่ครบ 100 ระบบปรับสัดส่วนให้อัตโนมัติ</span>':'')+' · ค่าเตียงเฉลี่ย IPD '+fmt(ipdP(P))+' · Villa '+fmt(villaP(P))}
 }
 function drawScnTable(){
-  $('#scnTable').innerHTML='<tr><th>สถานการณ์</th><th class="n">เงินที่ต้องเตรียมสูงสุด</th><th class="n">ผลปี 2570</th><th class="n">ผลปี 2571</th><th>เดือนแรกที่มีกำไร</th></tr>'+SCN.map(([n,o],i)=>{const q=scnP(o),r=summary(model(q),q);
-    return '<tr><td data-i="'+i+'">'+n+'</td><td class="n neg">'+fm(-r.peak)+'</td><td class="n '+(r.y1<0?'neg':'pos')+'">'+fm(r.y1)+'</td><td class="n '+(r.y2<0?'neg':'pos')+'">'+fm(r.y2)+'</td><td>'+(r.be?mlabel(r.be.i):'เกิน 24 เดือน')+'</td></tr>'}).join('');
+  $('#scnTable').innerHTML='<tr><th>สถานการณ์</th><th class="n">เงินลงทุนที่ต้องเตรียมสูงสุด</th><th class="n">ผลปี 2570</th><th class="n">ผลปี 2571</th><th>เดือนแรกที่มีกำไร</th></tr>'+SCN.map(([n,o],i)=>{const q=scnP(o),r=summary(model(q),q);
+    return '<tr><td data-i="'+i+'">'+n+'</td><td class="n">'+fm(r.peak)+'</td><td class="n '+(r.y1<0?'neg inv':'pos')+'">'+fm(r.y1)+'</td><td class="n '+(r.y2<0?'neg inv':'pos')+'">'+fm(r.y2)+'</td><td>'+(r.be?mlabel(r.be.i):'เกิน 24 เดือน')+'</td></tr>'}).join('');
   $('#scnTable').querySelectorAll('td[data-i]').forEach(td=>td.onclick=()=>{applyScn(+td.dataset.i);window.scrollTo({top:$('#fin').offsetTop-20,behavior:'smooth'})});
 }
 function buildCtrl(){
@@ -758,14 +772,14 @@ function lineChart(el,vals,labels,opt){
   labels.forEach((l,i)=>{if(i%3===0)s+='<text x="'+X(i)+'" y="'+(H-10)+'" font-size="12" text-anchor="middle" fill="#5F6B67">'+l+'</text>'});
   if(opt.bars){vals.forEach((v,i)=>{const bw=(W-pl-pr)/vals.length*.6;s+='<rect x="'+(X(i)-bw/2)+'" y="'+Math.min(Y(v),Y(0))+'" width="'+bw+'" height="'+Math.abs(Y(v)-Y(0))+'" fill="#3A7D68"><title>'+labels[i]+': '+v+'</title></rect>'})}
   else{s+='<polyline fill="none" stroke="#245B4A" stroke-width="2.5" points="'+vals.map((v,i)=>X(i)+','+Y(v)).join(' ')+'"/>';
-    vals.forEach((v,i)=>s+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3.5" fill="'+(v<0?'#B91C1C':'#15803D')+'"><title>'+labels[i]+': '+fmt(v)+' บาท</title></circle>');
-    const k=vals.indexOf(Math.min(...vals));if(vals[k]<0){const an=k>vals.length*.75?'end':k<vals.length*.25?'start':'middle';s+='<text x="'+X(k)+'" y="'+(Y(vals[k])+20)+'" font-size="13" text-anchor="'+an+'" fill="#B91C1C" font-weight="600">ต่ำสุด '+fm(vals[k])+'</text>';}}
+    vals.forEach((v,i)=>s+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3.5" fill="'+(v<0?'#8A5A2B':'#15803D')+'"><title>'+labels[i]+': '+fmt(v)+' บาท</title></circle>');
+    const k=vals.indexOf(Math.min(...vals));if(vals[k]<0){const an=k>vals.length*.75?'end':k<vals.length*.25?'start':'middle';s+='<text x="'+(X(k)+(an==='end'?-10:an==='start'?10:0))+'" y="'+(Y(vals[k])-10)+'" font-size="13" text-anchor="'+an+'" fill="#7A5222" font-weight="600">จุดต่ำสุด '+fm(vals[k])+'</text>';}}
   el.innerHTML=s+'</svg>';
 }
 function run(){
   const m=model(P),s=summary(m);
   const ss=(l,v,cls,sub)=>'<div class="card stat"><div class="l">'+l+'</div><div class="v '+(cls||'')+'">'+v+'</div><div class="sub">'+sub+'</div></div>';
-  $('#finStats').innerHTML=ss('เงินที่ต้องเตรียมสูงสุด',fm(-s.peak),'bad','จุดต่ำสุดของเงินสดสะสม = เงินสำรองที่ต้องมี')+ss('เดือนแรกที่มีกำไร',s.be?mlabel(s.be.i):'เกิน 24 เดือน','','เดือนแรกหลังเปิด IPD ที่รายรับ > รายจ่าย')+ss('ผลปี 2570',fm(s.y1),s.y1<0?'bad':'','กำไร/ขาดทุนโครงการทั้งปี')+ss('ผลปี 2571',fm(s.y2),s.y2<0?'bad':'','ปีแรกที่ รพ. และ Villa เปิดเต็มปี');
+  $('#finStats').innerHTML=ss('เงินลงทุนที่ต้องเตรียมสูงสุด',fm(s.peak),'inv','จุดต่ำสุดของเงินสดสะสม = เงินสำรองที่ต้องมี (ตามแผน)')+ss('เดือนแรกที่มีกำไร',s.be?mlabel(s.be.i):'เกิน 24 เดือน','','เดือนแรกหลังเปิด IPD ที่รายรับ > รายจ่าย')+ss('ผลปี 2570',fm(s.y1),s.y1<0?'inv':'','ช่วงลงทุนก่อตั้ง · กำไร/ขาดทุนโครงการทั้งปี')+ss('ผลปี 2571',fm(s.y2),s.y2<0?'inv':'','ปีแรกที่ รพ. และ Villa เปิดเต็มปี');
   drawScn();drawScnTable();drawRev(m);
   lineChart($('#chart'),m.map(x=>x.cum),m.map(x=>mlabel(x.i)),{title:'เงินสดสะสม',step:2e6,tick:t=>(t/1e6)+' ล.'});
   let q='<tr><th>ไตรมาส</th><th class="n">ผู้พักปลายไตรมาส</th><th class="n">รายได้</th><th class="n">ค่าใช้จ่าย</th><th class="n">กำไร/ขาดทุน</th><th class="n">เงินสดสะสม</th></tr>';
@@ -782,13 +796,13 @@ function run(){
   $('#opt').innerHTML='<tr><th>เรื่อง</th><th>แผนเดิม: OPD รพ. มี.ค. 70</th><th>แผนใหม่: คลินิกหน้า รพ. '+mlabel(P.clinicOpen)+'</th></tr>'
    +'<tr><td>OPD ก่อนเปิด IPD</td><td>OPD เต็มที่ รพ. 822,000 บาท/เดือน + ค่าสถานที่ รพ. ตั้งแต่ มี.ค.</td><td>คลินิกแพทย์ + กายภาพที่อาคารหน้า รพ. 8 คน '+fmt(P.clinicCost)+' บาท/เดือน แล้วย้ายเข้า รพ. '+mlabel(P.opdOpen)+'</td></tr>'
    +'<tr><td>ใบอนุญาตคลินิก</td><td>คลินิกแยกที่อาคาร รพ. ต้องรออาคาร OPD เสร็จ</td><td>ยื่นที่อาคารสำนักงานหน้า รพ. ภายใน 30 พ.ย. 69 (ต้องให้อาคารเสร็จก่อน)</td></tr>'
-   +'<tr><td>เงินที่ต้องเตรียมสูงสุด</td><td class="neg">'+fm(-ro.peak)+'</td><td class="neg">'+fm(-rn.peak)+'</td></tr>'
+   +'<tr><td>เงินลงทุนที่ต้องเตรียมสูงสุด</td><td>'+fm(ro.peak)+'</td><td>'+fm(rn.peak)+'</td></tr>'
    +'<tr><td>ผลปี 2570</td><td>'+fm(ro.y1)+'</td><td>'+fm(rn.y1)+'</td></tr>'
    +'<tr><td>ถ้าคลินิกหน้า รพ. มีรายได้เท่าทุน</td><td>–</td><td>'+fm(-rbk.peak)+'</td></tr>'
    +'<tr><td>ตลาดต่างประเทศ (ยังต้องเลือก)</td><td colspan="2">ใช้ได้กับทั้งสองแผน: A เริ่มขายในสวิส ก.ค. 70 หรือ B ทดลองขาย Q4 แล้วขายเต็มปี 2571 (เสนอ B)</td></tr>';
   kpiRender();
   // summary page
-  $('#sumStats').innerHTML=stat('เงินที่ต้องเตรียมสูงสุด (24 เดือน)',fm(-s.peak),'bad','hero')+stat('ผลปี 2570',fm(s.y1))+stat('เดือนแรกที่มีกำไร',s.be?mlabel(s.be.i):'เกิน 24 เดือน')+stat('คลินิกหน้า รพ. ต้องมีรายได้','≥ '+fmt(P.clinicCost)+'/เดือน')+stat('รายได้ OPD + แพ็กเกจ รพ. ที่ต้องมี','≈ 1.04 ล้าน/เดือน')+stat('ค่าใช้จ่าย รพ. + Villa ตอนเต็ม (รวมค่าผ่อน)','4.53 ล้าน/เดือน')+stat('พนักงาน รพ. + Villa','118 คน')+stat('ผู้สนใจที่ต้องหาปี 2570',s.l1+' ราย');
+  $('#sumStats').innerHTML=stat('เงินลงทุนที่ต้องเตรียมสูงสุด (24 เดือน)',fm(s.peak),'inv','hero')+stat('ผลปี 2570 (ช่วงลงทุน)',fm(s.y1),s.y1<0?'inv':'')+stat('เดือนแรกที่มีกำไร',s.be?mlabel(s.be.i):'เกิน 24 เดือน')+stat('คลินิกหน้า รพ. ต้องมีรายได้','≥ '+fmt(P.clinicCost)+'/เดือน')+stat('รายได้ OPD + แพ็กเกจ รพ. ที่ต้องมี','≈ 1.04 ล้าน/เดือน')+stat('ค่าใช้จ่าย รพ. + Villa ตอนเต็ม (รวมค่าผ่อน)','4.53 ล้าน/เดือน')+stat('พนักงาน รพ. + Villa','118 คน')+stat('ผู้สนใจที่ต้องหาปี 2570',s.l1+' ราย');
 }
 
 // ---------- tasks
@@ -817,6 +831,26 @@ const GO={'คลินิกอาคารหน้า รพ. (เป้า �
 'IPD 50 เตียง (สมมติ ต.ค. 70)':['ใบอนุญาตสถานพยาบาลประเภทรับผู้ป่วยไว้ค้างคืน','อาคารและอุปกรณ์ผ่านการตรวจรับจาก DG','แพทย์ 1 RN 4 และผู้ช่วยพยาบาลอย่างน้อย 6 คน เริ่มงานก่อนเปิด 1 เดือน','มีผู้จองเตียงล่วงหน้าอย่างน้อย 8 คน','เงินทุนสำรองครบตามตัวเลขเงินที่ต้องเตรียม'],
 'Villa 20 ห้อง (เป้า พ.ย. 70)':['ก่อสร้างเสร็จและได้ใบอนุญาตตามประเภทที่ยืนยันแล้ว','Care manager และผู้ช่วยพยาบาลอย่างน้อย 3 คนพร้อม','มีผู้จองอย่างน้อย 3 ห้อง','ยืนยันราคาแพ็กเกจ Villa ทุกกลุ่มอาการ']};
 let gchk=store.get('go2',{});
+// CEO decisions: [title, detail, by-when (only where the plan states one)]
+const DECS=[['อนุมัติโครงสร้างใหม่','เสนอ Board อนุมัติโครงสร้าง CEO → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ และตารางอำนาจอนุมัติ (ร่างคู่มือในแท็บธรรมาภิบาล) แล้วประกาศใช้ภายใน 4 สัปดาห์',''],
+ ['แต่งตั้ง MD + ผู้รับงานต่อ','ยืนยันการแต่งตั้ง MD (ปฏิบัติงานอยู่แล้ว) ด้วยมติ Board และกำหนดว่าใครควบตำแหน่ง Group Manager และ Unit Director เพื่อรับงานต่อจาก MD (ตำแหน่งเหล่านี้ยังไม่มีงบในโมเดลการเงิน)','ม.ค. 70'],
+ ['เปิดคลินิกหน้า รพ.','อนุมัติคลินิกเวชกรรมที่อาคารหน้า รพ.: ยื่นคำขอภายใน 30 พ.ย. 2569 เปิด ม.ค. 2570','26 ธ.ค. 69'],
+ ['ตัวเลขการเงินจริง','ให้ตัวเลขเงินลงทุน เงินกู้ ประมาณการรายได้ OPD และตัวเลขธุรกิจเดิมปี 2569','23 พ.ย. 69'],
+ ['เดือนเปิด IPD + Villa','ยืนยันเดือนเปิด IPD (แผนสมมติ ต.ค. 70) ราคา Villa T.Tube และประเภทใบอนุญาต Villa',''],
+ ['เป้า KPI ทุกสาย','ให้แต่ละสายตั้งค่าเป้า KPI ให้เสร็จ','ม.ค. 70'],
+ ['ตลาดต่างประเทศ','เลือกเวลาเริ่มขายตลาดต่างประเทศ A (ก.ค. 70) หรือ B (ทดลอง Q4)',''],
+ ['ผู้ดำเนินการโรงพยาบาล','ผู้ดำเนินการ รพ. ต้องปฏิบัติงานในเวลาราชการ ≥ 40 ชม./สัปดาห์ แต่ นพ.ณัฐวรรธ ทำงานประจำที่อื่น จ.–ศ. เลือก: ลาออก/ลดงาน หรือแต่งตั้งแพทย์เต็มเวลาคนอื่น (ต้องตัดสินก่อนยื่นแก้ไขคำขอ รพ.)','']];
+const DST2=['รอตัดสิน','ตัดสินแล้ว','เลื่อน'];let cdec=store.get('ceodec',{});
+function drawDecs(){const el=$('#decs');if(!el)return;const st=i=>(cdec[i]&&cdec[i].s)||'รอตัดสิน';
+  $('#decsum').innerHTML=DST2.map((x,k)=>'<span class="dc'+k+'"><b>'+DECS.filter((_,i)=>st(i)===x).length+'</b> '+x+'</span>').join('');
+  el.innerHTML=DECS.map(([t,d,w],i)=>{const s1=st(i),k=DST2.indexOf(s1),n=(cdec[i]&&cdec[i].n)||'';
+    return '<div class="card dcard dc'+k+'"><div class="dtop"><span class="dno">'+(i+1)+'</span><b>'+t+'</b>'+(w?'<span class="dwhen">ภายใน '+w+'</span>':'')+'</div><p>'+d+'</p>'
+     +'<div class="dbot"><select class="dsel" data-i="'+i+'" aria-label="สถานะเรื่องที่ '+(i+1)+'">'+DST2.map(x=>'<option'+(x===s1?' selected':'')+'>'+x+'</option>').join('')+'</select>'
+     +'<input class="dnote" data-i="'+i+'" value="'+n.replace(/"/g,'&quot;')+'" placeholder="ผลการตัดสิน / วันที่" aria-label="ผลการตัดสินเรื่องที่ '+(i+1)+'"></div></div>'}).join('');
+  const up=(i,f,v)=>{cdec[i]=Object.assign({},cdec[i],{[f]:v});store.set('ceodec',cdec)};
+  el.querySelectorAll('.dsel').forEach(x=>x.onchange=()=>{up(x.dataset.i,'s',x.value);drawDecs()});
+  el.querySelectorAll('.dnote').forEach(x=>x.onchange=()=>up(x.dataset.i,'n',x.value))}
+drawDecs();
 function drawGo(){
 $('#gonogo').innerHTML=Object.entries(GO).map(([h,a],g)=>'<div class="card chk"><b>'+h+'</b><div class="note" id="gs'+g+'"></div>'+a.map((x,i)=>'<label><input type="checkbox" data-k="'+g+'-'+i+'"'+(gchk[g+'-'+i]?' checked':'')+'> '+x+'</label>').join('')+'</div>').join('');
 function goStat(){Object.entries(GO).forEach(([h,a],g)=>{const n=a.filter((_,i)=>gchk[g+'-'+i]).length;$('#gs'+g).innerHTML=n===a.length?'<span class="tag">GO พร้อมเปิด</span>':'<span class="tag warn">ผ่าน '+n+'/'+a.length+'</span>'})}
@@ -1060,7 +1094,19 @@ function kpiSummary(K){const MS2=kmon<0?MON.map((_,j)=>j):[kmon];
   $('#kpiSumT').textContent='ผล KPI แยกตามสาย · '+(kmon<0?'ทุกเดือน':MON[kmon]+' 70');
   const rows=KLINES.slice(1).map(l=>{let ok=0,bad=0,no=0;K.forEach((k,i)=>{if(!k[1].includes(l))return;const [t,a]=kVals(k,i);MS2.forEach(j=>{if(t[j]==null||a[j]==null){no++;return}(k[3]==='↑'?a[j]>=t[j]:a[j]<=t[j])?ok++:bad++})});
     return {l,parts:[{n:'✓ ผ่าน',c:CGOOD,v:ok},{n:'✗ ไม่ผ่าน',c:CBAD,v:bad},{n:'ยังไม่กรอก',c:CNEU,v:no}],lab:(ok+bad)?'ผ่าน '+ok+'/'+(ok+bad):'ยังไม่มีผล'}});
-  $('#kpiSum').innerHTML=legend([{n:'✓ ผ่าน',c:CGOOD},{n:'✗ ไม่ผ่าน',c:CBAD},{n:'ยังไม่กรอกผล',c:CNEU}])+hStack({rows,W:1060,lw:130,rh:30,pr:110,pct:1,fmt:v=>v+' ข้อ'})}
+  const has=rows.some(r=>r.parts[0].v+r.parts[1].v);$('#kpiSumN').style.display=has?'':'none';
+  if(has){$('#kpiSum').innerHTML=legend([{n:'✓ ผ่าน',c:CGOOD},{n:'✗ ไม่ผ่าน',c:CBAD},{n:'ยังไม่กรอกผล',c:CNEU}])+hStack({rows,W:1060,lw:130,rh:30,pr:110,pct:1,fmt:v=>v+' ข้อ'});return}
+  // no results yet: show readiness (targets set this month) + where we start from (2569 baselines)
+  const j0=kmon<0?0:kmon,mn=MON[j0]+' 70';
+  $('#kpiSumT').textContent='ก่อนเริ่มนับผล · ความพร้อมของ KPI เดือน '+mn;
+  const rr=KLINES.slice(1).map(l=>{let set=0,later=0,none=0;K.forEach((k,i)=>{if(!k[1].includes(l))return;const [t]=kVals(k,i);if(t[j0]!=null)set++;else if(t.some(v=>v!=null))later++;else none++});
+    return {l,parts:[{n:'มีเป้าเดือนนี้',c:'#2F6B57',v:set},{n:'เริ่มวัดเดือนหลัง',c:'#C9BA97',v:later},{n:'ยังไม่ตั้งเป้า',c:'#C9822F',v:none}],lab:set+' ข้อพร้อมวัด'}});
+  let base='';
+  if(ACT){const c=id=>ACT.co.find(x=>x.id===id),occ=id=>{const o=c(id).occ;return Math.round(o[0]/o[1]*100)};
+    const B=[['อัตราเข้าพัก สาขา 1–4',occ('CMNH'),kVals(K[1],1)[0][j0]],['อัตราเข้าพัก TQL (IPD)',occ('TQL'),kVals(K[2],2)[0][j0]]];
+    base='<div class="kbase"><b>จุดเริ่มต้น (ฐานจริง '+ACT.asof+') เทียบเป้า '+mn+'</b>'+B.map(([n,b,t])=>'<div class="kb"><span>'+n+'</span><div class="kbt"><i style="width:'+b+'%"></i>'+(t!=null?'<em style="left:'+t+'%" title="เป้า '+t+'%"></em>':'')+'</div><span class="kbv">'+b+'%'+(t!=null?' → เป้า '+t+'% · '+(b>=t?'<span class="pos">ถึงเป้าแล้ว</span>':'ต้องเพิ่ม '+(t-b)+' จุด'):'')+'</span></div>').join('')+'</div>'}
+  $('#kpiSum').innerHTML='<p class="note" style="margin:0 0 6px">ยังไม่มีผลจริง: ผลเดือนแรกกรอกวันที่ 5 ของเดือนถัดไป · ระหว่างนี้แสดงว่าแต่ละสายตั้งเป้าครบหรือยัง</p>'
+   +legend(rr[0].parts.map(x=>({n:x.n,c:x.c})))+hStack({rows:rr,W:1060,lw:130,rh:30,pr:110,pct:1,fmt:v=>v+' ข้อ'})+base}
 function kpiRender(){
   if(!$('#kf').innerHTML)kpiFilters();
   const K=kpiList(),MS=kmon<0?MON.map((_,j)=>j):[kmon];
@@ -2270,7 +2316,7 @@ function buildReg(){const pre={'แบบฟอร์ม':'FRM','ใบอนุ
     R.push({k:x.id+'#'+t,code,t:t.replace(/^(PM|F)-[A-Z]{2}-\d{3}(-\d{2})?\s*/,'').replace(/^(ส\.พ\.\d+|สพส\.\d+)\s*/,'').replace(/^Rev\.\d+\s*/,''),ty,task:x.t.split(/[(:·]/)[0].trim(),own:x.own.split('·')[0].trim(),rev:/Rev\.01/.test(t)?'01':'00',open:()=>openItem(x.id,i)})}));
   JDS.forEach((j,i)=>R.push({k:'JD#'+j.n,code:'JD-'+String(i+1).padStart(3,'0'),t:j.n+' ('+j.e+')',ty:'JD',task:'โครงสร้างองค์กร',own:'Group HR',rev:'00',open:()=>{show('org');const q=$('#jdq');if(q){q.value=j.n;jdRender();const d=$('#jdall details');if(d){d.open=true;setTimeout(()=>d.scrollIntoView({behavior:'smooth'}),80)}}}}));
   return R}
-var DREG=null;
+var DREG=null;const dopen=new Set();
 function drawDocs(){if(!DREG)DREG=buildReg();const q=($('#dq').value||'').trim().toLowerCase(),sf=$('#dst').value;
   const st=r=>(dreg[r.k]&&dreg[r.k].s)||'ร่าง',rv=r=>(dreg[r.k]&&dreg[r.k].r)||r.rev,ow=r=>(dreg[r.k]&&dreg[r.k].o)||r.own;
   $('#dtotal').textContent=DREG.length;
@@ -2281,8 +2327,10 @@ function drawDocs(){if(!DREG)DREG=buildReg();const q=($('#dq').value||'').trim()
   $('#dsum').textContent='แสดง '+L.length+' จาก '+DREG.length+' ฉบับ · สถานะทั้งหมด: '+by;
   L.sort((a,b)=>a.code.localeCompare(b.code,'th',{numeric:true}));const groups=dtyp==='ทั้งหมด'?DTYPES:[dtyp];
   $('#docgrid').innerHTML=groups.map(g=>{const rows=L.filter(r=>r.ty===g);if(!rows.length)return '';
-    return '<h4 class="dgh">'+g+' <span class="note">'+rows.length+' ฉบับ</span></h4><table class="dreg" id="dreg-'+DTYPES.indexOf(g)+'"><tr><th>รหัส</th><th>ชื่อเอกสาร</th><th>อยู่ในงาน</th><th>เจ้าของ</th><th>Rev.</th><th>สถานะ</th></tr>'
-     +rows.map(r=>{const i=DREG.indexOf(r),s1=st(r);return '<tr><td class="dc">'+r.code+'</td><td><a href="#" class="dopen" data-i="'+i+'">'+r.t+'</a></td><td><span class="dtask">'+r.task+'</span></td><td><input class="dedit" data-i="'+i+'" data-f="o" value="'+ow(r).replace(/"/g,'&quot;')+'" aria-label="เจ้าของเอกสาร"></td><td><input class="dedit rev" data-i="'+i+'" data-f="r" value="'+rv(r)+'" aria-label="ฉบับที่"></td><td><select class="dedit st-'+DST.indexOf(s1)+'" data-i="'+i+'" data-f="s" aria-label="สถานะ">'+DST.map(x=>'<option'+(x===s1?' selected':'')+'>'+x+'</option>').join('')+'</select></td></tr>'}).join('')+'</table>'}).join('')||'<p class="note">ไม่พบเอกสาร</p>';
+    const op=dopen.has(g)||q||sf||dtyp!=='ทั้งหมด';
+    return '<details class="dgd" data-g="'+g+'"'+(op?' open':'')+'><summary><h4 class="dgh">'+g+' <span class="note">'+rows.length+' ฉบับ</span></h4></summary><table class="dreg" id="dreg-'+DTYPES.indexOf(g)+'"><tr><th>รหัส</th><th>ชื่อเอกสาร</th><th>อยู่ในงาน</th><th>เจ้าของ</th><th>Rev.</th><th>สถานะ</th></tr>'
+     +rows.map(r=>{const i=DREG.indexOf(r),s1=st(r);return '<tr><td class="dc">'+r.code+'</td><td><a href="#" class="dopen" data-i="'+i+'">'+r.t+'</a></td><td><span class="dtask">'+r.task+'</span></td><td><input class="dedit" data-i="'+i+'" data-f="o" value="'+ow(r).replace(/"/g,'&quot;')+'" aria-label="เจ้าของเอกสาร"></td><td><input class="dedit rev" data-i="'+i+'" data-f="r" value="'+rv(r)+'" aria-label="ฉบับที่"></td><td><select class="dedit st-'+DST.indexOf(s1)+'" data-i="'+i+'" data-f="s" aria-label="สถานะ">'+DST.map(x=>'<option'+(x===s1?' selected':'')+'>'+x+'</option>').join('')+'</select></td></tr>'}).join('')+'</table></details>'}).join('')||'<p class="note">ไม่พบเอกสาร</p>';
+  $('#docgrid').querySelectorAll('details.dgd').forEach(d=>d.ontoggle=()=>{d.open?dopen.add(d.dataset.g):dopen.delete(d.dataset.g)});
   $('#docgrid').querySelectorAll('.dopen').forEach(a=>a.onclick=e=>{e.preventDefault();DREG[+a.dataset.i].open()});
   $('#docgrid').querySelectorAll('.dedit').forEach(el=>el.onchange=()=>{const r=DREG[+el.dataset.i],o=dreg[r.k]=Object.assign({},dreg[r.k]);o[el.dataset.f]=el.value;store.set('docreg',dreg);if(el.dataset.f==='s')drawDocs()})}
 $('#dst').innerHTML='<option value="">ทุกสถานะ</option>'+DST.map(x=>'<option>'+x+'</option>').join('');
@@ -2349,6 +2397,8 @@ var RM=[['clinic','clinic','ยื่นขออนุญาต → เปิ�
  ['intl','mktplan','วางรากฐาน Tranquila International',0,5],['intl','mktlaunch','เปิดตัวในสวิส',6,11]];
 var MS=[[0,'เปิดคลินิก'],[1,'Board ยืนยัน MD'],[5,'ทบทวนกลางปี'],[9,'เปิด OPD + IPD'],[10,'เปิด Villa'],[11,'แผน 2571']];
 var MCOL=['พ.ย.','ธ.ค.'].concat(MON);
+function PREP(){return [['แผนปี 2570 + Roadmap + KPI',2],['โครงสร้างองค์กร + JD ทุกตำแหน่ง',2],['ตัวเลขจริง 2569 (Performance Review)',2],['ชุดแบบคำขอคลินิก กรอกพร้อมพิมพ์',2],
+ ['เก็บตัวเลขจริง 6 รายการ (23 พ.ย.)',+tstat[0]||0],['ยื่นคำขอคลินิก (30 พ.ย.)',+tstat[1]||0],['SOP คลินิก 4 เรื่อง (15 ธ.ค.)',+tstat[2]||0]]}
 function drawYear(){const g=$('#gantt');if(!g||!LANES)return;
   const W=100/14,L=i=>(i+2)*W;
   const it=id=>ITEMS.find(x=>x.id===id)||{};
@@ -2367,8 +2417,13 @@ function drawYear(){const g=$('#gantt');if(!g||!LANES)return;
   g.querySelectorAll('.gbar').forEach(el=>el.onclick=()=>openItem(el.dataset.id));
   $('#glegend').innerHTML=LANES.map(l=>'<span><i style="background:'+l[2]+'"></i>'+l[1]+'</span>').join('')+'<span>พื้นเทา = ก่อนเริ่มปี (พ.ย.–ธ.ค. 69)</span>';
   // hero: progress ring + chips
-  const n=TASKS.length,dn=tstat.filter(v=>v==2).length,ip=tstat.filter(v=>v==1).length,pc=n?dn/n:0,R=64,C=2*Math.PI*R;
-  $('#yring').innerHTML='<svg width="100%" height="100%" viewBox="0 0 150 150"><circle cx="75" cy="75" r="'+R+'" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="12"/><circle cx="75" cy="75" r="'+R+'" fill="none" stroke="url(#yg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+(C*pc)+' '+C+'"/><defs><linearGradient id="yg"><stop offset="0" stop-color="#F4E2AE"/><stop offset="1" stop-color="#C99A47"/></linearGradient></defs></svg><div class="c"><b>'+Math.round(pc*100)+'%</b><small>งานเสร็จ '+dn+'/'+n+'<br>กำลังทำ '+ip+'</small></div>';
+  const pre=now<new Date(2027,0,1),R=64,C=2*Math.PI*R;let n=TASKS.length,dn=tstat.filter(v=>v==2).length,ip=tstat.filter(v=>v==1).length,pc=n?dn/n:0,cap='งานเสร็จ '+dn+'/'+n+'<br>กำลังทำ '+ip;
+  if(pre){// before 1 Jan 2570: show readiness of the preparation work instead of an empty 0%
+    const P0=PREP(),sc=P0.reduce((a,x)=>a+x[1],0);pc=sc/(P0.length*2);dn=P0.filter(x=>x[1]==2).length;
+    cap='ความพร้อมก่อนเริ่มปี<br>เสร็จ '+dn+'/'+P0.length+' เรื่อง';
+    $('#yprep').innerHTML='<b>งานเตรียมการ 2569</b>'+P0.map(x=>'<span class="'+['w','i','d'][x[1]]+'">'+['○','◐','●'][x[1]]+' '+x[0]+'</span>').join('')}
+  else $('#yprep').innerHTML='';
+  $('#yring').innerHTML='<svg width="100%" height="100%" viewBox="0 0 150 150"><circle cx="75" cy="75" r="'+R+'" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="12"/><circle cx="75" cy="75" r="'+R+'" fill="none" stroke="url(#yg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+(C*pc)+' '+C+'"/><defs><linearGradient id="yg"><stop offset="0" stop-color="#F4E2AE"/><stop offset="1" stop-color="#C99A47"/></linearGradient></defs></svg><div class="c"><b>'+Math.round(pc*100)+'%</b><small>'+cap+'</small></div>';
   const start=new Date(2027,0,1),days=Math.ceil((start-now)/864e5);
   $('#ychips').innerHTML=(days>0?'<span>อีก <b>'+days+'</b> วัน เริ่มปี 2570</span>':'<span>วันที่ <b>'+(Math.floor((now-start)/864e5)+1)+'</b> ของปี 2570</span>')
    +'<span>งานหลัก <b>'+ITEMS.filter(x=>x.key).length+'</b> เรื่อง</span><span>งานทั้งหมด <b>'+ITEMS.length+'</b> รายการ</span><span>เอกสารประกอบ <b>'+ITEMS.reduce((a,x)=>a+(x.docs||[]).length,0)+'</b> ฉบับ</span>';
@@ -2377,7 +2432,7 @@ function drawYear(){const g=$('#gantt');if(!g||!LANES)return;
   $('#chap').innerHTML=QH.map((q,k)=>{const xs=ITEMS.filter(x=>x.q===k+1),ts=TASKS.map((t,i)=>[t,i]).filter(([t])=>t[0].startsWith('Q'+(k+1))),d=ts.filter(([,i])=>tstat[i]==2).length;
     return '<div class="card" style="--c:'+CC[k]+'"><div class="num">Q'+(k+1)+'</div><h4>'+q[0].split('·')[1].trim()+'</h4><div class="m">'+q[1]+' 2570</div><ul>'
      +xs.filter(x=>x.key).concat(xs.filter(x=>!x.key)).slice(0,5).map(x=>'<li data-id="'+x.id+'">'+(x.key?'<b>':'')+x.t.split(/[(:]/)[0].trim()+(x.key?'</b>':'')+'</li>').join('')+(xs.length>5?'<li style="list-style:none;color:var(--mute);cursor:default">+ อีก '+(xs.length-5)+' งาน</li>':'')
-     +'</ul><div class="bar"><i style="width:'+(ts.length?d/ts.length*100:0)+'%"></i></div><div class="m" style="margin:4px 0 0">เสร็จ '+d+'/'+ts.length+' งานในตาราง</div></div>'}).join('');
+     +'</ul><div class="bar"><i style="width:'+(ts.length?d/ts.length*100:0)+'%"></i></div><div class="m" style="margin:4px 0 0">'+(now<new Date(2027,k*3,1)?'เริ่ม '+q[1].split('–')[0].trim()+' 2570 · '+ts.length+' งานในตาราง':'เสร็จ '+d+'/'+ts.length+' งานในตาราง')+'</div></div>'}).join('');
   $('#chap').querySelectorAll('li[data-id]').forEach(el=>el.onclick=()=>openItem(el.dataset.id));
 }
 drawYear();
@@ -2497,8 +2552,8 @@ function drawAct(){const el=$('#act');if(!el)return;
   document.addEventListener('levelready',()=>drawAct());
   db.doc('shared/act2569').onSnapshot(sn=>{ACT=sn.exists?sn.data().v:null;if(ACT)updBump(sn.data().at);drawAct();if($('#kt')&&$('#kt').innerHTML)kpiDefer()},()=>drawAct())})();
 // ---------- shared data (Supabase via supabase-bridge.js): tasks, data checklist, go/no-go, KPI
-const SHARED={docreg:v=>{dreg=v;drawDocs()},lichub:v=>{lhub=v;drawLicHub()},tstat5:v=>{tstat=v;drawTasks();drawYear()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
-const SCUR={docreg:()=>dreg,lichub:()=>lhub,tstat5:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
+const SHARED={ceodec:v=>{cdec=v;drawDecs()},docreg:v=>{dreg=v;drawDocs()},lichub:v=>{lhub=v;drawLicHub()},tstat5:v=>{tstat=v;drawTasks();drawYear()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
+const SCUR={ceodec:()=>cdec,docreg:()=>dreg,lichub:()=>lhub,tstat5:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
 let sdb=null,sro=false;const sq={},stm={},sbusy={};
 function syncBadge(t,c){const b=$('#sync');b.textContent=t;b.className='sync '+(c||'')}
 function kpiDefer(){const a=document.activeElement;if(a&&$('#kt').contains(a)){a.addEventListener('blur',()=>setTimeout(kpiRender,0),{once:true})}else kpiRender()}
