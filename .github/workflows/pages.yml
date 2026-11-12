@@ -28,8 +28,9 @@ jobs:
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
           LOGIN_EMAIL: ${{ vars.LOGIN_EMAIL }}
+          STAFF_EMAIL: ${{ vars.STAFF_EMAIL }}
         run: |
-          node -e 'const c={supabaseUrl:process.env.SUPABASE_URL||"",supabaseAnonKey:process.env.SUPABASE_ANON_KEY||"",loginEmail:process.env.LOGIN_EMAIL||"team@years-plan.local"};require("fs").writeFileSync("public/config.js","window.APP_CONFIG = "+JSON.stringify(c)+";\n")'
+          node -e 'const c={supabaseUrl:process.env.SUPABASE_URL||"",supabaseAnonKey:process.env.SUPABASE_ANON_KEY||"",loginEmail:process.env.LOGIN_EMAIL||"team@years-plan.local",staffEmail:process.env.STAFF_EMAIL||"staff@years-plan.local"};require("fs").writeFileSync("public/config.js","window.APP_CONFIG = "+JSON.stringify(c)+";\n")'
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

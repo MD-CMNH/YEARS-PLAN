@@ -42,6 +42,7 @@
 .yring .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .yring .c b{font:700 34px/1 Trirong,Georgia,serif;color:#FFF8E6}.yring .c small{font-size:12px;opacity:.85;margin-top:4px}
 .ystats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 22px}
+details.acc{margin:0 0 14px}details.acc>summary{cursor:pointer;list-style:none}details.acc>summary::before{content:"▸ ";color:var(--brand2)}details.acc[open]>summary::before{content:"▾ "}details.acc[open]>summary{margin-bottom:10px}
 .ystats .card{padding:14px 16px}.ystats .v{font:700 26px/1.2 Trirong,Georgia,serif;color:#21483B}.ystats .l{font-size:13px;color:var(--mute)}
 /* gantt */
 .gwrap{overflow-x:auto;border:1px solid #DCCFB2;border-radius:10px;background:#FFFDF8;box-shadow:0 2px 8px -4px rgba(80,60,20,.35)}
@@ -311,7 +312,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
 <body>
 <header>
   <div class="hrow"><h1>CMNH แผนงานปี 2570 (2027)</h1><span class="hright"><button class="pbtn" id="pbtn" title="พิมพ์แท็บที่เปิดอยู่" aria-label="พิมพ์หน้านี้">🖨<span class="pl"> พิมพ์หน้านี้</span></button><span class="sync" id="sync" title="สถานะการบันทึกข้อมูล">เก็บในเครื่องนี้</span></span></div>
-  <p>บจก. ซีเอ็มเอ็นเอช 2012 · ข้อมูล ณ 9 พ.ย. 2569 · ตัวเลขจาก CMNH_แผนการเงิน_2570-71.xlsx</p>
+  <p>บจก. ซีเอ็มเอ็นเอช 2012 · บจก. แทรงควิลา · อัปเดตล่าสุด <span id="upd">–</span></p>
   <nav id="nav"></nav>
 </header>
 <main>
@@ -344,7 +345,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
   <div class="scroll"><table id="opt"></table></div>
   <h3>เรื่องที่ต้องให้ CEO ตัดสินใจ</h3>
   <ol class="dec">
-    <li>เสนอ Board อนุมัติโครงสร้าง CEO → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ และตารางอำนาจอนุมัติ (ร่างคู่มือ docs/08) แล้วประกาศใช้ภายใน 4 สัปดาห์</li>
+    <li>เสนอ Board อนุมัติโครงสร้าง CEO → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ และตารางอำนาจอนุมัติ (ร่างคู่มือในแท็บธรรมาภิบาล) แล้วประกาศใช้ภายใน 4 สัปดาห์</li>
     <li>ยืนยันการแต่งตั้ง MD (ปฏิบัติงานอยู่แล้ว) ด้วยมติ Board ใน ม.ค. 70 และกำหนดว่าใครควบตำแหน่ง Group Manager และ Unit Director เพื่อรับงานต่อจาก MD (ตำแหน่งเหล่านี้ยังไม่มีงบในโมเดลการเงิน)</li>
     <li>อนุมัติคลินิกแพทย์ + กายภาพที่อาคารหน้า รพ.: ยื่นคำขอภายใน 30 พ.ย. 2569 เปิด ม.ค. 2570 (ตัดสินใจ 26 ธ.ค.)</li>
     <li>ให้ตัวเลขเงินลงทุน เงินกู้ ประมาณการรายได้ OPD และตัวเลขธุรกิจเดิมปี 2569</li>
@@ -365,7 +366,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
     <li><b>ตัวเลขหลายตัวเป็นสมมติฐาน</b> ยังไม่ใช่ประมาณการสุดท้ายจนกว่าจะใส่ตัวเลขจริง</li>
     <li><b>การรับคน 118 คนเสี่ยงสูง</b> โดยเฉพาะ RN จึงเริ่มสรรหาตั้งแต่ Q2</li>
     <li><b>ใบอนุญาตเป็นตัวกำหนดเวลา</b> ยืนยันประเภทใบอนุญาตคลินิกและ Villa ใน Q1</li>
-    <li><b>ไฟล์หลัก</b> คือเอกสารแผนและไฟล์ Excel แอปนี้ใช้นำเสนอและทดลองตัวเลข</li>
+    <li><b>เอกสารหลัก</b> คือเอกสารแผนฉบับเต็มและไฟล์แผนการเงินของ Group Finance เว็บนี้ใช้นำเสนอและทดลองตัวเลข</li>
   </ol>
   <h3>4 เรื่องหลักของปี</h3>
   <div class="grid g4">
@@ -410,7 +411,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
 
 <section id="org">
   <h2>โครงสร้างองค์กร</h2>
-  <p class="lead">ตามร่างคู่มือโครงสร้างองค์กร (docs/08): Board → CEO (C-level เดียว) → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ · JD 34 ตำแหน่ง · รอ Board อนุมัติ</p>
+  <p class="lead">ตามร่างคู่มือโครงสร้างองค์กร: Board → CEO (C-level เดียว) → MD → ส่วนกลาง 6 ฝ่าย + 5 หน่วยธุรกิจ · JD 34 ตำแหน่ง · รอ Board อนุมัติ</p>
   <div class="chain"><div class="plaque"><b>Board of Directors</b><span>นโยบาย · อนุมัติแผนและงบลงทุน · แต่งตั้ง CEO</span></div><i>↓</i><div class="plaque"><b>CEO</b><span>กลยุทธ์ · การลงทุน · กำกับ MD · อนุมัติ ≤ 2 ล้าน</span></div><i>↓</i><div class="plaque"><b>Managing Director (MD)</b><span>บริหารทุกหน่วยโดยตรง · งบ คน KPI · อนุมัติ ≤ 5 แสน</span></div></div>
   <div class="org" id="orgg"></div>
   <p class="note">ตำแหน่งในแต่ละหน่วยเป็นกรอบสำหรับจัดสรรคน ช่วงแรกควบบทบาทได้ แต่ต้องแยกความรับผิดชอบให้ชัด · ตำแหน่งระดับ MD, Group Manager และ Unit Director ยังไม่อยู่ในโมเดลการเงิน</p>
@@ -418,7 +419,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
   <div class="scroll"><table><tr><th>งาน</th><th>เสนอให้อยู่ที่</th><th>เหตุผล</th></tr>
   <tr><td>คลินิกหน้า รพ. (ม.ค.–ก.ย. 70)</td><td>Unit 1 Hospital</td><td>ทีมเดียวกันย้ายเข้า OPD ต.ค. 70</td></tr>
   <tr><td>CMCC Home Care · CMNH Home Rehab · CMCC Health Product</td><td>Unit 2 Chiangmai Nursing Homecare</td><td>ลูกค้ากลุ่มเดียวกัน ใช้ทีมพยาบาล/กายภาพร่วมกัน</td></tr>
-  <tr><td>Single Procedure by Neuro</td><td>Unit 1 Hospital</td><td>ย้ายมาอยู่ใต้ใบอนุญาตบริษัทเมื่อคลินิกหน้า รพ. ได้ใบอนุญาต (รอทนาย docs/05)</td></tr>
+  <tr><td>Single Procedure by Neuro</td><td>Unit 1 Hospital</td><td>ย้ายมาอยู่ใต้ใบอนุญาตบริษัทเมื่อคลินิกหน้า รพ. ได้ใบอนุญาต (รอความเห็นทนาย)</td></tr>
   <tr><td>CM Derma Plus</td><td>Group Business Development</td><td>เป็นสินค้า ไม่ใช่บริการดูแล</td></tr>
   <tr><td>แพลตฟอร์มระบบหลังบ้าน</td><td>Group Operations</td><td>ระบบกลางที่ทุกหน่วยใช้</td></tr>
   <tr><td>คลินิกหมอต้น</td><td>นอกโครงสร้างบริษัท</td><td>ใบอนุญาตบุคคลของ นพ.ณัฐวรรธ</td></tr></table></div>
@@ -467,13 +468,12 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
    <li><b>ผู้ดำเนินการสถานพยาบาล</b> ตาม พ.ร.บ.สถานพยาบาล (รพ. นพ.ณัฐวรรธ · คลินิกหน้า รพ. นพ.รังสรรค์) มีหน้าที่ตามกฎหมายแยกจาก Hospital Director ควรเขียนในคู่มือ</li>
    <li><b>CMCC Training Center</b> ยังไม่มีในแผนและโมเดลการเงินปี 2570</li>
    <li><b>"เครือธุรกิจ / แต่ละนิติบุคคล"</b> ยืนยันแล้วว่ามี 2 นิติบุคคล: <b>บจก. ซีเอ็มเอ็นเอช 2012</b> (สาขา 1–4 · คลินิก · โครงการ รพ.) และ <b>บจก. แทรงควิลา</b> (Tranquila: IPD · Villa · VIP · Day Care) · ผลที่ต้องเขียนในคู่มือ: (1) DOA และผู้มีอำนาจลงนามแยกตามบริษัท (2) รายงานรวมกลุ่ม (consolidated) รายเดือน (3) สัญญาและการคิดค่าบริการระหว่างกันเมื่อแชร์พนักงานส่วนกลาง / รถพยาบาล / ระบบ (4) ข้อบังคับการทำงานฉบับละนิติบุคคล (5) ทะเบียนใบอนุญาตแยกตามผู้รับอนุญาต</li>
-   <li>รายละเอียดเต็มอยู่ใน <code>docs/08a_ข้อสังเกต_คู่มือโครงสร้างองค์กร.md</code></li>
   </ol>
 </section>
 
 <section id="fin">
   <h2>การเงิน: ทดลองปรับสมมติฐาน</h2>
-  <p class="lead">ตัวเลขชุดนี้คือ <b>โครงการคลินิก + รพ. + Villa</b> (ยังไม่รวมธุรกิจเดิม) ใช้สูตรเดียวกับไฟล์ Excel · ค่าที่ปรับเห็นแค่เครื่องนี้ ไม่กระทบคนอื่น</p>
+  <p class="lead">ตัวเลขชุดนี้คือ <b>โครงการคลินิก + รพ. + Villa</b> (ยังไม่รวมธุรกิจเดิม) ใช้สูตรเดียวกับไฟล์แผนการเงินของ Group Finance · ค่าที่ปรับเห็นแค่เครื่องนี้ ไม่กระทบคนอื่น</p>
   <div class="scn"><span class="note">เลือกสถานการณ์:</span><div class="filters" id="scn"></div></div>
   <p class="note" id="scnNote" style="margin:8px 0 12px"></p>
   <div class="grid g4" id="finStats" style="margin-bottom:14px"></div>
@@ -1989,6 +1989,8 @@ function drawYear(){const g=$('#gantt');if(!g||!LANES)return;
 drawYear();
 // ---------- actual 2569 figures (sensitive: loaded from Supabase after login, never embedded or cached)
 var ACT=null;
+var updAt=0;function updBump(t){t=+t||0;if(t<=updAt)return;updAt=t;const e=document.getElementById('upd');if(e)e.textContent=new Date(t).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'numeric'})}
+updBump(Date.parse(document.lastModified));
 const b0=n=>n==null?'–':Math.round(n).toLocaleString('en-US');
 const pct=(a,b)=>b?Math.round(a/b*100)+'%':'–';
 function actCo(c){const pm=c.mg.rev-c.mg.exp,ops=c.extra.filter(x=>!x[2]).reduce((a,x)=>a+x[1],0),n=ACT.months;
@@ -2000,7 +2002,7 @@ function actNote(k,def){if(!ACT)return def;const c=id=>ACT.co.find(x=>x.id===id)
   if(k==='REV'){const r=ACT.co.reduce((a,x)=>a+x.mg.rev,0)/ACT.months;return 'ฐาน 2569 เฉลี่ย '+b0(r)+' บาท/เดือน (2 บริษัท ตารางผู้บริหาร)'}
   return def}
 function drawAct(){const el=$('#act');if(!el)return;
-  if(!ACT){el.innerHTML='<div class="card note">ยังไม่มีตัวเลขจริงในฐานข้อมูล</div>';return}
+  if(!ACT){el.innerHTML=window.__fin===false?'<div class="card note">🔒 ตัวเลขการเงินจริงแสดงเฉพาะบัญชีผู้บริหาร</div>':'<div class="card note">ยังไม่มีตัวเลขจริงในฐานข้อมูล</div>';return}
   const cs=ACT.co.map(c=>[c,actCo(c)]);
   const tot=cs.reduce((a,[c,k])=>a+k.avg,0),proj=ACT.co.reduce((a,c)=>a+c.extra.filter(x=>x[2]).reduce((s,x)=>s+x[1],0),0);
   let h='<div class="grid g4">'+cs.map(([c,k])=>'<div class="card"><b>'+c.id+'</b><div class="note">'+c.name+'</div><div style="font-size:22px;font-weight:700;margin-top:6px">'+b0(k.avg)+'</div><div class="note">กำไรเฉลี่ย/เดือน หลังหักภาษีและรายการนอกตาราง</div></div>').join('')
@@ -2015,6 +2017,7 @@ function drawAct(){const el=$('#act');if(!el)return;
   h+='<div class="grid g2" style="margin-bottom:14px"><div class="ccard"><h4>เตียงมีผู้ใช้ / ว่าง ('+ACT.asof+')</h4>'+legend([{n:'มีผู้ใช้',c:CAT[0]},{n:'ว่าง',c:CNEU}])+hStack({rows:BR,lw:150,rh:28,fmt:v=>v+' เตียง'})+'</div>'
    +'<div class="ccard"><h4>บริการเสริม CMNH ปี 2569 (ราย)</h4><p class="note">ฐานของ 6 โปรเจ็คต่อเนื่อง</p>'+hStack({rows:SV,lw:150,rh:28,fmt:v=>v+' ราย'})
    +(ACT.trend?'<h4 style="margin-top:8px">'+ACT.trend.n+'</h4>'+colChart({title:ACT.trend.n,h:150,cats:ACT.trend.v.map(x=>MON[x[0]]),bars:[{n:'ราย',c:CAT[2],v:ACT.trend.v.map(x=>x[1])}]}):'')+'</div></div>';
+  h+='<details class="card acc"><summary><b>รายละเอียดตัวเลขบัญชี</b> <span class="note">สำหรับ Group Finance: กำไรก่อน/หลังปรับ งบการเงิน ต้นทุนคงที่ และข้อควรตรวจ</span></summary>';
   h+='<div class="scroll"><table><tr><th>'+ACT.period+'</th>'+cs.map(([c])=>'<th>'+c.id+'</th>').join('')+'</tr>'
    +[['รายรับ (ตารางผู้บริหาร)',([c])=>b0(c.mg.rev)],['รายจ่าย (ตารางผู้บริหาร)',([c])=>b0(c.mg.exp)],['กำไรคงเหลือ (รับ − จ่าย)',([c,k])=>'<b>'+b0(k.pm)+'</b>'],
      ['หัก: จ่ายแล้วแต่ยังไม่อยู่ในตาราง',([c,k])=>'−'+b0(k.ops)+'<div class="note">'+c.extra.filter(x=>!x[2]).map(x=>x[0]+' '+b0(x[1])).join(' · ')+'</div>'],
@@ -2023,16 +2026,17 @@ function drawAct(){const el=$('#act');if(!el)return;
      ['ต้นทุนคงที่สำคัญ',([c])=>c.fixed.map(x=>x[0]+' '+b0(x[1])).join('<br>')]]
    .map(r=>'<tr><td>'+r[0]+'</td>'+cs.map(x=>'<td>'+r[1](x)+'</td>').join('')+'</tr>').join('')+'</table></div>';
   if(proj)h+='<p class="note">ไม่หักในกำไรธุรกิจเดิม: ค่าใช้จ่ายโครงการ รพ. '+b0(proj)+' บาท ('+ACT.co.flatMap(c=>c.extra.filter(x=>x[2]).map(x=>x[0])).join(', ')+') ให้นับในงบโครงการ</p>';
+  h+='<h4>ข้อควรตรวจก่อนใช้ตัวเลข</h4><ol class="dec">'+ACT.flags.map(x=>'<li>'+x+'</li>').join('')+'</ol></details>';
   h+='<div class="grid g2"><div><h4>เตียงแยกอาคาร / โซน ('+ACT.asof+')</h4><div class="scroll"><table><tr><th>บริษัท</th><th>อาคาร / โซน</th><th>เตียง</th><th>ว่าง</th></tr>'
    +ACT.co.flatMap(c=>c.beds.map(b=>'<tr><td>'+c.id+'</td><td>'+b[0]+'</td><td>'+b[1]+'</td><td>'+(b[2]||'เต็ม')+'</td></tr>')).join('')+'</table></div></div>'
    +'<div><h4>บริการเสริม CMNH ปี 2569 (ฐานของ 6 โปรเจ็ค)</h4><div class="scroll"><table><tr><th>บริการ</th><th>ผู้ใช้</th></tr>'
    +ACT.svc.map(x=>'<tr><td>'+x[0]+'</td><td>'+x[1]+'</td></tr>').join('')+'</table></div></div></div>';
   h+='<h4>รายการอื่นจากที่ประชุม</h4><ul>'+ACT.other.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
-  h+='<h4>ข้อควรตรวจก่อนใช้ตัวเลข</h4><ol class="dec">'+ACT.flags.map(x=>'<li>'+x+'</li>').join('')+'</ol>';
   el.innerHTML=h}
 (async()=>{let db=null;try{if(window.claude&&claude.use)db=await claude.use('db')}catch(e){}
   if(!db){drawAct();return}
-  db.doc('shared/act2569').onSnapshot(sn=>{ACT=sn.exists?sn.data().v:null;drawAct();if($('#kt')&&$('#kt').innerHTML)kpiDefer()},()=>drawAct())})();
+  document.addEventListener('levelready',()=>drawAct());
+  db.doc('shared/act2569').onSnapshot(sn=>{ACT=sn.exists?sn.data().v:null;if(ACT)updBump(sn.data().at);drawAct();if($('#kt')&&$('#kt').innerHTML)kpiDefer()},()=>drawAct())})();
 // ---------- shared data (Supabase via supabase-bridge.js): tasks, data checklist, go/no-go, KPI
 const SHARED={tstat5:v=>{tstat=v;drawTasks();drawYear()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
 const SCUR={tstat5:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
@@ -2056,7 +2060,7 @@ async function sflush(k){
   Object.keys(SHARED).forEach(k=>db.doc('shared/'+k).onSnapshot(sn=>{
     if(!sn.metadata.fromCache){clearTimeout(tm);if(!sbusy[k]&&!(k in sq))syncBadge(sro?'ดูได้อย่างเดียว':'ข้อมูลร่วมกับทีม',sro?'warn':'ok')}
     if(!sn.exists||sn.metadata.hasPendingWrites||(k in sq))return;
-    const d=sn.data();if(!d||d.v==null)return;const j=JSON.stringify(d.v);
+    const d=sn.data();if(!d||d.v==null)return;updBump(d.at);const j=JSON.stringify(d.v);
     if(j===JSON.stringify(SCUR[k]()))return;
     _lset(k,JSON.parse(j));SHARED[k](JSON.parse(j));
   },e=>{clearTimeout(tm);syncBadge(e&&e.code==='revoked'?'เก็บในเครื่องนี้':'เชื่อมข้อมูลทีมไม่ได้','warn')}));

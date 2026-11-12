@@ -5,4 +5,6 @@ window.APP_CONFIG = {
   supabaseAnonKey: "sb_publishable_6Qz3wewB80JK22KeC40Z_w_3SSoUk2p",
   // Shared dashboard account; people sign in with its password only.
   loginEmail: "team@years-plan.local",
+  // Staff account: sees the plan, SOPs and KPI but not the real finance figures.
+  staffEmail: "staff@years-plan.local",
 };

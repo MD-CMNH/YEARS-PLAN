@@ -22,6 +22,8 @@
     #gate button { width: 100%; font: inherit; font-weight: 700; padding: 10px; border-radius: 7px; cursor: pointer; color: #F6EBCB;
       border: 1px solid #163A2F; background: linear-gradient(#2F6B57, #1F4D3E); }
     #gate .err { color: #A4161A; min-height: 1.3em; margin: 10px 0 0; font-size: 14px; }
+    .lvl:empty { display: none; } .lvl { font-size: 11.5px; color: #F3EBD6; opacity: .85; white-space: nowrap; flex: 0 0 auto; }
+    @media (max-width: 640px) { .lvl { display: none; } }
     #logout { font: inherit; font-size: 12px; cursor: pointer; color: #F3EBD6; background: none; border: 1px solid rgba(243,235,214,.5); border-radius: 99px; padding: 3px 10px; white-space: nowrap; flex: 0 0 auto; }
     @media (max-width: 640px) { #logout { font-size: 11px; padding: 2px 8px; } #logout .lg-long { display: none; } }`;
   document.head.appendChild(css);
@@ -38,12 +40,16 @@
       e.preventDefault();
       const err = g.querySelector("#gateErr");
       err.textContent = "กำลังเข้าสู่ระบบ…";
-      const { error } = await sb.auth.signInWithPassword({ email: cfg.loginEmail, password: g.querySelector("#gatePw").value });
+      // One password box: try the executive account, then the staff account.
+      const pw = g.querySelector("#gatePw").value;
+      let { error } = await sb.auth.signInWithPassword({ email: cfg.loginEmail, password: pw });
+      if (error && cfg.staffEmail) ({ error } = await sb.auth.signInWithPassword({ email: cfg.staffEmail, password: pw }));
       err.textContent = error ? "รหัสไม่ถูกต้อง" : "";
     });
     const hr = document.querySelector(".hright");
     if (hr) {
       const b = document.createElement("button");
+      const lv = document.createElement("span"); lv.id = "lvl"; lv.className = "lvl"; lv.title = "ระดับการเข้าถึง"; hr.appendChild(lv);
       b.id = "logout"; b.title = "ออกจากระบบ"; b.innerHTML = 'ออก<span class="lg-long">จากระบบ</span>';
       b.onclick = async () => { await sb.auth.signOut(); location.reload(); };
       hr.appendChild(b);
@@ -52,7 +58,18 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", buildGate); else buildGate();
 
   sb.auth.onAuthStateChange((_ev, session) => {
-    if (session) { document.documentElement.classList.remove("locked"); resolveAuth(); }
+    if (session) {
+      document.documentElement.classList.remove("locked");
+      // access level: finance=true sees real figures; the database enforces it, this only adjusts the UI
+      sb.from("allowed_users").select("finance").maybeSingle().then(({ data }) => {
+        window.__fin = !!(data && data.finance);
+        document.documentElement.classList.toggle("lvl-staff", !window.__fin);
+        const b = document.getElementById("lvl");
+        if (b) b.textContent = window.__fin ? "ผู้บริหาร" : "พนักงาน";
+        document.dispatchEvent(new CustomEvent("levelready"));
+      });
+      resolveAuth();
+    }
     else document.documentElement.classList.add("locked");
   });
 
