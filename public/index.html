@@ -42,6 +42,7 @@ select.st-0{background:#FFF6DC}select.st-1{background:#FDE9D2}select.st-2{backgr
 .spapp{margin:10px 0 0 auto;width:60%;border:1px solid #999;padding:6px 12px;line-height:2}
 .spn{margin-top:10px!important;line-height:1.6}
 .spins td:nth-child(2),.spins td:nth-child(3){text-align:center}
+.lfp{padding:4px 12px 2px;font-size:13.5px}.lfp select{font:inherit;padding:4px 8px;border:1px solid #C9BA97;border-radius:6px;margin-left:6px}
 .lfg{border:1px solid #DCCFB2;border-radius:7px;margin:8px 0;background:#FFFDF8}.lfg>summary{cursor:pointer;padding:8px 12px;font-weight:700;color:#20392F}
 .lfgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px 14px;padding:4px 12px 12px}
 .lfi{display:flex;flex-direction:column;font-size:13px;gap:2px}.lfi.wide{grid-column:1/-1}.lfi .ll{color:var(--mute)}
@@ -2410,9 +2411,12 @@ function drawLicEditor(el){
     if(opt)return '<label class="lfi">'+lab+'<select data-k="'+k+'"><option value=""></option>'+opt.map(o=>'<option'+(o===v?' selected':'')+'>'+o+'</option>').join('')+'</select></label>';
     return '<label class="lfi'+(/reason|multi|extra|job|work|change|close$/.test(k)?' wide':'')+'">'+lab+'<input data-k="'+k+'" value="'+v.replace(/"/g,'&quot;')+'"></label>'};
   el.innerHTML='<p class="note">กรอกครั้งเดียว ทุกแบบในงานนี้เติมให้เอง · บันทึกอัตโนมัติ · 🔒 = ข้อมูลส่วนบุคคล/การเงิน (เห็นเฉพาะบัญชีผู้บริหาร) · ค่าเริ่มต้นมาจากแผน ตรวจก่อนยื่น</p>'
-   +LFD.map(([g,fs],i)=>'<details class="lfg"'+(i<3?' open':'')+'><summary>'+g+'</summary><div class="lfgrid">'+fs.map(inp).join('')+'</div></details>').join('')+'<p class="note" id="licSaved"></p>';
+   +LFD.map(([g,fs],i)=>'<details class="lfg"'+(i<3?' open':'')+'><summary>'+g+'</summary>'+(g.startsWith('ผู้ประกอบวิชาชีพ')?'<div class="lfp"><label>บุคคลที่กำลังกรอก/พิมพ์ <select id="lpSel"><option value="">— เลือก —</option>'+Object.keys(LICP.persons||{}).map(n=>'<option'+(n===LICP.p_name?' selected':'')+'>'+n+'</option>').join('')+'</select></label> <button type="button" id="lpSave" class="dprint">บันทึกเป็นบุคคลนี้</button> <span class="note">เลือกชื่อแล้วแบบ ส.พ.6 / 18 / 20–22 จะเปลี่ยนเป็นของคนนั้น · แก้ข้อมูลแล้วกด "บันทึก" เพื่อเก็บไว้</span></div>':'')+'<div class="lfgrid">'+fs.map(inp).join('')+'</div></details>').join('')+'<p class="note" id="licSaved"></p>';
   let tm;const save=()=>{clearTimeout(tm);tm=setTimeout(async()=>{const s=document.getElementById('licSaved');
     try{await sdb.doc('shared/licprof').set({v:LICP,at:Date.now()});if(s)s.textContent='บันทึกแล้ว '+new Date().toLocaleTimeString('th-TH')}catch(e){if(s)s.textContent='บันทึกไม่สำเร็จ (บัญชีนี้แก้ไขไม่ได้)'}},600)};
+  const PK=LFD.find(g=>g[0].startsWith('ผู้ประกอบวิชาชีพ'))[1].map(f=>f[0]);
+  const ls=el.querySelector('#lpSel');if(ls)ls.onchange=()=>{const v=(LICP.persons||{})[ls.value];if(!v)return;PK.forEach(k=>LICP[k]=v[k]||'');delete el.dataset.built;drawLicEditor(el);fillLic($('#mbody'));save()};
+  const lb=el.querySelector('#lpSave');if(lb)lb.onclick=()=>{const n=(LICP.p_name||'').trim();if(!n)return;LICP.persons=Object.assign({},LICP.persons);LICP.persons[n]=Object.fromEntries(PK.map(k=>[k,LICP[k]||'']));delete el.dataset.built;drawLicEditor(el);save()};
   el.querySelectorAll('[data-k]').forEach(c=>{const ev=c.tagName==='SELECT'||c.type==='checkbox'?'change':'input';c.addEventListener(ev,()=>{const k=c.dataset.k;
     if(c.type==='checkbox')LICP[k]=[...el.querySelectorAll('input[type=checkbox][data-k="'+k+'"]:checked')].map(x=>x.value).join(',');else LICP[k]=c.value;
     fillLic($('#mbody').querySelectorAll?$('#mbody'):document);save()})})}
