@@ -268,6 +268,9 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
     <li>ให้แต่ละสายตั้งค่าเป้า KPI ให้เสร็จใน ม.ค. 2570</li>
     <li>เลือกเวลาเริ่มขายตลาดต่างประเทศ A (ก.ค. 70) หรือ B (ทดลอง Q4)</li>
   </ol>
+  <h3>ผลจริงปี 2569 (ม.ค.–ก.ย.) ธุรกิจเดิม 2 บริษัท</h3>
+  <p class="note">จาก Performance Review Sep 2026 · ตัวเลขเก็บในฐานข้อมูล แสดงเฉพาะผู้ที่เข้าระบบแล้ว</p>
+  <div id="act"><div class="card note">กำลังโหลดตัวเลขจริง…</div></div>
   <h3>ตัวเลขจริงที่ต้องเก็บภายใน 2 สัปดาห์ (ภายใน 23 พ.ย. 69)</h3>
   <div class="card chk" id="datareq"></div>
   <h3>ข้อสังเกตและข้อเสนอแนะ</h3>
@@ -379,7 +382,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
    <li><b>MD ปฏิบัติงานแล้ว</b> รอมติ Board ทำให้เป็นทางการ (ม.ค. 70) · ยังต้องกำหนดว่าปี 2570 ใครควบตำแหน่ง Group Manager / Unit Director · ตำแหน่งเหล่านี้ยังไม่มีงบในโมเดลการเงิน (เงินสดติดลบสูงสุด −29.79 ล้านยังไม่รวม)</li>
    <li><b>ผู้ดำเนินการสถานพยาบาล</b> ตาม พ.ร.บ.สถานพยาบาล (รพ. นพ.ณัฐวรรธ · คลินิกหน้า รพ. นพ.รังสรรค์) มีหน้าที่ตามกฎหมายแยกจาก Hospital Director ควรเขียนในคู่มือ</li>
    <li><b>CMCC Training Center</b> ยังไม่มีในแผนและโมเดลการเงินปี 2570</li>
-   <li><b>"เครือธุรกิจ / แต่ละนิติบุคคล"</b> ตอนนี้มีข้อมูลแค่ บจก. ซีเอ็มเอ็นเอช 2012 ถ้ามีบริษัทอื่นต้องระบุ</li>
+   <li><b>"เครือธุรกิจ / แต่ละนิติบุคคล"</b> ยืนยันแล้วว่ามี 2 นิติบุคคล: <b>บจก. ซีเอ็มเอ็นเอช 2012</b> (สาขา 1–4 · คลินิก · โครงการ รพ.) และ <b>บจก. แทรงควิลา</b> (Tranquila: IPD · Villa · VIP · Day Care) · ผลที่ต้องเขียนในคู่มือ: (1) DOA และผู้มีอำนาจลงนามแยกตามบริษัท (2) รายงานรวมกลุ่ม (consolidated) รายเดือน (3) สัญญาและการคิดค่าบริการระหว่างกันเมื่อแชร์พนักงานส่วนกลาง / รถพยาบาล / ระบบ (4) ข้อบังคับการทำงานฉบับละนิติบุคคล (5) ทะเบียนใบอนุญาตแยกตามผู้รับอนุญาต</li>
    <li>รายละเอียดเต็มอยู่ใน <code>docs/08a_ข้อสังเกต_คู่มือโครงสร้างองค์กร.md</code></li>
   </ol>
 </section>
@@ -831,8 +834,8 @@ function kpiList(){
   const m=model(P).slice(0,12);
   return [
   ['งานในตารางงานเสร็จตามกำหนด','CEO','%','↑',Q4(90),'วัดรายไตรมาส'],
-  ['อัตราเข้าพัก สาขา 1–4','MD','%','↑',K12(85),'ปรับตามค่าฐาน 2569'],
-  ['อัตราเข้าพัก TQL','MD','%','↑',K12(80),'เพิ่มเมื่อมีผู้พักต่างชาติ'],
+  ['อัตราเข้าพัก สาขา 1–4','MD','%','↑',K12(85),actNote('CMNH','ปรับตามค่าฐาน 2569')],
+  ['อัตราเข้าพัก TQL','MD','%','↑',K12(80),actNote('TQL','เพิ่มเมื่อมีผู้พักต่างชาติ')],
   ['อัตราเข้าพัก IPD','MD','%','↑',m.map(x=>x.i>=P.ipdOpen?Math.round(x.oi*100):null),'ตามแผนการเงิน (เปิด '+mlabel(P.ipdOpen)+')'],
   ['อัตราเข้าพัก Villa','MD','%','↑',m.map(x=>x.i>=P.villaOpen?Math.round(x.ov*100):null),'ตามแผนการเงิน (เปิด '+mlabel(P.villaOpen)+')'],
   ['ผู้ป่วยคลินิก (หน้า รพ. → OPD รพ.)','MD','ราย/เดือน','↑',[40,60,80,100,120,140,160,180,200,300,350,400],'สมมติ ให้ Group Marketing/Group Finance ยืนยัน'],
@@ -840,8 +843,8 @@ function kpiList(){
   ['แผลกดทับใหม่','MD','ครั้ง/1,000 วันนอน','↓',K12(1),''],
   ['อัตราลาออกพนักงาน','MD + HR','%/เดือน','↓',K12(2),'ราว 24% ต่อปี'],
   ['ใบอนุญาตวิชาชีพหมดอายุขณะทำงาน','MD + HR','คน','↓',K12(0),'HR เตือนล่วงหน้า 90 วัน'],
-  ['ผู้ใช้ Day Care / Home Care','MD','ราย','↑',K12(null),'รอค่าฐาน ม.ค. แล้วตั้ง +20% ภายใน ธ.ค.'],
-  ['รายได้รวมบริษัท','Group Finance','บาท','↑',K12(null),'รอตัวเลขธุรกิจเดิม 2569'],
+  ['ผู้ใช้ Day Care / Home Care','MD','ราย','↑',K12(null),actNote('DC','รอค่าฐาน ม.ค. แล้วตั้ง +20% ภายใน ธ.ค.')],
+  ['รายได้รวมบริษัท','Group Finance','บาท','↑',K12(null),actNote('REV','รอตัวเลขธุรกิจเดิม 2569')],
   ['รายได้คลินิกหน้า รพ.','Group Finance','บาท','↑',m.map(x=>x.i>=P.clinicOpen&&x.i<P.opdOpen?P.clinicCost:null),'≥ ค่าใช้จ่ายคลินิก (คุ้มทุน)'],
   ['ค่าใช้จ่ายโครงการ รพ. + Villa','Group Finance','บาท','↓',m.map(x=>Math.round(x.cost)),'ไม่เกินแผนการเงิน'],
   ['ปิดงบรายเดือนภายในวันที่','Group Finance','วันที่','↓',K12(10),'ของเดือนถัดไป'],
@@ -1801,6 +1804,43 @@ labelTables();
 document.body.insertAdjacentHTML('beforeend','<button id="totop" aria-label="กลับขึ้นบน">↑</button>');
 document.getElementById('totop').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>window.scrollTo({top:0})));
+// ---------- actual 2569 figures (sensitive: loaded from Supabase after login, never embedded or cached)
+var ACT=null;
+const b0=n=>n==null?'–':Math.round(n).toLocaleString('en-US');
+const pct=(a,b)=>b?Math.round(a/b*100)+'%':'–';
+function actCo(c){const pm=c.mg.rev-c.mg.exp,ops=c.extra.filter(x=>!x[2]).reduce((a,x)=>a+x[1],0),n=ACT.months;
+  return {pm,ops,adj:pm-ops,avg:(pm-ops)/n}}
+function actNote(k,def){if(!ACT)return def;const c=id=>ACT.co.find(x=>x.id===id);
+  if(k==='CMNH'){const o=c('CMNH').occ;return 'ฐานจริง '+ACT.asof+': '+pct(o[0],o[1])+' ('+o[0]+'/'+o[1]+' เตียง) สูงกว่าเป้าแล้ว ควรพิจารณาเป้า ≥90%'}
+  if(k==='TQL'){const o=c('TQL').occ;return 'ฐานจริง '+ACT.asof+': IPD '+pct(o[0],o[1])+' ('+o[0]+'/'+o[1]+') · ว่าง '+(o[1]-o[0])+' เตียง = โอกาสหลักของปี'}
+  if(k==='DC'){const d=c('TQL').dc;return 'ฐาน '+ACT.asof+': Day Care TQL '+d[0]+'/'+d[1]+' ราย · ตั้ง +20% ภายใน ธ.ค.'}
+  if(k==='REV'){const r=ACT.co.reduce((a,x)=>a+x.mg.rev,0)/ACT.months;return 'ฐาน 2569 เฉลี่ย '+b0(r)+' บาท/เดือน (2 บริษัท ตารางผู้บริหาร)'}
+  return def}
+function drawAct(){const el=$('#act');if(!el)return;
+  if(!ACT){el.innerHTML='<div class="card note">ยังไม่มีตัวเลขจริงในฐานข้อมูล</div>';return}
+  const cs=ACT.co.map(c=>[c,actCo(c)]);
+  const tot=cs.reduce((a,[c,k])=>a+k.avg,0),proj=ACT.co.reduce((a,c)=>a+c.extra.filter(x=>x[2]).reduce((s,x)=>s+x[1],0),0);
+  let h='<div class="grid g4">'+cs.map(([c,k])=>'<div class="card"><b>'+c.id+'</b><div class="note">'+c.name+'</div><div style="font-size:22px;font-weight:700;margin-top:6px">'+b0(k.avg)+'</div><div class="note">กำไรเฉลี่ย/เดือน หลังหักภาษีและรายการนอกตาราง</div></div>').join('')
+   +'<div class="card"><b>รวม 2 บริษัท</b><div style="font-size:22px;font-weight:700;margin-top:6px">'+b0(tot)+'</div><div class="note">ต่อเดือน ≈ '+b0(tot*12)+' บาท/ปี ใช้เทียบกับเงินสดที่ต้องเตรียมในแท็บการเงิน</div></div>'
+   +'<div class="card"><b>อัตราเข้าพัก '+ACT.asof+'</b>'+cs.map(([c])=>'<div>'+c.id+' '+(c.id==='TQL'?'IPD ':'')+pct(c.occ[0],c.occ[1])+' <span class="note">('+c.occ[0]+'/'+c.occ[1]+')</span></div>').join('')+'<div class="note">Day Care TQL '+ACT.co[1].dc[0]+'/'+ACT.co[1].dc[1]+'</div></div></div>';
+  h+='<div class="scroll"><table><tr><th>'+ACT.period+'</th>'+cs.map(([c])=>'<th>'+c.id+'</th>').join('')+'</tr>'
+   +[['รายรับ (ตารางผู้บริหาร)',([c])=>b0(c.mg.rev)],['รายจ่าย (ตารางผู้บริหาร)',([c])=>b0(c.mg.exp)],['กำไรคงเหลือ (รับ − จ่าย)',([c,k])=>'<b>'+b0(k.pm)+'</b>'],
+     ['หัก: จ่ายแล้วแต่ยังไม่อยู่ในตาราง',([c,k])=>'−'+b0(k.ops)+'<div class="note">'+c.extra.filter(x=>!x[2]).map(x=>x[0]+' '+b0(x[1])).join(' · ')+'</div>'],
+     ['กำไรหลังปรับ',([c,k])=>'<b>'+b0(k.adj)+'</b>'],['เฉลี่ยต่อเดือน',([c,k])=>b0(k.avg)],
+     ['รายได้ตามงบการเงิน',([c])=>b0(c.pl.rev)],['กำไรขั้นต้นตามงบ',([c])=>b0(c.pl.gross)],['กำไรจากการดำเนินงานตามงบ',([c])=>b0(c.pl.op)],
+     ['ต้นทุนคงที่สำคัญ',([c])=>c.fixed.map(x=>x[0]+' '+b0(x[1])).join('<br>')]]
+   .map(r=>'<tr><td>'+r[0]+'</td>'+cs.map(x=>'<td>'+r[1](x)+'</td>').join('')+'</tr>').join('')+'</table></div>';
+  if(proj)h+='<p class="note">ไม่หักในกำไรธุรกิจเดิม: ค่าใช้จ่ายโครงการ รพ. '+b0(proj)+' บาท ('+ACT.co.flatMap(c=>c.extra.filter(x=>x[2]).map(x=>x[0])).join(', ')+') ให้นับในงบโครงการ</p>';
+  h+='<div class="grid g2"><div><h4>เตียงแยกอาคาร / โซน ('+ACT.asof+')</h4><div class="scroll"><table><tr><th>บริษัท</th><th>อาคาร / โซน</th><th>เตียง</th><th>ว่าง</th></tr>'
+   +ACT.co.flatMap(c=>c.beds.map(b=>'<tr><td>'+c.id+'</td><td>'+b[0]+'</td><td>'+b[1]+'</td><td>'+(b[2]||'เต็ม')+'</td></tr>')).join('')+'</table></div></div>'
+   +'<div><h4>บริการเสริม CMNH ปี 2569 (ฐานของ 6 โปรเจ็ค)</h4><div class="scroll"><table><tr><th>บริการ</th><th>ผู้ใช้</th></tr>'
+   +ACT.svc.map(x=>'<tr><td>'+x[0]+'</td><td>'+x[1]+'</td></tr>').join('')+'</table></div></div></div>';
+  h+='<h4>รายการอื่นจากที่ประชุม</h4><ul>'+ACT.other.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+  h+='<h4>ข้อควรตรวจก่อนใช้ตัวเลข</h4><ol class="dec">'+ACT.flags.map(x=>'<li>'+x+'</li>').join('')+'</ol>';
+  el.innerHTML=h}
+(async()=>{let db=null;try{if(window.claude&&claude.use)db=await claude.use('db')}catch(e){}
+  if(!db){drawAct();return}
+  db.doc('shared/act2569').onSnapshot(sn=>{ACT=sn.exists?sn.data().v:null;drawAct();if($('#kt')&&$('#kt').innerHTML)kpiDefer()},()=>drawAct())})();
 // ---------- shared data (Supabase via supabase-bridge.js): tasks, data checklist, go/no-go, KPI
 const SHARED={tstat5:v=>{tstat=v;drawTasks()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
 const SCUR={tstat5:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
