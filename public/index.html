@@ -12,6 +12,57 @@
 --arrow:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%235A4A2A' stroke-width='1.8' stroke-linecap='round'/></svg>");
 --ok:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%231E6B3A' stroke-width='2.4' stroke-linecap='round'/></svg>");
 --no:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 4l8 8M12 4l-8 8' fill='none' stroke='%23A4161A' stroke-width='2.4' stroke-linecap='round'/></svg>")}
+/* ---- year at a glance ---- */
+.yhero{position:relative;overflow:hidden;border-radius:12px;padding:30px 32px 26px;color:#F3EBD6;margin:0 0 22px;
+ background:var(--noise),radial-gradient(ellipse at 85% -30%,#4E8C74 0%,transparent 55%),radial-gradient(ellipse at 10% 120%,#0F2E24 0%,transparent 60%),linear-gradient(135deg,#24584A,#173D31);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 10px 26px -10px rgba(20,40,30,.7);display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.yhero::after{content:"2570";position:absolute;right:-10px;bottom:-46px;font:700 170px/1 Trirong,Georgia,serif;color:rgba(233,207,142,.08);pointer-events:none}
+.yhero .eyebrow{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--brass1);font-weight:600}
+.yhero h2{font-size:34px;line-height:1.25;margin:6px 0 8px;color:#FFF8E6;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+.yhero h2 em{font-style:normal;background:linear-gradient(#F4E2AE,#C99A47);-webkit-background-clip:text;background-clip:text;color:transparent}
+.yhero p{margin:0;max-width:640px;opacity:.9;font-size:15px}
+.ychips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.ychips span{font-size:13px;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(233,207,142,.35)}
+.ychips b{color:var(--brass1)}
+.yring{position:relative;width:150px;height:150px;flex:0 0 auto;z-index:1}
+.yring svg{transform:rotate(-90deg)}
+.yring .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.yring .c b{font:700 34px/1 Trirong,Georgia,serif;color:#FFF8E6}.yring .c small{font-size:12px;opacity:.85;margin-top:4px}
+.ystats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 22px}
+.ystats .card{padding:14px 16px}.ystats .v{font:700 26px/1.2 Trirong,Georgia,serif;color:#21483B}.ystats .l{font-size:13px;color:var(--mute)}
+/* gantt */
+.gwrap{overflow-x:auto;border:1px solid #DCCFB2;border-radius:10px;background:#FFFDF8;box-shadow:0 2px 8px -4px rgba(80,60,20,.35)}
+.gantt{--gl:170px;position:relative;min-width:1040px;display:grid;grid-template-columns:var(--gl) repeat(14,1fr)}
+.gantt .gh{font-size:12px;font-weight:700;color:#3A3020;text-align:center;padding:8px 0 6px;background:linear-gradient(#F3EAD6,#E5D8BB);border-bottom:2px solid #C9B88E}
+.gantt .gh.pre{color:#8A7A5A;background:linear-gradient(#EFE8D8,#E2D8C0)}
+.gantt .gh small{display:block;font-weight:500;font-size:10.5px;color:#7A6A4A}
+.gantt .gl{grid-column:1;padding:10px 12px;font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #EFE6D2;background:#FBF6EA;position:sticky;left:0;z-index:2}
+.gantt .gl i{width:10px;height:10px;border-radius:3px;flex:0 0 auto}
+.gantt .gr{grid-column:2/-1;position:relative;border-bottom:1px solid #EFE6D2;
+ background:repeating-linear-gradient(90deg,transparent 0 calc(100%/14 - 1px),#F1E9D6 calc(100%/14 - 1px) calc(100%/14))}
+.gantt .gr .pre{position:absolute;top:0;bottom:0;left:0;width:calc(200%/14);background:rgba(120,100,60,.05)}
+.gbar{position:absolute;height:26px;border-radius:7px;padding:0 9px;font-size:12px;line-height:26px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 4px -1px rgba(0,0,0,.3);transition:transform .15s,box-shadow .15s}
+.gbar:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 5px 10px -2px rgba(0,0,0,.35);z-index:3}
+.gbar.sm{padding:0 4px;font-size:11px;text-overflow:clip;text-align:center}.gbar.key{font-weight:700;outline:2px solid rgba(233,207,142,.9);outline-offset:-2px}
+.gbar.done{opacity:.55}
+.gms{position:absolute;top:8px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:2;pointer-events:none}
+.gms i{width:14px;height:14px;transform:rotate(45deg);background:linear-gradient(#F4E2AE,#B8893B);border:1px solid #7A5A1E;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.gms.lo span{margin-top:24px}.gms span{margin-top:5px;font-size:11.5px;font-weight:700;color:#5A3E0E;background:#FFF6DC;border:1px solid #E2C98A;border-radius:6px;padding:1px 6px;white-space:nowrap}
+.gtoday{position:absolute;top:0;bottom:0;width:2px;background:#C0392B;z-index:4;pointer-events:none}
+.gtoday b{position:absolute;top:44px;left:4px;font-size:11px;color:#fff;background:#C0392B;border-radius:4px;padding:0 5px;white-space:nowrap}
+.glegend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--mute);margin:8px 2px 0}
+.glegend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+/* chapters */
+.chap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.chap .card{position:relative;padding:18px 16px 14px;border-top:4px solid var(--c)}
+.chap .num{font:700 40px/1 Trirong,Georgia,serif;color:var(--c);opacity:.22;position:absolute;right:12px;top:8px}
+.chap h4{margin:0;font-size:17px;color:#20392F}.chap .m{font-size:12.5px;color:var(--mute);margin-bottom:8px}
+.chap ul{margin:0;padding-left:18px;font-size:13.5px}.chap li{margin:3px 0;cursor:pointer}.chap li:hover{color:var(--brand2);text-decoration:underline}
+.chap .bar{height:6px;border-radius:99px;background:#EDE3CC;margin-top:10px;overflow:hidden}.chap .bar i{display:block;height:100%;background:var(--c)}
+@media(max-width:640px){.gantt{--gl:96px;min-width:900px}.gantt .gl{font-size:12px;padding:8px;gap:5px}.gantt .gl i{display:none}}
+@media(max-width:800px){.yhero{grid-template-columns:1fr;padding:22px 20px}.yhero h2{font-size:26px}.yring{width:120px;height:120px;margin:0 auto}.ystats,.chap{grid-template-columns:1fr 1fr}}
+@media print{.yhero{-webkit-print-color-adjust:exact;print-color-adjust:exact}.gwrap{overflow:visible}.gantt{min-width:0}.gbar,.gms i,.gtoday{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 *{box-sizing:border-box}
 h1,h2,h3,h4,.stat .v,.plaque b,.qcol h4,#mbox h2,.doc h3{font-family:"Trirong","Taviraj","Leelawadee UI",Georgia,serif;letter-spacing:.1px}
 h1,h2{font-weight:700}h3,h4,.stat .v{font-weight:600}
@@ -251,6 +302,25 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
 </header>
 <main>
 
+<section id="year">
+  <div class="yhero">
+   <div>
+    <div class="eyebrow">CMNH Group · Year Plan 2570 (2027)</div>
+    <h2>ปีแห่งการวาง<em>ระบบ</em> สู่การเปิด<em>โรงพยาบาล</em></h2>
+    <p>ครึ่งปีแรกจัดระบบภายในให้แข็งแรง (คลินิกหน้า รพ. · โครงสร้าง CEO–MD · KPI · SOP) ครึ่งปีหลังเปิดโรงพยาบาล Villa และตลาดต่างประเทศ</p>
+    <div class="ychips" id="ychips"></div>
+   </div>
+   <div class="yring" id="yring"></div>
+  </div>
+  <div class="ystats" id="ystats"></div>
+  <h3>Roadmap ทั้งปี</h3>
+  <p class="note">คลิกที่แถบเพื่อดูขั้นตอน ผู้รับผิดชอบ และเอกสาร · ◆ = หมุดสำคัญ · กรอบทอง = งานหลัก · เส้นแดง = วันนี้</p>
+  <div class="gwrap"><div class="gantt" id="gantt"></div></div>
+  <div class="glegend" id="glegend"></div>
+  <h3>4 บทของปี</h3>
+  <div class="chap" id="chap"></div>
+</section>
+
 <section id="sum">
   <h2>สรุปสำหรับ CEO <span class="tag warn">ร่างเพื่อตัดสินใจ</span></h2>
   <p class="lead">ครึ่งปีแรกจัดระบบภายใน (คลินิกหน้า รพ. โครงสร้าง CEO–MD KPI) ครึ่งปีหลังเปิด รพ. Villa และตลาดต่างประเทศ</p>
@@ -451,7 +521,7 @@ const MON=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.
 const store={get(k,d){try{const v=localStorage.getItem('cmnh2570:'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('cmnh2570:'+k,JSON.stringify(v))}catch(e){}}};
 
 // ---------- nav
-const tabs=[['sum','สรุป CEO'],['plan','แผนไตรมาส'],['tasks','งาน'],['proj','โปรเจ็ค'],['org','โครงสร้าง'],['gov','ธรรมาภิบาล'],['fin','การเงิน'],['sales','การขาย'],['kpi','KPI'],['docs','เอกสาร']];
+const tabs=[['year','ภาพรวมปี'],['sum','สรุป CEO'],['plan','แผนไตรมาส'],['tasks','งาน'],['proj','โปรเจ็ค'],['org','โครงสร้าง'],['gov','ธรรมาภิบาล'],['fin','การเงิน'],['sales','การขาย'],['kpi','KPI'],['docs','เอกสาร']];
 tabs.forEach(([id,t],i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>show(id);b.dataset.id=id;$('#nav').appendChild(b)});
 function show(id){document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.id===id));if(id==='fin'||id==='sales')run()}
 
@@ -623,7 +693,7 @@ function drawTasks(){
   $('#tf').innerHTML=qs.map(q=>'<button class="'+(q===tfil?'on':'')+'" data-q="'+q+'">'+q+'</button>').join('');
   $('#tf').querySelectorAll('button').forEach(b=>b.onclick=()=>{tfil=b.dataset.q;drawTasks()});
   $('#tt').innerHTML='<tr><th>ไตรมาส</th><th>งาน</th><th>สายรับผิดชอบ</th><th>ผลลัพธ์ที่ต้องได้</th><th>ส่งภายใน</th><th>สถานะ</th></tr>'+TASKS.map((t,i)=>(tfil==='ทั้งหมด'||t[0].startsWith(tfil))?'<tr><td>'+t[0]+'</td><td>'+t[1]+'</td><td>'+t[2]+'</td><td>'+t[3]+'</td><td>'+t[4]+'</td><td><select class="st" data-i="'+i+'">'+ST.map((s,j)=>'<option value="'+j+'"'+(tstat[i]==j?' selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>':'').join('');
-  $('#tt').querySelectorAll('select').forEach(el=>el.onchange=()=>{tstat[+el.dataset.i]=+el.value;store.set('tstat5',tstat)});
+  $('#tt').querySelectorAll('select').forEach(el=>el.onchange=()=>{tstat[+el.dataset.i]=+el.value;store.set('tstat5',tstat);drawYear()});
 }
 
 // ---------- data request
@@ -1788,7 +1858,7 @@ $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('o
 $('#mprint').onclick=()=>printNode($('#mbody'),($('#mbody h2')||{}).textContent||'เอกสาร',false,true,$('#mprint'));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('on')});
 
-buildCtrl();drawTasks();run();show('sum');
+buildCtrl();drawTasks();run();show('year');
 
 // ---------- mobile: label table cells ----------
 const MC=['tt','rep','merge','opt','st','qt','scnTable','revTable'];
@@ -1804,6 +1874,47 @@ labelTables();
 document.body.insertAdjacentHTML('beforeend','<button id="totop" aria-label="กลับขึ้นบน">↑</button>');
 document.getElementById('totop').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>window.scrollTo({top:0})));
+// ---------- year at a glance (roadmap). month index: -2 = พ.ย. 69 … 11 = ธ.ค. 70
+var LANES=[['clinic','คลินิก & โรงพยาบาล','#2F6B57'],['villa','Villa','#8A5A2B'],['orgl','องค์กร & KPI','#3D5A80'],['sop','ระบบเอกสาร & SOP','#7A4E8C'],['intl','ตลาดต่างประเทศ','#B8702E']];
+var RM=[['clinic','clinic','ยื่นขออนุญาต → เปิดคลินิก',-2,0],['clinic','licconfirm','ใบอนุญาต',0,0],['clinic','hosp','โครงสร้าง รพ. + JD',2,3],['clinic','recruit','สรรหาบุคลากร รพ.',4,7],['clinic','clinic','คลินิกดำเนินงาน → ย้ายเข้า OPD',1,9],
+ ['villa','villapermit','ยื่นขออนุญาต Villa',5,9],['villa','villaop','เปิดบริการ Villa',10,11],
+ ['orgl','comm','สื่อสาร',0,0],['orgl','org','Board + ผังใหม่',0,1],['orgl','govsys','ระบบบริหาร + DOA',0,3],['orgl','kpi','KPI รายแผนก',1,2],['orgl','kpieval','KPI กลางปี',5,5],['orgl','perf','ประเมินคน',11,11],['orgl','midyear','แผนกลางปี',5,5],['orgl','yearend','สรุปปี',11,11],
+ ['sop','sopa','SOP กลุ่ม A คลินิก',-1,1],['sop','sopreg','ทะเบียนเอกสาร',0,2],['sop','sopb','SOP B ช่วง 1',1,2],['sop','sopb2','SOP B ช่วง 2',3,5],['sop','sopc','SOP C ก่อนเปิด IPD/Villa',6,8],
+ ['intl','mktplan','วางรากฐาน Tranquila International',0,5],['intl','mktlaunch','เปิดตัวในสวิส',6,11]];
+var MS=[[0,'เปิดคลินิก'],[1,'Board ยืนยัน MD'],[5,'ทบทวนกลางปี'],[9,'เปิด OPD + IPD'],[10,'เปิด Villa'],[11,'แผน 2571']];
+var MCOL=['พ.ย.','ธ.ค.'].concat(MON);
+function drawYear(){const g=$('#gantt');if(!g||!LANES)return;
+  const W=100/14,L=i=>(i+2)*W;
+  const it=id=>ITEMS.find(x=>x.id===id)||{};
+  let h='<div class="gh" style="text-align:left;padding-left:12px">สาย / เดือน</div>'+MCOL.map((m,i)=>'<div class="gh'+(i<2?' pre':'')+'">'+m+'<small>'+(i<2?'69':'70')+'</small></div>').join('');
+  const now=new Date(),mi=(now.getFullYear()-2027)*12+now.getMonth()+ (now.getDate()-1)/31;
+  h+='<div class="gl" style="min-height:66px"><i style="background:linear-gradient(#F4E2AE,#B8893B);transform:rotate(45deg)"></i>หมุดสำคัญ</div><div class="gr" style="min-height:66px"><div class="pre"></div>'+MS.map((m,k)=>'<div class="gms'+(k%2?' lo':'')+'" style="left:'+(L(m[0])+W/2)+'%"><i></i><span>'+m[1]+'</span></div>').join('')+'</div>';
+  LANES.forEach(([lid,ln,c],li)=>{
+    const bars=RM.filter(r=>r[0]===lid),rows=[];
+    bars.forEach(b=>{let r=0;while((rows[r]||[]).some(x=>!(b[4]<x[3]||b[3]>x[4])))r++;(rows[r]=rows[r]||[]).push(b);b.row=r});
+    const top0=8,H=top0+rows.length*32+6;
+    h+='<div class="gl" style="min-height:'+H+'px"><i style="background:'+c+'"></i>'+ln+'</div><div class="gr" style="min-height:'+H+'px"><div class="pre"></div>'
+     +bars.map(b=>{const x=it(b[1]);return '<div class="gbar'+(x.key?' key':'')+(b[4]===b[3]?' sm':'')+'" data-id="'+b[1]+'" title="'+(x.t||b[2]).replace(/"/g,'')+(x.due?' · ภายใน '+x.due:'')+'" style="left:calc('+L(b[3])+'% + 3px);width:calc('+(b[4]-b[3]+1)*W+'% - 6px);top:'+(top0+b.row*32)+'px;background:linear-gradient('+c+'E6,'+c+')">'+b[2]+'</div>'}).join('')
+     +'</div>'});
+  g.innerHTML=h;
+  if(mi>=-2&&mi<12){const t=document.createElement('div');t.className='gtoday';t.style.left='calc(var(--gl) + (100% - var(--gl)) * '+((mi+2)/14)+')';t.innerHTML='<b>วันนี้</b>';g.appendChild(t)}
+  g.querySelectorAll('.gbar').forEach(el=>el.onclick=()=>openItem(el.dataset.id));
+  $('#glegend').innerHTML=LANES.map(l=>'<span><i style="background:'+l[2]+'"></i>'+l[1]+'</span>').join('')+'<span>พื้นเทา = ก่อนเริ่มปี (พ.ย.–ธ.ค. 69)</span>';
+  // hero: progress ring + chips
+  const n=TASKS.length,dn=tstat.filter(v=>v==2).length,ip=tstat.filter(v=>v==1).length,pc=n?dn/n:0,R=64,C=2*Math.PI*R;
+  $('#yring').innerHTML='<svg width="100%" height="100%" viewBox="0 0 150 150"><circle cx="75" cy="75" r="'+R+'" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="12"/><circle cx="75" cy="75" r="'+R+'" fill="none" stroke="url(#yg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+(C*pc)+' '+C+'"/><defs><linearGradient id="yg"><stop offset="0" stop-color="#F4E2AE"/><stop offset="1" stop-color="#C99A47"/></linearGradient></defs></svg><div class="c"><b>'+Math.round(pc*100)+'%</b><small>งานเสร็จ '+dn+'/'+n+'<br>กำลังทำ '+ip+'</small></div>';
+  const start=new Date(2027,0,1),days=Math.ceil((start-now)/864e5);
+  $('#ychips').innerHTML=(days>0?'<span>อีก <b>'+days+'</b> วัน เริ่มปี 2570</span>':'<span>วันที่ <b>'+(Math.floor((now-start)/864e5)+1)+'</b> ของปี 2570</span>')
+   +'<span>งานหลัก <b>'+ITEMS.filter(x=>x.key).length+'</b> เรื่อง</span><span>งานทั้งหมด <b>'+ITEMS.length+'</b> รายการ</span><span>เอกสารประกอบ <b>'+ITEMS.reduce((a,x)=>a+(x.docs||[]).length,0)+'</b> ฉบับ</span>';
+  $('#ystats').innerHTML=[['ม.ค. 70','เปิดคลินิกหน้า รพ.'],['ต.ค. 70','เปิด OPD + IPD โรงพยาบาล'],['พ.ย. 70','เปิด Villa ใหม่'],['118 คน','บุคลากร รพ. + Villa ที่ต้องสรรหา']].map(x=>'<div class="card"><div class="v">'+x[0]+'</div><div class="l">'+x[1]+'</div></div>').join('');
+  const CC=['#2F6B57','#3D5A80','#B8702E','#8A5A2B'];
+  $('#chap').innerHTML=QH.map((q,k)=>{const xs=ITEMS.filter(x=>x.q===k+1),ts=TASKS.map((t,i)=>[t,i]).filter(([t])=>t[0].startsWith('Q'+(k+1))),d=ts.filter(([,i])=>tstat[i]==2).length;
+    return '<div class="card" style="--c:'+CC[k]+'"><div class="num">Q'+(k+1)+'</div><h4>'+q[0].split('·')[1].trim()+'</h4><div class="m">'+q[1]+' 2570</div><ul>'
+     +xs.filter(x=>x.key).concat(xs.filter(x=>!x.key)).slice(0,5).map(x=>'<li data-id="'+x.id+'">'+(x.key?'<b>':'')+x.t.split(/[(:]/)[0].trim()+(x.key?'</b>':'')+'</li>').join('')+(xs.length>5?'<li style="list-style:none;color:var(--mute);cursor:default">+ อีก '+(xs.length-5)+' งาน</li>':'')
+     +'</ul><div class="bar"><i style="width:'+(ts.length?d/ts.length*100:0)+'%"></i></div><div class="m" style="margin:4px 0 0">เสร็จ '+d+'/'+ts.length+' งานในตาราง</div></div>'}).join('');
+  $('#chap').querySelectorAll('li[data-id]').forEach(el=>el.onclick=()=>openItem(el.dataset.id));
+}
+drawYear();
 // ---------- actual 2569 figures (sensitive: loaded from Supabase after login, never embedded or cached)
 var ACT=null;
 const b0=n=>n==null?'–':Math.round(n).toLocaleString('en-US');
@@ -1842,7 +1953,7 @@ function drawAct(){const el=$('#act');if(!el)return;
   if(!db){drawAct();return}
   db.doc('shared/act2569').onSnapshot(sn=>{ACT=sn.exists?sn.data().v:null;drawAct();if($('#kt')&&$('#kt').innerHTML)kpiDefer()},()=>drawAct())})();
 // ---------- shared data (Supabase via supabase-bridge.js): tasks, data checklist, go/no-go, KPI
-const SHARED={tstat5:v=>{tstat=v;drawTasks()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
+const SHARED={tstat5:v=>{tstat=v;drawTasks();drawYear()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
 const SCUR={tstat5:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
 let sdb=null,sro=false;const sq={},stm={},sbusy={};
 function syncBadge(t,c){const b=$('#sync');b.textContent=t;b.className='sync '+(c||'')}
