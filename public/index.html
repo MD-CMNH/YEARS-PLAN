@@ -77,6 +77,16 @@ select.st-0{background:#FFF6DC}select.st-1{background:#FDE9D2}select.st-2{backgr
 .ychips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .ychips span{font-size:13px;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(233,207,142,.35)}
 .ychips b{color:var(--brass1)}
+.due{margin:0 0 16px;padding:14px 18px}.due h4{margin:0 0 8px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}.due h4 .note{font-weight:400;font-size:13px}.due h4 button{margin-left:auto}
+.dli{display:grid;grid-template-columns:118px 92px 1fr auto;gap:10px;align-items:center;padding:6px 0;border-top:1px dashed var(--line);font-size:14px;cursor:pointer}.dli:hover{background:#FBF5E7}
+.dli .dd{font-weight:700;font-size:13px}.dli .dd.late{color:var(--bad)}.dli .dd.soon{color:#9A5B0B}.dli .dd.next{color:var(--mute);font-weight:400}
+.dli .dk{font-size:12px;padding:1px 8px;border-radius:99px;background:#EFE6D2;text-align:center}.dli .do{font-size:12.5px;color:var(--mute);text-align:right}
+@media(max-width:640px){.dli{grid-template-columns:1fr auto;gap:2px 8px}.dli .dk{align-self:start}.dli .dt,.dli .do{grid-column:1/-1;text-align:left}.due h4 button{margin-left:0}}
+.rptbtn{font:inherit;font-weight:600;cursor:pointer;padding:7px 16px;border-radius:8px;border:1px solid #B8893B;background:linear-gradient(#F8E8C2,#E5C77F);color:#3A2A10}
+.rpt h2{margin-bottom:2px}.rpt h3{margin-top:18px}.rpt .rgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.rpt .rgrid div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#FFFDF7}
+.rpt .rgrid b{display:block;font:700 22px/1.2 Trirong,Georgia,serif}.rpt .rgrid span{font-size:12.5px;color:var(--mute)}.rpt .wl{border-bottom:1px dotted #8A7A5A;height:30px}
+@media(max-width:640px){.rpt .rgrid{grid-template-columns:1fr 1fr}}
+@media print{.rpt select{border:0;appearance:none;background:none;font-weight:700}}
 .yprep{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:14px;font-size:13px;color:#E9DFC6}.yprep:empty{display:none}.yprep b{flex-basis:100%;color:var(--brass1);font-size:12.5px}
 .yprep .d{color:#FFF8E6}.yprep .i{color:#F4E2AE}.yprep .w{opacity:.7}
 .v.inv,.neg.inv{color:#7A5222}
@@ -385,6 +395,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
    </div>
    <div class="yring" id="yring"></div>
   </div>
+  <div class="due card" id="due"></div>
   <div class="ystats" id="ystats"></div>
   <h3>Roadmap ทั้งปี</h3>
   <p class="note">คลิกที่แถบเพื่อดูขั้นตอน ผู้รับผิดชอบ และเอกสาร · ◆ = หมุดสำคัญ · กรอบทอง = งานหลัก · เส้นแดง = วันนี้</p>
@@ -401,6 +412,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
   <h3>ทางเลือกให้ CEO ตัดสินใจ</h3>
   <p class="note">เทียบแผนเดิมกับแผนใหม่ (คลินิกอาคารหน้า รพ.) คำนวณสดจากสมมติฐานในแท็บการเงิน</p>
   <div class="scroll"><table id="opt"></table></div>
+  <p><button class="rptbtn" type="button" onclick="openReport()">📄 รายงานประจำเดือน MD → CEO</button></p>
   <h3>เรื่องที่ต้องให้ CEO ตัดสินใจ</h3>
   <div class="dsum" id="decsum"></div>
   <div class="decs" id="decs"></div>
@@ -794,7 +806,7 @@ function run(){
   // options A/B
   const PO=Object.assign({},P,{clinicOpen:99,opdOpen:3,phase:0}),ro=summary(model(PO),PO),rn=summary(model(P),P),PB=Object.assign({},P,{clinicRev:P.clinicCost}),rbk=summary(model(PB),PB);
   $('#opt').innerHTML='<tr><th>เรื่อง</th><th>แผนเดิม: OPD รพ. มี.ค. 70</th><th>แผนใหม่: คลินิกหน้า รพ. '+mlabel(P.clinicOpen)+'</th></tr>'
-   +'<tr><td>OPD ก่อนเปิด IPD</td><td>OPD เต็มที่ รพ. 822,000 บาท/เดือน + ค่าสถานที่ รพ. ตั้งแต่ มี.ค.</td><td>คลินิกแพทย์ + กายภาพที่อาคารหน้า รพ. 8 คน '+fmt(P.clinicCost)+' บาท/เดือน แล้วย้ายเข้า รพ. '+mlabel(P.opdOpen)+'</td></tr>'
+   +'<tr><td>OPD ก่อนเปิด IPD</td><td>OPD เต็มที่ รพ. 822,000 บาท/เดือน + ค่าสถานที่ รพ. ตั้งแต่ มี.ค.</td><td>คลินิกเวชกรรมที่อาคารหน้า รพ. 8 คน '+fmt(P.clinicCost)+' บาท/เดือน แล้วย้ายเข้า รพ. '+mlabel(P.opdOpen)+'</td></tr>'
    +'<tr><td>ใบอนุญาตคลินิก</td><td>คลินิกแยกที่อาคาร รพ. ต้องรออาคาร OPD เสร็จ</td><td>ยื่นที่อาคารสำนักงานหน้า รพ. ภายใน 30 พ.ย. 69 (ต้องให้อาคารเสร็จก่อน)</td></tr>'
    +'<tr><td>เงินลงทุนที่ต้องเตรียมสูงสุด</td><td>'+fm(ro.peak)+'</td><td>'+fm(rn.peak)+'</td></tr>'
    +'<tr><td>ผลปี 2570</td><td>'+fm(ro.y1)+'</td><td>'+fm(rn.y1)+'</td></tr>'
@@ -807,7 +819,7 @@ function run(){
 
 // ---------- tasks
 const ST=['ยังไม่เริ่ม','กำลังทำ','เสร็จ'];
-const TASKS=[['ก่อนเริ่มปี','เก็บตัวเลขจริง 6 รายการ','Group Finance','ใส่ในไฟล์แผนการเงิน ตัวเลขเงินที่ต้องเตรียมเป็นตัวจริง','23 พ.ย. 69'],['ก่อนเริ่มปี','ยื่นใบอนุญาตคลินิกแพทย์ + กายภาพที่อาคารสำนักงานหน้า รพ.','MD','ได้ใบรับคำขอ ปรับปรุงเสร็จ พร้อมรับตรวจ','30 พ.ย. 69'],['ก่อนเริ่มปี','SOP คลินิก 4 เรื่องหลัก + แบบฟอร์มชุดแรก','Group Quality + แพทย์ผู้ดำเนินการ · MD อนุมัติ','พร้อมก่อน mock inspection 18 ธ.ค.','15 ธ.ค. 69'],['Q1','ติดตามคำขอ ส.พ. ที่ยื่นแล้ว (แก้ 11 จุด) + ถาม สสจ. เรื่อง Villa','MD','ไม่ถูกตีกลับ และรู้ใบอนุญาต Villa','31 ม.ค. 70'],['Q1','ยุทธศาสตร์ปี 2570 + สื่อสารให้พนักงานรับทราบ','CEO + MD','กรรมการอนุมัติ และพนักงานทุกแผนกรับทราบ','31 ม.ค. 70'],['Q1','เปิดคลินิกแพทย์ + กายภาพที่อาคารสำนักงานหน้า รพ.','MD → หัวหน้าคลินิกหลังเปิด','เปิดให้บริการ ม.ค. 70 (ตัดสินใจ 26 ธ.ค. · สำรอง 1 ก.พ.) รายได้ ≥302,000/เดือน','31 ม.ค. 70'],['Q1','ตั้งเป้าปี 2570 ทั้ง 6 โปรเจ็คต่อเนื่อง (Home Care · Home Rehab · Single Procedure · CM Derma Plus · แพลตฟอร์ม · Health Product)','เจ้าของโปรเจ็คแต่ละคน','เป้าและ KPI ครบทุกโปรเจ็ค CEO อนุมัติ','31 ม.ค. 70'],['Q1','มติ Board ยืนยัน MD + ประกาศผังใหม่ + แต่งตั้งหัวหน้าส่วนกลาง','CEO + Group HR','MD ปฏิบัติงานแล้ว ทำให้เป็นทางการ · หัวหน้ารับงานต่อจาก MD','28 ก.พ. 70'],['Q1','SOP คลินิกอีก 5 เรื่อง + แบบฟอร์มชุดที่สอง','Group Quality · MD อนุมัติ','ลงนามหลังใช้จริงเดือนแรก','28 ก.พ. 70'],['Q1','กำหนด KPI รายแผนก','ทุกหน่วย (HR ประสาน)','KPI และค่าเป้าครบทุกแผนก','31 มี.ค. 70'],['Q1','SOP กลุ่ม B ช่วงที่ 1 (ปิดงบ ทดลองงาน การลา เงินเดือน)','Group Finance + Group HR · MD อนุมัติ','ลงนามและใช้งาน','31 มี.ค. 70'],['Q1–Q2','ระบบบริหารใหม่ (รูปแบบการจัดการ + DOA + นโยบาย)','Group Operations + Group Quality · MD อนุมัติ','ประกาศใช้ทุกหน่วย','30 เม.ย. 70'],['Q1–Q2','วางรากฐาน Tranquila International (ทาง B: เลื่อนเป็น เม.ย.–ก.ย.)','CEO + Group Marketing','ตอบ 8 คำถาม แพ็กเกจ A ข้อตกลง SHP เว็บไซต์ EN/DE','30 มิ.ย. 70'],['Q2','วางโครงสร้าง รพ. อัตรากำลัง และ JD ใหม่','MD + Group HR + Group Finance','ต้องเสร็จก่อนเริ่มสรรหา','30 เม.ย. 70'],['Q2–Q3','สรรหาบุคลากร รพ.','Group HR','สัญญาจ้างครบตามแผนอัตรากำลัง และรายชื่อสำรอง','31 ส.ค. 70'],['Q2','SOP กลุ่ม B ช่วงที่ 2 (จัดซื้อ คลังยา เครื่องมือ HR เอกสาร)','Group Managers · MD อนุมัติ','ก่อนรับคนและซื้อเครื่องมือ รพ.','30 มิ.ย. 70'],['Q2','ทบทวน KPI กลางปี (ยังไม่ประเมินรายคน)','Group HR + Group Finance','รายงาน KPI กลางปีรายหน่วย','30 มิ.ย. 70'],['Q2','ทบทวนแผนกลางปี','CEO','ปรับแผนครึ่งปีหลังจากผล KPI','30 มิ.ย. 70'],['Q2–Q4','ยื่นขออนุญาต Villa (ยื่น มิ.ย.–ก.ค.)','Group HR (ธุรการ) · MD อนุมัติ','ได้ใบอนุญาตภายใน ต.ค. สำรอง 1 เดือนก่อนเปิด','31 ต.ค. 70'],['Q3','SOP กลุ่ม C + อบรมก่อนเปิด IPD และ Villa','Nursing Director + Unit Directors','ลงนามและอบรมครบ','30 ก.ย. 70'],['Q3–Q4','เปิดตัว Tranquila International ในสวิส (รับผู้พักทดลอง ธ.ค. หรือต้นปี 2571)','Group Marketing','lead ต่างชาติ 25 ราย ผู้แนะนำ 30 ราย','31 ธ.ค. 70'],['Q4','ย้ายคลินิกเข้าเป็น OPD รพ. แล้วคืนอาคารหน้าเป็นออฟฟิศ (พร้อมเปิด IPD)','MD','ทีม 8 คนเป็นแกน OPD 31 คน ย้ายเวชระเบียนครบ','31 ต.ค. 70'],['Q4','เปิดให้บริการ Villa ใหม่','Villa Director · MD ตัดสิน Go / No-go','เปิดรับผู้พัก','31 ธ.ค. 70'],['Q4','ประเมินผลงานรายคนรอบแรก','Group HR + หัวหน้าแผนก','ผลประเมินรายคน + แผนพัฒนา','31 ธ.ค. 70'],['Q4','สรุปผลทั้งปี + แผนปี 2571','CEO','รายงานผลปีและแผนปีถัดไป','31 ธ.ค. 70'],['ทั้งปี','ระบบแฟรนไชส์กับ Franbiz','Group Business Development · MD อนุมัติ','คู่มือและระบบแฟรนไชส์พร้อมขาย','ตามสัญญา'],['ทั้งปี','ติดตามก่อสร้าง รพ. กับ DG และธนาคาร','Group Finance','รายงานความคืบหน้ารายเดือน','ทุกเดือน']];
+const TASKS=[['ก่อนเริ่มปี','เก็บตัวเลขจริง 6 รายการ','Group Finance','ใส่ในไฟล์แผนการเงิน ตัวเลขเงินที่ต้องเตรียมเป็นตัวจริง','23 พ.ย. 69'],['ก่อนเริ่มปี','ยื่นใบอนุญาตคลินิกเวชกรรมที่อาคารสำนักงานหน้า รพ.','MD','ได้ใบรับคำขอ ปรับปรุงเสร็จ พร้อมรับตรวจ','30 พ.ย. 69'],['ก่อนเริ่มปี','SOP คลินิก 4 เรื่องหลัก + แบบฟอร์มชุดแรก','Group Quality + แพทย์ผู้ดำเนินการ · MD อนุมัติ','พร้อมก่อน mock inspection 18 ธ.ค.','15 ธ.ค. 69'],['Q1','ติดตามคำขอ ส.พ. ที่ยื่นแล้ว (แก้ 11 จุด) + ถาม สสจ. เรื่อง Villa','MD','ไม่ถูกตีกลับ และรู้ใบอนุญาต Villa','31 ม.ค. 70'],['Q1','ยุทธศาสตร์ปี 2570 + สื่อสารให้พนักงานรับทราบ','CEO + MD','กรรมการอนุมัติ และพนักงานทุกแผนกรับทราบ','31 ม.ค. 70'],['Q1','เปิดคลินิกเวชกรรมที่อาคารสำนักงานหน้า รพ.','MD → หัวหน้าคลินิกหลังเปิด','เปิดให้บริการ ม.ค. 70 (ตัดสินใจ 26 ธ.ค. · สำรอง 1 ก.พ.) รายได้ ≥302,000/เดือน','31 ม.ค. 70'],['Q1','ตั้งเป้าปี 2570 ทั้ง 6 โปรเจ็คต่อเนื่อง (Home Care · Home Rehab · Single Procedure · CM Derma Plus · แพลตฟอร์ม · Health Product)','เจ้าของโปรเจ็คแต่ละคน','เป้าและ KPI ครบทุกโปรเจ็ค CEO อนุมัติ','31 ม.ค. 70'],['Q1','มติ Board ยืนยัน MD + ประกาศผังใหม่ + แต่งตั้งหัวหน้าส่วนกลาง','CEO + Group HR','MD ปฏิบัติงานแล้ว ทำให้เป็นทางการ · หัวหน้ารับงานต่อจาก MD','28 ก.พ. 70'],['Q1','SOP คลินิกอีก 5 เรื่อง + แบบฟอร์มชุดที่สอง','Group Quality · MD อนุมัติ','ลงนามหลังใช้จริงเดือนแรก','28 ก.พ. 70'],['Q1','กำหนด KPI รายแผนก','ทุกหน่วย (HR ประสาน)','KPI และค่าเป้าครบทุกแผนก','31 มี.ค. 70'],['Q1','SOP กลุ่ม B ช่วงที่ 1 (ปิดงบ ทดลองงาน การลา เงินเดือน)','Group Finance + Group HR · MD อนุมัติ','ลงนามและใช้งาน','31 มี.ค. 70'],['Q1–Q2','ระบบบริหารใหม่ (รูปแบบการจัดการ + DOA + นโยบาย)','Group Operations + Group Quality · MD อนุมัติ','ประกาศใช้ทุกหน่วย','30 เม.ย. 70'],['Q1–Q2','วางรากฐาน Tranquila International (ทาง B: เลื่อนเป็น เม.ย.–ก.ย.)','CEO + Group Marketing','ตอบ 8 คำถาม แพ็กเกจ A ข้อตกลง SHP เว็บไซต์ EN/DE','30 มิ.ย. 70'],['Q2','วางโครงสร้าง รพ. อัตรากำลัง และ JD ใหม่','MD + Group HR + Group Finance','ต้องเสร็จก่อนเริ่มสรรหา','30 เม.ย. 70'],['Q2–Q3','สรรหาบุคลากร รพ.','Group HR','สัญญาจ้างครบตามแผนอัตรากำลัง และรายชื่อสำรอง','31 ส.ค. 70'],['Q2','SOP กลุ่ม B ช่วงที่ 2 (จัดซื้อ คลังยา เครื่องมือ HR เอกสาร)','Group Managers · MD อนุมัติ','ก่อนรับคนและซื้อเครื่องมือ รพ.','30 มิ.ย. 70'],['Q2','ทบทวน KPI กลางปี (ยังไม่ประเมินรายคน)','Group HR + Group Finance','รายงาน KPI กลางปีรายหน่วย','30 มิ.ย. 70'],['Q2','ทบทวนแผนกลางปี','CEO','ปรับแผนครึ่งปีหลังจากผล KPI','30 มิ.ย. 70'],['Q2–Q4','ยื่นขออนุญาต Villa (ยื่น มิ.ย.–ก.ค.)','Group HR (ธุรการ) · MD อนุมัติ','ได้ใบอนุญาตภายใน ต.ค. สำรอง 1 เดือนก่อนเปิด','31 ต.ค. 70'],['Q3','SOP กลุ่ม C + อบรมก่อนเปิด IPD และ Villa','Nursing Director + Unit Directors','ลงนามและอบรมครบ','30 ก.ย. 70'],['Q3–Q4','เปิดตัว Tranquila International ในสวิส (รับผู้พักทดลอง ธ.ค. หรือต้นปี 2571)','Group Marketing','lead ต่างชาติ 25 ราย ผู้แนะนำ 30 ราย','31 ธ.ค. 70'],['Q4','ย้ายคลินิกเข้าเป็น OPD รพ. แล้วคืนอาคารหน้าเป็นออฟฟิศ (พร้อมเปิด IPD)','MD','ทีม 8 คนเป็นแกน OPD 31 คน ย้ายเวชระเบียนครบ','31 ต.ค. 70'],['Q4','เปิดให้บริการ Villa ใหม่','Villa Director · MD ตัดสิน Go / No-go','เปิดรับผู้พัก','31 ธ.ค. 70'],['Q4','ประเมินผลงานรายคนรอบแรก','Group HR + หัวหน้าแผนก','ผลประเมินรายคน + แผนพัฒนา','31 ธ.ค. 70'],['Q4','สรุปผลทั้งปี + แผนปี 2571','CEO','รายงานผลปีและแผนปีถัดไป','31 ธ.ค. 70'],['ทั้งปี','ระบบแฟรนไชส์กับ Franbiz','Group Business Development · MD อนุมัติ','คู่มือและระบบแฟรนไชส์พร้อมขาย','ตามสัญญา'],['ทั้งปี','ติดตามก่อสร้าง รพ. กับ DG และธนาคาร','Group Finance','รายงานความคืบหน้ารายเดือน','ทุกเดือน']];
 let tstat=store.get('tstat5',TASKS.map((_,i)=>i>=TASKS.length-2?1:0)),tfil=matchMedia('(max-width:640px)').matches?'ก่อนเริ่มปี':'ทั้งหมด';
 function drawTasks(){
   const qs=['ทั้งหมด','ก่อนเริ่มปี','Q1','Q2','Q3','Q4','ทั้งปี'];
@@ -848,9 +860,47 @@ function drawDecs(){const el=$('#decs');if(!el)return;const st=i=>(cdec[i]&&cdec
      +'<div class="dbot"><select class="dsel" data-i="'+i+'" aria-label="สถานะเรื่องที่ '+(i+1)+'">'+DST2.map(x=>'<option'+(x===s1?' selected':'')+'>'+x+'</option>').join('')+'</select>'
      +'<input class="dnote" data-i="'+i+'" value="'+n.replace(/"/g,'&quot;')+'" placeholder="ผลการตัดสิน / วันที่" aria-label="ผลการตัดสินเรื่องที่ '+(i+1)+'"></div></div>'}).join('');
   const up=(i,f,v)=>{cdec[i]=Object.assign({},cdec[i],{[f]:v});store.set('ceodec',cdec)};
-  el.querySelectorAll('.dsel').forEach(x=>x.onchange=()=>{up(x.dataset.i,'s',x.value);drawDecs()});
+  el.querySelectorAll('.dsel').forEach(x=>x.onchange=()=>{up(x.dataset.i,'s',x.value);drawDecs();drawDue()});
   el.querySelectorAll('.dnote').forEach(x=>x.onchange=()=>up(x.dataset.i,'n',x.value))}
 drawDecs();
+// ---------- dates in the plan are Thai short dates ("23 พ.ย. 69", "ม.ค. 70" = end of that month)
+const TMRE=/(?:(\d{1,2})\s*)?(ม\.ค\.|ก\.พ\.|มี\.ค\.|เม\.ย\.|พ\.ค\.|มิ\.ย\.|ก\.ค\.|ส\.ค\.|ก\.ย\.|ต\.ค\.|พ\.ย\.|ธ\.ค\.)\s*(\d{2,4})/;
+function thDate(s){const m=String(s||'').match(TMRE);if(!m)return null;let y=+m[3];if(y<100)y+=2500;y-=543;const mo=MON.indexOf(m[2]);return m[1]?new Date(y,mo,+m[1]):new Date(y,mo+1,0)}
+const thShort=d=>d.getDate()+' '+MON[d.getMonth()]+' '+String(d.getFullYear()+543).slice(2);
+// everything with a due date: open tasks, pending CEO decisions, licences with an expiry date
+function dueAll(){const R=[];
+  TASKS.forEach((t,i)=>{if(tstat[i]==2)return;const d=thDate(t[4]);if(d)R.push({d,k:'งาน',t:t[1],o:t[2],go:()=>show('tasks')})});
+  DECS.forEach(([t,,w],i)=>{if(((cdec[i]||{}).s||'รอตัดสิน')!=='รอตัดสิน')return;const d=thDate(w);if(d)R.push({d,k:'CEO ตัดสิน',t,o:'CEO',go:()=>{show('sum');setTimeout(()=>$('#decs').scrollIntoView({behavior:'smooth'}),60)}})});
+  if(typeof LICS!=='undefined')LICS.forEach(([k,n,h])=>{const o=lhub[k]||{},e=o.e;if(!e||o.s==='ไม่ใช้')return;const d=new Date(e+'T00:00');if(!isNaN(d))R.push({d,k:'ใบอนุญาต',t:n,o:h,lic:1,go:()=>show('docs')})});
+  const t0=new Date();t0.setHours(0,0,0,0);R.forEach(r=>r.days=Math.round((r.d-t0)/864e5));return R.sort((a,b)=>a.d-b.d)}
+function drawDue(){const el=$('#due');if(!el)return;const A=dueAll();
+  let L=A.filter(r=>r.days<=(r.lic?90:14));const nx=A.filter(r=>!L.includes(r)&&r.days>=0).slice(0,Math.max(0,3-L.length));
+  const row=(r,next)=>'<div class="dli" data-n="'+A.indexOf(r)+'"><span class="dd '+(next?'next':r.days<0?'late':'soon')+'">'+thShort(r.d)+'<br><small>'+(r.days<0?'เลยกำหนด '+(-r.days)+' วัน':r.days===0?'วันนี้':'อีก '+r.days+' วัน')+'</small></span><span class="dk">'+r.k+'</span><span class="dt">'+r.t+'</span><span class="do">'+r.o+'</span></div>';
+  el.innerHTML='<h4>📌 ต้องทำใน 14 วัน <span class="note">'+(L.length?L.length+' เรื่อง':'ไม่มีเรื่องครบกำหนด')+' · ใบอนุญาตเตือนล่วงหน้า 90 วัน · กดเพื่อเปิด</span><button class="rptbtn" type="button" onclick="openReport()">📄 รายงานประจำเดือน</button></h4>'
+   +L.map(r=>row(r)).join('')+(nx.length?'<div class="note" style="margin:8px 0 0">ถัดไป</div>'+nx.map(r=>row(r,1)).join(''):'');
+  el.querySelectorAll('.dli').forEach(x=>x.onclick=()=>{A[+x.dataset.n].go();scrollTo({top:0})})}
+// ---------- monthly report MD -> CEO (one printable page, built from live data)
+function openReport(j){const pre=new Date()<new Date(2027,0,1);if(j==null)j=pre?-1:kmonDefault;
+  const mlab=j<0?MON[new Date().getMonth()]+' '+String(new Date().getFullYear()+543).slice(2)+' (ช่วงเตรียมการ)':MON[j]+' 70';
+  const K=kpiList();let ok=0,bad=0,wait=0;const krows=[];
+  if(j>=0)K.forEach((k,i)=>{const [t,a]=kVals(k,i);if(t[j]==null)return;let r='รอกรอก';if(a[j]!=null){const p=k[3]==='↑'?a[j]>=t[j]:a[j]<=t[j];p?ok++:bad++;r=p?'<span class="pos">✓ ผ่าน</span>':'<span class="neg">✗ ไม่ผ่าน</span>'}else wait++;
+    krows.push([k[0],k[1],kfmt(t[j])+' '+k[2],a[j]==null?'–':kfmt(a[j]),r])});
+  const A=dueAll(),late=A.filter(r=>r.days<0&&!r.lic),soon=A.filter(r=>r.days>=0&&r.days<=31&&!r.lic),lic=A.filter(r=>r.lic&&r.days<=90);
+  const dn=tstat.filter(v=>v==2).length,pend=DECS.filter((_,i)=>((cdec[i]||{}).s||'รอตัดสิน')==='รอตัดสิน');
+  const lst=LICS.map(([k,n,h,,,s0])=>[n,h,(lhub[k]||{}).s||s0]).filter(r=>!['มีแล้ว','ไม่ใช้','ทุกปี','ถ้ามีเอกซเรย์'].includes(r[2]));
+  const dl=r=>[thShort(r.d)+(r.days<0?' <span class="neg">(เลย '+(-r.days)+' วัน)</span>':''),r.k,r.t,r.o];
+  let fin='';if(window.__fin!==false){const s=summary(model(P));fin='<h3>6. การเงินโครงการ รพ. + Villa (ตามแผน)</h3>'+T(['เงินลงทุนที่ต้องเตรียมสูงสุด','ผลปี 2570','เดือนแรกที่มีกำไร','ผลจริงเดือนนี้'],[[fm(s.peak),fm(s.y1),s.be?mlabel(s.be.i):'เกิน 24 เดือน',BL]])}
+  $('#mbody').innerHTML='<div class="rpt"><h2>รายงานประจำเดือน MD → CEO · '+mlab+'</h2><div class="meta"><span class="tag">ข้อมูล ณ '+thShort(new Date())+'</span><span class="tag">เดือนของ KPI: <select id="rptm">'+'<option value="-1">ช่วงเตรียมการ</option>'+MON.map((m,x)=>'<option value="'+x+'"'+(x===j?' selected':'')+'>'+m+' 70</option>').join('')+'</select></span></div>'
+   +'<div class="rgrid"><div><b>'+dn+'/'+TASKS.length+'</b><span>งานในตารางเสร็จ</span></div><div><b class="'+(late.length?'neg':'')+'">'+late.length+'</b><span>งาน/เรื่องเลยกำหนด</span></div><div><b>'+pend.length+'</b><span>เรื่องรอ CEO ตัดสิน</span></div><div><b>'+(j<0?'–':ok+' / '+(ok+bad))+'</b><span>'+(j<0?'KPI เริ่มนับ ม.ค. 70':'KPI ผ่าน · รอกรอก '+wait)+'</span></div></div>'
+   +'<h3>1. KPI '+(j<0?'(เริ่มนับผล ม.ค. 70)':MON[j]+' 70')+'</h3>'+(j<0?'<p class="note">ยังไม่มีผล · ผลเดือน ม.ค. กรอกภายใน 5 ก.พ. 70</p>':krows.length?T(['KPI','สาย','เป้า','ผลจริง','ผล'],krows):'<p class="note">ไม่มี KPI ที่มีเป้าเดือนนี้</p>')
+   +'<h3>2. งานเลยกำหนด</h3>'+(late.length?T(['ครบกำหนด','ประเภท','เรื่อง','ผู้รับผิดชอบ'],late.map(dl)):'<p class="note">ไม่มี</p>')
+   +'<h3>3. ครบกำหนดใน 31 วันข้างหน้า</h3>'+(soon.length?T(['ครบกำหนด','ประเภท','เรื่อง','ผู้รับผิดชอบ'],soon.map(dl)):'<p class="note">ไม่มี</p>')
+   +'<h3>4. เรื่องรอ CEO ตัดสิน</h3>'+(pend.length?T(['#','เรื่อง','ภายใน'],DECS.map((d,i)=>[i+1,d[0],d[2]||'–']).filter((_,i)=>pend.includes(DECS[i]))):'<p class="note">ไม่มี</p>')
+   +'<h3>5. ใบอนุญาตที่ยังไม่เรียบร้อย / ใกล้หมดอายุ</h3>'+T(['ใบอนุญาต','ผู้ถือ','สถานะ'],lst.concat(lic.map(r=>[r.t,r.o,'<span class="neg">หมดอายุ '+thShort(r.d)+'</span>'])))
+   +fin+'<h3>'+(fin?7:6)+'. ความเห็น MD และแผนเดือนถัดไป</h3>'+'<div class="wl"></div>'.repeat(5)
+   +SIGN(['MD ผู้รายงาน','CEO รับทราบ'])+'</div>';
+  $('#rptm').onchange=e=>openReport(+e.target.value);
+  $('#modal').classList.add('on');$('#mbox').scrollIntoView()}
 function drawGo(){
 $('#gonogo').innerHTML=Object.entries(GO).map(([h,a],g)=>'<div class="card chk"><b>'+h+'</b><div class="note" id="gs'+g+'"></div>'+a.map((x,i)=>'<label><input type="checkbox" data-k="'+g+'-'+i+'"'+(gchk[g+'-'+i]?' checked':'')+'> '+x+'</label>').join('')+'</div>').join('');
 function goStat(){Object.entries(GO).forEach(([h,a],g)=>{const n=a.filter((_,i)=>gchk[g+'-'+i]).length;$('#gs'+g).innerHTML=n===a.length?'<span class="tag">GO พร้อมเปิด</span>':'<span class="tag warn">ผ่าน '+n+'/'+a.length+'</span>'})}
@@ -2356,7 +2406,7 @@ function drawLicHub(){const today=new Date();
     let warn='';if(ex){const d=new Date(ex);if(!isNaN(d)){const days=Math.round((d-today)/864e5);warn=days<0?'หมดอายุแล้ว':days<=90?'อีก '+days+' วัน':''}}
     return '<tr'+(warn?' class="lwarn"':'')+'><td><b>'+n+'</b></td><td>'+h+'</td><td class="note">'+law+'</td><td><select class="ledit" data-k="'+k+'" data-f="s">'+LST.map(x=>'<option'+(x===s1?' selected':'')+'>'+x+'</option>').join('')+'</select></td><td><input class="ledit" data-k="'+k+'" data-f="n" value="'+(o.n||'').replace(/"/g,'&quot;')+'" placeholder="–"></td><td><input class="ledit" type="date" data-k="'+k+'" data-f="e" value="'+ex+'">'+(warn?'<div class="lw">⚠ '+warn+'</div>':'')+'</td><td>'+forms.map(([id,pre])=>{const i=docIdx(id,pre);return i<0?'':'<a href="#" class="lopen" data-id="'+id+'" data-i="'+i+'">'+pre+'</a>'}).join(' · ')+'</td><td class="note">'+(o.m!=null?o.m:note)+'</td></tr>'}).join('');
   $('#lichub').querySelectorAll('.lopen').forEach(a=>a.onclick=e=>{e.preventDefault();openItem(a.dataset.id,+a.dataset.i)});
-  $('#lichub').querySelectorAll('.ledit').forEach(el=>el.onchange=()=>{const o=lhub[el.dataset.k]=Object.assign({},lhub[el.dataset.k]);o[el.dataset.f]=el.value;store.set('lichub',lhub);drawLicHub()})}
+  $('#lichub').querySelectorAll('.ledit').forEach(el=>el.onchange=()=>{const o=lhub[el.dataset.k]=Object.assign({},lhub[el.dataset.k]);o[el.dataset.f]=el.value;store.set('lichub',lhub);drawLicHub();drawDue()})}
 drawDocs();drawLicHub();
 function openItem(id,toDoc){
   const x=ITEM[id];
@@ -2427,7 +2477,7 @@ function drawYear(){const g=$('#gantt');if(!g||!LANES)return;
   const start=new Date(2027,0,1),days=Math.ceil((start-now)/864e5);
   $('#ychips').innerHTML=(days>0?'<span>อีก <b>'+days+'</b> วัน เริ่มปี 2570</span>':'<span>วันที่ <b>'+(Math.floor((now-start)/864e5)+1)+'</b> ของปี 2570</span>')
    +'<span>งานหลัก <b>'+ITEMS.filter(x=>x.key).length+'</b> เรื่อง</span><span>งานทั้งหมด <b>'+ITEMS.length+'</b> รายการ</span><span>เอกสารประกอบ <b>'+ITEMS.reduce((a,x)=>a+(x.docs||[]).length,0)+'</b> ฉบับ</span>';
-  $('#ystats').innerHTML=[['ม.ค. 70','เปิดคลินิกหน้า รพ.'],['ต.ค. 70','เปิด OPD + IPD โรงพยาบาล'],['พ.ย. 70','เปิด Villa ใหม่'],['118 คน','บุคลากร รพ. + Villa ที่ต้องสรรหา']].map(x=>'<div class="card"><div class="v">'+x[0]+'</div><div class="l">'+x[1]+'</div></div>').join('');
+  drawDue();$('#ystats').innerHTML=[['ม.ค. 70','เปิดคลินิกหน้า รพ.'],['ต.ค. 70','เปิด OPD + IPD โรงพยาบาล'],['พ.ย. 70','เปิด Villa ใหม่'],['118 คน','บุคลากร รพ. + Villa ที่ต้องสรรหา']].map(x=>'<div class="card"><div class="v">'+x[0]+'</div><div class="l">'+x[1]+'</div></div>').join('');
   const CC=['#2F6B57','#3D5A80','#B8702E','#8A5A2B'];
   $('#chap').innerHTML=QH.map((q,k)=>{const xs=ITEMS.filter(x=>x.q===k+1),ts=TASKS.map((t,i)=>[t,i]).filter(([t])=>t[0].startsWith('Q'+(k+1))),d=ts.filter(([,i])=>tstat[i]==2).length;
     return '<div class="card" style="--c:'+CC[k]+'"><div class="num">Q'+(k+1)+'</div><h4>'+q[0].split('·')[1].trim()+'</h4><div class="m">'+q[1]+' 2570</div><ul>'
@@ -2552,7 +2602,7 @@ function drawAct(){const el=$('#act');if(!el)return;
   document.addEventListener('levelready',()=>drawAct());
   db.doc('shared/act2569').onSnapshot(sn=>{ACT=sn.exists?sn.data().v:null;if(ACT)updBump(sn.data().at);drawAct();if($('#kt')&&$('#kt').innerHTML)kpiDefer()},()=>drawAct())})();
 // ---------- shared data (Supabase via supabase-bridge.js): tasks, data checklist, go/no-go, KPI
-const SHARED={ceodec:v=>{cdec=v;drawDecs()},docreg:v=>{dreg=v;drawDocs()},lichub:v=>{lhub=v;drawLicHub()},tstat5:v=>{tstat=v;drawTasks();drawYear()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
+const SHARED={ceodec:v=>{cdec=v;drawDecs();drawDue()},docreg:v=>{dreg=v;drawDocs()},lichub:v=>{lhub=v;drawLicHub();drawDue()},tstat5:v=>{tstat=v;drawTasks();drawYear()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
 const SCUR={ceodec:()=>cdec,docreg:()=>dreg,lichub:()=>lhub,tstat5:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
 let sdb=null,sro=false;const sq={},stm={},sbusy={};
 function syncBadge(t,c){const b=$('#sync');b.textContent=t;b.className='sync '+(c||'')}
