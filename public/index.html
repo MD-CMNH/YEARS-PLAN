@@ -23,7 +23,7 @@ table.dreg a,#lichub a{color:#1F4D3E;font-weight:600;text-decoration:none;border
 select.st-0{background:#FFF6DC}select.st-1{background:#FDE9D2}select.st-2{background:#E3F1E6}select.st-3{background:#CFE8D6;font-weight:600}select.st-4{background:#EEE;color:#777}
 #lichub td{vertical-align:middle}#lichub tr.lwarn td{background:#FBE4E1}.lw{color:#A4161A;font-size:12px;font-weight:700}
 .doc.dhl{outline:3px solid #E9CF8E;outline-offset:4px;border-radius:6px}
-@media(max-width:640px){table.dreg th:nth-child(3),table.dreg td:nth-child(3),table.dreg th:nth-child(5),table.dreg td:nth-child(5){display:none}.dedit{max-width:110px}}
+@media(max-width:640px){table.dreg{display:block;overflow-x:auto;max-width:100%}table.dreg .dc{white-space:normal;font-size:11.5px}header h1 .hy{display:none}table.dreg th:nth-child(3),table.dreg td:nth-child(3),table.dreg th:nth-child(5),table.dreg td:nth-child(5){display:none}.dedit{max-width:110px}}
 @media print{.dedit,.ledit{border:0;background:none}}
 /* ---- licence forms (ส.พ.) ---- */
 .spf{background:#fff;border:1px solid #DCCFB2;border-radius:6px;padding:22px 26px;font-size:14.5px;line-height:2;color:#111}
@@ -350,7 +350,7 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
 </head>
 <body>
 <header>
-  <div class="hrow"><h1>CMNH แผนงานปี 2570 (2027)</h1><span class="hright"><button class="pbtn" id="pbtn" title="พิมพ์แท็บที่เปิดอยู่" aria-label="พิมพ์หน้านี้">🖨<span class="pl"> พิมพ์หน้านี้</span></button><span class="sync" id="sync" title="สถานะการบันทึกข้อมูล">เก็บในเครื่องนี้</span></span></div>
+  <div class="hrow"><h1>CMNH <span class="hy">แผนงานปี </span>2570<span class="hy"> (2027)</span></h1><span class="hright"><button class="pbtn" id="pbtn" title="พิมพ์แท็บที่เปิดอยู่" aria-label="พิมพ์หน้านี้">🖨<span class="pl"> พิมพ์หน้านี้</span></button><span class="sync" id="sync" title="สถานะการบันทึกข้อมูล">เก็บในเครื่องนี้</span></span></div>
   <p>บจก. ซีเอ็มเอ็นเอช 2012 · บจก. แทรงควิลา · อัปเดตล่าสุด <span id="upd">–</span></p>
   <nav id="nav"></nav>
 </header>
