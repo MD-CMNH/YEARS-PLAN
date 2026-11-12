@@ -12,6 +12,19 @@
 --arrow:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%235A4A2A' stroke-width='1.8' stroke-linecap='round'/></svg>");
 --ok:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%231E6B3A' stroke-width='2.4' stroke-linecap='round'/></svg>");
 --no:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 4l8 8M12 4l-8 8' fill='none' stroke='%23A4161A' stroke-width='2.4' stroke-linecap='round'/></svg>")}
+/* ---- document register + licence hub ---- */
+.dbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}.dbar input{flex:1 1 260px;font:inherit;padding:8px 12px;border:1px solid #C9BA97;border-radius:8px;background:#fff}.dbar select{font:inherit;padding:8px;border:1px solid #C9BA97;border-radius:8px;background:#fff}
+#dtype small{opacity:.7;margin-left:3px}
+.dgh{margin:16px 0 6px;color:#20392F}
+table.dreg td{vertical-align:middle;padding:6px 8px}table.dreg .dc{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;white-space:nowrap;color:#3A3222}
+table.dreg a,#lichub a{color:#1F4D3E;font-weight:600;text-decoration:none;border-bottom:1px dotted #2F6B57}table.dreg a:hover,#lichub a:hover{color:#B8702E}
+.dtask{font-size:12px;color:var(--mute);background:#F3EAD6;border-radius:99px;padding:1px 8px;display:inline-block;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+.dedit,.ledit{font:inherit;font-size:13px;padding:3px 6px;border:1px solid #DCCFB2;border-radius:6px;background:#FFFDF8;max-width:150px}.dedit.rev{width:46px}
+select.st-0{background:#FFF6DC}select.st-1{background:#FDE9D2}select.st-2{background:#E3F1E6}select.st-3{background:#CFE8D6;font-weight:600}select.st-4{background:#EEE;color:#777}
+#lichub td{vertical-align:middle}#lichub tr.lwarn td{background:#FBE4E1}.lw{color:#A4161A;font-size:12px;font-weight:700}
+.doc.dhl{outline:3px solid #E9CF8E;outline-offset:4px;border-radius:6px}
+@media(max-width:640px){table.dreg th:nth-child(3),table.dreg td:nth-child(3),table.dreg th:nth-child(5),table.dreg td:nth-child(5){display:none}.dedit{max-width:110px}}
+@media print{.dedit,.ledit{border:0;background:none}}
 /* ---- licence forms (ส.พ.) ---- */
 .spf{background:#fff;border:1px solid #DCCFB2;border-radius:6px;padding:22px 26px;font-size:14.5px;line-height:2;color:#111}
 .sph{position:relative;text-align:center;margin-bottom:6px;min-height:70px}
@@ -549,7 +562,14 @@ h4.jdg{margin:18px 0 6px;color:var(--brand)}table.jdh{margin:8px 0;box-shadow:no
 
 <section id="docs">
   <h2>เอกสารประกอบแผน</h2>
-  <p class="lead">138 เอกสาร (ร่าง/แม่แบบ) ตามงานในแต่ละไตรมาส คลิกเพื่อเปิด พิมพ์ หรือบันทึกเป็น PDF ตรวจสอบรายละเอียดก่อนใช้จริง</p>
+  <p class="lead"><span id="dtotal"></span> เอกสาร (ร่าง/แม่แบบ) รวม JD ทุกตำแหน่ง คลิกชื่อเพื่อเปิด พิมพ์ หรือบันทึกเป็น PDF ตรวจสอบรายละเอียดก่อนใช้จริง</p>
+  <h3>ศูนย์ใบอนุญาตของกลุ่ม</h3>
+  <p class="note" style="margin-top:-4px">ใบอนุญาตทุกตัวของกลุ่มในที่เดียว · แก้สถานะ เลขที่ และวันหมดอายุได้ ทีมเห็นร่วมกัน · แดง = หมดอายุภายใน 90 วัน · คลิกชื่อแบบเพื่อเปิดแบบฟอร์ม</p>
+  <div class="scroll"><table id="lichub"></table></div>
+  <h3>ทะเบียนเอกสารกลาง (Master List)</h3>
+  <div class="dbar"><input id="dq" type="search" placeholder="ค้นหาชื่อ รหัส หรือผู้รับผิดชอบ…" aria-label="ค้นหาเอกสาร"><select id="dst" aria-label="กรองตามสถานะ"></select></div>
+  <div class="filters" id="dtype"></div>
+  <p class="note" id="dsum"></p>
   <div id="docgrid"></div>
 </section>
 </main>
@@ -1499,7 +1519,7 @@ const ITEMS=[
  out:'ใบอนุญาต Villa ภายใน ต.ค. 70',
  steps:[['ม.ค. 70','ยืนยันประเภทใบอนุญาตกับหน่วยงาน (ในงานติดตามใบอนุญาต)','MD'],['พ.ค. 70','เตรียมเอกสารตามประเภทที่ยืนยัน','Group HR (ธุรการ)'],['มิ.ย.–ก.ค. 70','ยื่นคำขอ','Group HR (ธุรการ)'],['ส.ค.–ก.ย. 70','รับตรวจสถานที่และแก้ไขตามข้อสังเกต','Group HR (ธุรการ) + DG'],['ต.ค. 70','ได้ใบอนุญาต (สำรอง 1 เดือนก่อนเปิด)','MD']],
  docs:[['เช็กลิสต์ใบอนุญาต Villa',
- '<p class="note">ประเภทใบอนุญาตขึ้นกับรูปแบบบริการที่เลือก ต้องยืนยันกับหน่วยงานก่อน เอกสารนี้เป็นรายการคำถามและการเตรียม ไม่ใช่ข้อสรุปทางกฎหมาย</p><h4>1. ตัดสินใจรูปแบบบริการก่อน</h4>'+T(['คำถาม','คำตอบ'],[['Villa ให้บริการทางการแพทย์/การพยาบาลเอง หรือรับบริการจาก รพ. CMNH',BL],['ผู้พักเป็นผู้สูงอายุทั่วไป หรือผู้มีภาวะพึ่งพิง/ผู้ป่วย',BL],['Villa อยู่ในใบอนุญาตเดียวกับ รพ. หรือแยก',BL]])+'<h4>2. หน่วยงานที่ต้องสอบถาม</h4>'+CK(['สำนักงานสาธารณสุขจังหวัดเชียงใหม่ (กรณีเป็นส่วนหนึ่งของสถานพยาบาล)','สำนักงานสนับสนุนบริการสุขภาพเขต / กรม สบส. (กรณีสถานประกอบการเพื่อสุขภาพ)','เทศบาล/องค์กรปกครองส่วนท้องถิ่น (ใบอนุญาตกิจการและอาคาร)'])+'<h4>3. เอกสารที่มักต้องเตรียม</h4>'+CK(['แบบแปลนอาคารและใบอนุญาตก่อสร้าง/ใช้อาคาร','หนังสือรับรองบริษัทและผู้มีอำนาจ','รายชื่อและคุณสมบัติผู้ดำเนินการ (care manager) และผู้ดูแล','แผนป้องกันอัคคีภัยและอุปกรณ์ความปลอดภัย','มาตรฐานบริการและ SOP'])+'<h4>4. ติดตาม</h4>'+T(['ขั้น','วันที่','ผล'],[['ปรึกษาหน่วยงาน',BL,BL],['ยื่นคำขอ',BL,BL],['ตรวจสถานที่',BL,BL],['ได้ใบอนุญาต',BL,BL]])]]},
+ '<div class="card" style="margin-bottom:10px"><b>ข้อสรุปจากกฎกระทรวง (31 ก.ค. 2563)</b><ul style="margin:6px 0 0"><li>Villa <b>อยู่ในใบอนุญาตโรงพยาบาล</b> → ใช้กฎหมายสถานพยาบาล ยื่น ส.พ.16 เพิ่มบริการ</li><li>Villa <b>แยกดำเนินการ</b> → ขอใบอนุญาตสถานประกอบการเพื่อสุขภาพ กิจการดูแลผู้สูงอายุ ลักษณะ 2 (Residential Home) หรือ 3 (Nursing Home) ด้วยแบบ สพส.1</li></ul><p class="note" style="margin:6px 0 0">แบบคำขอ แบบตรวจตัวเอง และรายละเอียดอยู่ในงาน <b>"ชุดแบบฟอร์มสถานประกอบการเพื่อสุขภาพ"</b> (Q2) · ยืนยันกับ สสจ. ก่อนตัดสินใจ</p></div><h4>1. ตัดสินใจรูปแบบบริการก่อน</h4>'+T(['คำถาม','คำตอบ'],[['Villa ให้บริการทางการแพทย์/การพยาบาลเอง หรือรับบริการจาก รพ. CMNH',BL],['ผู้พักเป็นผู้สูงอายุทั่วไป หรือผู้มีภาวะพึ่งพิง/ผู้ป่วย',BL],['Villa อยู่ในใบอนุญาตเดียวกับ รพ. หรือแยก',BL]])+'<h4>2. หน่วยงานที่ต้องสอบถาม</h4>'+CK(['สำนักงานสาธารณสุขจังหวัดเชียงใหม่ (กรณีเป็นส่วนหนึ่งของสถานพยาบาล)','สำนักงานสนับสนุนบริการสุขภาพเขต / กรม สบส. (กรณีสถานประกอบการเพื่อสุขภาพ)','เทศบาล/องค์กรปกครองส่วนท้องถิ่น (ใบอนุญาตกิจการและอาคาร)'])+'<h4>3. เอกสารที่มักต้องเตรียม</h4>'+CK(['แบบแปลนอาคารและใบอนุญาตก่อสร้าง/ใช้อาคาร','หนังสือรับรองบริษัทและผู้มีอำนาจ','รายชื่อและคุณสมบัติผู้ดำเนินการ (care manager) และผู้ดูแล','แผนป้องกันอัคคีภัยและอุปกรณ์ความปลอดภัย','มาตรฐานบริการและ SOP'])+'<h4>4. ติดตาม</h4>'+T(['ขั้น','วันที่','ผล'],[['ปรึกษาหน่วยงาน',BL,BL],['ยื่นคำขอ',BL,BL],['ตรวจสถานที่',BL,BL],['ได้ใบอนุญาต',BL,BL]])]]},
 {id:'yearend',q:4,key:0,t:'สรุปผลปี + แผน 2571',own:'CEO',due:'31 ธ.ค. 70',
  goal:'สรุปผลปี 2570 และทำแผนปี 2571 ให้พร้อมใช้ตั้งแต่ 1 ม.ค.',
  out:'รายงานผลปี และแผนปี 2571 ที่กรรมการอนุมัติ',
@@ -2221,8 +2241,60 @@ const ITEM=Object.fromEntries(ITEMS.map(x=>[x.id,x]));
 const QH=[['Q1 · ตั้งระบบ','ม.ค. – มี.ค.'],['Q2 · วัดผล','เม.ย. – มิ.ย.'],['Q3 · วางแผนขยาย','ก.ค. – ก.ย.'],['Q4 · เริ่มดำเนินการ','ต.ค. – ธ.ค.']];
 $('#qboard').innerHTML=QH.map((h,k)=>'<div class="qcol"><h4>'+h[0]+'</h4><small>'+h[1]+'</small>'+ITEMS.filter(x=>x.q===k+1).map(x=>'<div class="item'+(x.key?' key':'')+(x.span?' span':'')+'" data-id="'+x.id+'">'+x.t+'<span class="dc">'+x.steps.length+' ขั้น · เอกสาร'+(x.opt?' · <b style="color:#B45309">'+x.opt+'</b>':'')+'</span></div>').join('')+'</div>').join('');
 document.querySelectorAll('#qboard .item').forEach(el=>el.onclick=()=>openItem(el.dataset.id));
-$('#docgrid').innerHTML=QH.map((h,k)=>'<h3>'+h[0]+'</h3><div class="doclist">'+ITEMS.filter(x=>x.q===k+1).map(x=>x.docs.map(d=>'<div class="card" data-id="'+x.id+'"><b>'+d[0]+'</b><div class="note">'+x.t+' · '+x.own+'</div></div>').join('')).join('')+'</div>').join('');
-document.querySelectorAll('#docgrid .card').forEach(el=>el.onclick=()=>openItem(el.dataset.id,true));
+// ---------- document register (master list) + licence hub; status/rev/owner overrides shared via Supabase (docreg, lichub)
+var DTYPES=['SOP','แบบฟอร์ม','ใบอนุญาต/ราชการ','นโยบาย/คู่มือ','แผน/รายงาน','JD'],DST=['ร่าง','รอตรวจ','อนุมัติ','ใช้จริง','ยกเลิก'];
+var dreg=store.get('docreg',{}),lhub=store.get('lichub',{}),dtyp='ทั้งหมด';
+function docType(x,t){if(/^PM-/.test(t))return 'SOP';if(/^F-/.test(t))return 'แบบฟอร์ม';
+  if(['licforms','spsforms','licconfirm','villapermit'].includes(x.id))return 'ใบอนุญาต/ราชการ';
+  if(/แบบประเมิน|แบบฟอร์ม|แม่แบบ|แบบรายงาน|ใบรับทราบ|เช็กลิสต์/.test(t))return 'แบบฟอร์ม';
+  if(/นโยบาย|ตารางอำนาจ|DOA|ประกาศ|ข้อบังคับ|รูปแบบการจัดการ|กรอบโครงสร้าง|คำสั่งแต่งตั้ง/.test(t))return 'นโยบาย/คู่มือ';
+  return 'แผน/รายงาน'}
+function buildReg(){const pre={'แบบฟอร์ม':'FRM','ใบอนุญาต/ราชการ':'LIC','นโยบาย/คู่มือ':'POL','แผน/รายงาน':'PLN'},cnt={};const R=[];
+  ITEMS.forEach(x=>x.docs.forEach((d,i)=>{const t=d[0],ty=docType(x,t);let code=(t.match(/^(PM|F)-[A-Z]{2}-\d{3}(-\d{2})?/)||[])[0];
+    if(!code){const m=t.match(/^(ส\.พ\.\d+|สพส\.\d+)/);code=m?m[1]:pre[ty]+'-'+String(cnt[ty]=(cnt[ty]||0)+1).padStart(3,'0')}
+    R.push({k:x.id+'#'+t,code,t:t.replace(/^(PM|F)-[A-Z]{2}-\d{3}(-\d{2})?\s*/,'').replace(/^(ส\.พ\.\d+|สพส\.\d+)\s*/,'').replace(/^Rev\.\d+\s*/,''),ty,task:x.t.split(/[(:·]/)[0].trim(),own:x.own.split('·')[0].trim(),rev:/Rev\.01/.test(t)?'01':'00',open:()=>openItem(x.id,i)})}));
+  JDS.forEach((j,i)=>R.push({k:'JD#'+j.n,code:'JD-'+String(i+1).padStart(3,'0'),t:j.n+' ('+j.e+')',ty:'JD',task:'โครงสร้างองค์กร',own:'Group HR',rev:'00',open:()=>{show('org');const q=$('#jdq');if(q){q.value=j.n;jdRender();const d=$('#jdall details');if(d){d.open=true;setTimeout(()=>d.scrollIntoView({behavior:'smooth'}),80)}}}}));
+  return R}
+var DREG=null;
+function drawDocs(){if(!DREG)DREG=buildReg();const q=($('#dq').value||'').trim().toLowerCase(),sf=$('#dst').value;
+  const st=r=>(dreg[r.k]&&dreg[r.k].s)||'ร่าง',rv=r=>(dreg[r.k]&&dreg[r.k].r)||r.rev,ow=r=>(dreg[r.k]&&dreg[r.k].o)||r.own;
+  $('#dtotal').textContent=DREG.length;
+  $('#dtype').innerHTML=['ทั้งหมด'].concat(DTYPES).map(t=>'<button class="'+(t===dtyp?'on':'')+'" data-t="'+t+'">'+t+' <small>'+(t==='ทั้งหมด'?DREG.length:DREG.filter(r=>r.ty===t).length)+'</small></button>').join('');
+  $('#dtype').querySelectorAll('button').forEach(b=>b.onclick=()=>{dtyp=b.dataset.t;drawDocs()});
+  const L=DREG.filter(r=>(dtyp==='ทั้งหมด'||r.ty===dtyp)&&(!sf||st(r)===sf)&&(!q||(r.code+' '+r.t+' '+r.task+' '+ow(r)).toLowerCase().includes(q)));
+  const by=DST.map(s=>s+' '+DREG.filter(r=>st(r)===s).length).join(' · ');
+  $('#dsum').textContent='แสดง '+L.length+' จาก '+DREG.length+' ฉบับ · สถานะทั้งหมด: '+by;
+  L.sort((a,b)=>a.code.localeCompare(b.code,'th',{numeric:true}));const groups=dtyp==='ทั้งหมด'?DTYPES:[dtyp];
+  $('#docgrid').innerHTML=groups.map(g=>{const rows=L.filter(r=>r.ty===g);if(!rows.length)return '';
+    return '<h4 class="dgh">'+g+' <span class="note">'+rows.length+' ฉบับ</span></h4><table class="dreg" id="dreg-'+DTYPES.indexOf(g)+'"><tr><th>รหัส</th><th>ชื่อเอกสาร</th><th>อยู่ในงาน</th><th>เจ้าของ</th><th>Rev.</th><th>สถานะ</th></tr>'
+     +rows.map(r=>{const i=DREG.indexOf(r),s1=st(r);return '<tr><td class="dc">'+r.code+'</td><td><a href="#" class="dopen" data-i="'+i+'">'+r.t+'</a></td><td><span class="dtask">'+r.task+'</span></td><td><input class="dedit" data-i="'+i+'" data-f="o" value="'+ow(r).replace(/"/g,'&quot;')+'" aria-label="เจ้าของเอกสาร"></td><td><input class="dedit rev" data-i="'+i+'" data-f="r" value="'+rv(r)+'" aria-label="ฉบับที่"></td><td><select class="dedit st-'+DST.indexOf(s1)+'" data-i="'+i+'" data-f="s" aria-label="สถานะ">'+DST.map(x=>'<option'+(x===s1?' selected':'')+'>'+x+'</option>').join('')+'</select></td></tr>'}).join('')+'</table>'}).join('')||'<p class="note">ไม่พบเอกสาร</p>';
+  $('#docgrid').querySelectorAll('.dopen').forEach(a=>a.onclick=e=>{e.preventDefault();DREG[+a.dataset.i].open()});
+  $('#docgrid').querySelectorAll('.dedit').forEach(el=>el.onchange=()=>{const r=DREG[+el.dataset.i],o=dreg[r.k]=Object.assign({},dreg[r.k]);o[el.dataset.f]=el.value;store.set('docreg',dreg);if(el.dataset.f==='s')drawDocs()})}
+$('#dst').innerHTML='<option value="">ทุกสถานะ</option>'+DST.map(x=>'<option>'+x+'</option>').join('');
+$('#dq').oninput=drawDocs;$('#dst').onchange=drawDocs;
+// licence hub rows: [key, licence, holder, law/forms, form links [itemId, docTitlePrefix], default status, note]
+var LICS=[
+ ['cl_op','ใบอนุญาตประกอบกิจการ คลินิกหน้า รพ. (ส.พ.7)','บจก. ซีเอ็มเอ็นเอช 2012','พ.ร.บ.สถานพยาบาล',[['licforms','ส.พ.5'],['licforms','เช็กลิสต์']],'กำลังเตรียมยื่น','ยื่น พ.ย. 69 · เปิด ม.ค. 70'],
+ ['cl_run','ใบอนุญาตให้ดำเนินการ คลินิก (ส.พ.19)','นพ.รังสรรค์ วิฑูรย์','พ.ร.บ.สถานพยาบาล',[['licforms','ส.พ.18'],['licforms','ส.พ.6']],'กำลังเตรียมยื่น','ห้ามเวลาซ้ำซ้อนกับคลินิกหมอต้น'],
+ ['h_op','ใบอนุญาตประกอบกิจการ โรงพยาบาล 50 เตียง','บจก. ซีเอ็มเอ็นเอช 2012','พ.ร.บ.สถานพยาบาล',[['licconfirm','สถานะ'],['licforms','ส.พ.4'],['licforms','ส.พ.5']],'ยื่นแล้ว รอแก้ไข','ยื่น 28 ต.ค. 69 · แก้ 11 จุด'],
+ ['h_run','ใบอนุญาตให้ดำเนินการ โรงพยาบาล','นพ.ณัฐวรรธ','พ.ร.บ.สถานพยาบาล',[['licforms','ส.พ.18']],'ยื่นแล้ว รอแก้ไข','ต้องปฏิบัติงาน ≥ 40 ชม./สัปดาห์'],
+ ['villa','Villa ใหม่ (ใน รพ. ส.พ.16 หรือ แยก สพส.1)','รอตัดสินใจ','สถานพยาบาล / สถานประกอบการเพื่อสุขภาพ',[['spsforms','Villa ต้องใช้'],['spsforms','สพส.1'],['licforms','ส.พ.16']],'รอตัดสินใจ','ตัดสิน ม.ค. 70 · ได้ใบอนุญาตภายใน ต.ค. 70'],
+ ['tql','Tranquila: ใบอนุญาตสถานประกอบการเพื่อสุขภาพ (ดูแลผู้สูงอายุ)','บจก. แทรงควิลา','พ.ร.บ.สถานประกอบการเพื่อสุขภาพ',[['spsforms','ตรวจตัวเอง']],'มีแล้ว','Post Audit กรม สบส. ปี 2569 · ต่ออายุด้วย สพส.21'],
+ ['tql_op','ใบอนุญาตผู้ดำเนินการ (Tranquila / Villa)','ผู้ดำเนินการ','พ.ร.บ.สถานประกอบการเพื่อสุขภาพ',[['spsforms','หนังสือแสดงความจำนง'],['spsforms','ทะเบียนประวัติ']],'ตรวจสอบ',''],
+ ['br14','สาขา 1–4 (80 เตียง): ประเภทใบอนุญาตปัจจุบัน','บจก. ซีเอ็มเอ็นเอช 2012','ตรวจสอบ (สถานพยาบาล หรือ สถานประกอบการเพื่อสุขภาพ)',[],'ตรวจสอบ','ใส่เลขที่และวันหมดอายุแต่ละอาคาร'],
+ ['fee','ค่าธรรมเนียมรายปีสถานพยาบาล (ส.พ.12)','คลินิก / รพ.','พ.ร.บ.สถานพยาบาล',[],'ทุกปี','ชำระภายใน 31 ธ.ค. · ติดแสดงที่ทางเข้า'],
+ ['prof','ใบอนุญาตประกอบวิชาชีพของบุคลากรทุกคน','รายบุคคล','สภาวิชาชีพ',[['sopb2','PM-HR-010'],['sopb2','F-HR-010-01']],'ทุกปี','HR เตือนล่วงหน้า 90 วัน'],
+ ['fda','ทะเบียน/ใบอนุญาต อย. เครื่องมือแพทย์ (TMS / PMS / เครื่องมือไฟฟ้า)','หัวหน้าคลินิก','พ.ร.บ.เครื่องมือแพทย์',[['licforms','ตรวจตัวเอง: มาตรฐานคลินิกเวชกรรม']],'ตรวจสอบ','แนบตอนตรวจตั้งใหม่'],
+ ['rad','ใบอนุญาตครอบครองรังสี (ปส.) · หนังสือรับรองกรมวิทย์ฯ','โรงพยาบาล','พ.ร.บ.พลังงานนิวเคลียร์ฯ',[],'ถ้ามีเอกซเรย์','เฉพาะเมื่อมีเครื่องเอกซเรย์']];
+var LST=['รอตัดสินใจ','กำลังเตรียมยื่น','ยื่นแล้ว รอแก้ไข','ยื่นแล้ว รอผล','มีแล้ว','ต้องต่ออายุ','ตรวจสอบ','ทุกปี','ถ้ามีเอกซเรย์','ไม่ใช้'];
+function drawLicHub(){const today=new Date();
+  const docIdx=(id,pre)=>{const x=ITEM[id];return x?x.docs.findIndex(d=>d[0].startsWith(pre)):-1};
+  $('#lichub').innerHTML='<tr><th>ใบอนุญาต</th><th>ผู้ถือ</th><th>กฎหมาย</th><th>สถานะ</th><th>เลขที่</th><th>หมดอายุ / ครบกำหนด</th><th>แบบที่ใช้</th><th>หมายเหตุ</th></tr>'+LICS.map(([k,n,h,law,forms,s0,note])=>{const o=lhub[k]||{},s1=o.s||s0,ex=o.e||'';
+    let warn='';if(ex){const d=new Date(ex);if(!isNaN(d)){const days=Math.round((d-today)/864e5);warn=days<0?'หมดอายุแล้ว':days<=90?'อีก '+days+' วัน':''}}
+    return '<tr'+(warn?' class="lwarn"':'')+'><td><b>'+n+'</b></td><td>'+h+'</td><td class="note">'+law+'</td><td><select class="ledit" data-k="'+k+'" data-f="s">'+LST.map(x=>'<option'+(x===s1?' selected':'')+'>'+x+'</option>').join('')+'</select></td><td><input class="ledit" data-k="'+k+'" data-f="n" value="'+(o.n||'').replace(/"/g,'&quot;')+'" placeholder="–"></td><td><input class="ledit" type="date" data-k="'+k+'" data-f="e" value="'+ex+'">'+(warn?'<div class="lw">⚠ '+warn+'</div>':'')+'</td><td>'+forms.map(([id,pre])=>{const i=docIdx(id,pre);return i<0?'':'<a href="#" class="lopen" data-id="'+id+'" data-i="'+i+'">'+pre+'</a>'}).join(' · ')+'</td><td class="note">'+(o.m!=null?o.m:note)+'</td></tr>'}).join('');
+  $('#lichub').querySelectorAll('.lopen').forEach(a=>a.onclick=e=>{e.preventDefault();openItem(a.dataset.id,+a.dataset.i)});
+  $('#lichub').querySelectorAll('.ledit').forEach(el=>el.onchange=()=>{const o=lhub[el.dataset.k]=Object.assign({},lhub[el.dataset.k]);o[el.dataset.f]=el.value;store.set('lichub',lhub);drawLicHub()})}
+drawDocs();drawLicHub();
 function openItem(id,toDoc){
   const x=ITEM[id];
   $('#mbody').innerHTML='<h2>'+x.t+'</h2><div class="meta"><span class="tag">Q'+x.q+'</span><span class="tag">ผู้รับผิดชอบ: '+x.own+'</span><span class="tag warn">ส่งภายใน '+x.due+'</span>'+(x.opt?'<span class="tag warn">ทางเลือก '+x.opt+'</span>':'')+'</div>'
@@ -2230,7 +2302,7 @@ function openItem(id,toDoc){
    +'<h3>ขั้นตอนย่อย</h3>'+T(['ช่วงเวลา','งาน','ผู้รับผิดชอบ'],x.steps)
    +x.docs.map((d,i)=>'<div class="doc" id="doc'+i+'"><h3>เอกสาร: '+d[0]+'</h3><p class="note">บริษัท ซีเอ็มเอ็นเอช 2012 จำกัด · ร่างเพื่อใช้ในแผนปี 2570</p>'+d[1]+'</div>').join('');
   $('#modal').classList.add('on');$('#mbox').scrollIntoView();fillLic($('#mbody'));licPrintBtns();
-  if(toDoc){const d=$('#doc0');if(d)setTimeout(()=>d.scrollIntoView({behavior:'smooth'}),50)}
+  if(toDoc!==undefined&&toDoc!==false){const d=$('#doc'+(toDoc===true?0:toDoc));if(d){d.classList.add('dhl');setTimeout(()=>{d.scrollIntoView({behavior:'smooth'});setTimeout(()=>d.classList.remove('dhl'),2500)},80)}}
 }
 $('#mclose').onclick=()=>$('#modal').classList.remove('on');
 $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')};
@@ -2407,8 +2479,8 @@ function drawAct(){const el=$('#act');if(!el)return;
   document.addEventListener('levelready',()=>drawAct());
   db.doc('shared/act2569').onSnapshot(sn=>{ACT=sn.exists?sn.data().v:null;if(ACT)updBump(sn.data().at);drawAct();if($('#kt')&&$('#kt').innerHTML)kpiDefer()},()=>drawAct())})();
 // ---------- shared data (Supabase via supabase-bridge.js): tasks, data checklist, go/no-go, KPI
-const SHARED={tstat5:v=>{tstat=v;drawTasks();drawYear()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
-const SCUR={tstat5:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
+const SHARED={docreg:v=>{dreg=v;drawDocs()},lichub:v=>{lhub=v;drawLicHub()},tstat5:v=>{tstat=v;drawTasks();drawYear()},data:v=>{dchk=v;drawData()},go2:v=>{gchk=v;drawGo()},kpi3:v=>{kv=v;kpiDefer()}};
+const SCUR={docreg:()=>dreg,lichub:()=>lhub,tstat5:()=>tstat,data:()=>dchk,go2:()=>gchk,kpi3:()=>kv};
 let sdb=null,sro=false;const sq={},stm={},sbusy={};
 function syncBadge(t,c){const b=$('#sync');b.textContent=t;b.className='sync '+(c||'')}
 function kpiDefer(){const a=document.activeElement;if(a&&$('#kt').contains(a)){a.addEventListener('blur',()=>setTimeout(kpiRender,0),{once:true})}else kpiRender()}
